@@ -1,4 +1,6 @@
-﻿using BookingSystem.Service.Entities;
+﻿using AutoMapper;
+using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,12 +12,14 @@ namespace BookingSystem.Service.Services
     public class TentService : ITentService
     {
         private readonly ApplicationDbContext _dbContext;
-        public TentService(ApplicationDbContext dbContext)
+        private readonly IMapper _mapper;
+        public TentService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<Tent> GetTentById(int id)
+        public async Task<TentDto> GetTentById(int id)
         {
             try
             {
@@ -24,7 +28,9 @@ namespace BookingSystem.Service.Services
                 if (tent == null)
                     throw new ArgumentNullException(nameof(tent));
 
-                return tent;
+                var tentDto = _mapper.Map<TentDto>(tent);
+
+                return tentDto;
             }
             catch (Exception)
             {
@@ -32,7 +38,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<List<Tent>> GetTents()
+        public async Task<List<TentDto>> GetTents()
         {
             try
             {
@@ -41,7 +47,9 @@ namespace BookingSystem.Service.Services
                 if (tents == null)
                     throw new ArgumentNullException(nameof(tents));
 
-                return tents;
+                var tentDtos = _mapper.Map<List<TentDto>>(tents);
+
+                return tentDtos;
             }
             catch (Exception)
             {

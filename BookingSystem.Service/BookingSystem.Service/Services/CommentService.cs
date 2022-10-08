@@ -1,4 +1,6 @@
-﻿using BookingSystem.Service.Entities;
+﻿using AutoMapper;
+using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,17 +12,21 @@ namespace BookingSystem.Service.Services
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext _dbContext;
-        public CommentService(ApplicationDbContext dbContext)
+        private readonly IMapper _mapper;
+        public CommentService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task Create(Comment comment)
+        public async Task Create(CommentDto commentDto)
         {
             try
             {
-                if(comment == null)
-                    throw new ArgumentNullException(nameof(comment));
+                if(commentDto == null)
+                    throw new ArgumentNullException(nameof(commentDto));
+
+                var comment = _mapper.Map<Comment>(commentDto);
 
                 await _dbContext.Comments.AddAsync(comment);
                 await _dbContext.SaveChangesAsync();
@@ -49,7 +55,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<Comment> GetById(int id)
+        public async Task<CommentDto> GetById(int id)
         {
             try
             {
@@ -58,7 +64,9 @@ namespace BookingSystem.Service.Services
                 if (comment == null)
                     throw new ArgumentNullException(nameof(comment));
 
-                return comment;
+                var commentDto = _mapper.Map<CommentDto>(comment);
+
+                return commentDto;
             }
             catch (Exception)
             {
@@ -66,7 +74,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<List<Comment>> GetAll()
+        public async Task<List<CommentDto>> GetAll()
         {
             try
             {
@@ -75,7 +83,9 @@ namespace BookingSystem.Service.Services
                 if (comments == null)
                     throw new ArgumentNullException(nameof(comments));
 
-                return comments;
+                var commentDtos = _mapper.Map<List<CommentDto>>(comments);
+
+                return commentDtos;
             }
             catch (Exception)
             {
