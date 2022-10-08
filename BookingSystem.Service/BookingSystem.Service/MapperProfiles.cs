@@ -16,6 +16,10 @@ namespace BookingSystem.Service
 
             CreateMap<Comment, CommentDto>()
                 .ReverseMap();
+
+            CreateMap<UserRegistrationDto, User>();
+
+            CreateMap<UserLoginDto, User>();
         }
     }
 }
