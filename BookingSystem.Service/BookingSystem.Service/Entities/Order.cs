@@ -19,5 +19,6 @@ namespace BookingSystem.Service.Entities
         public decimal Cost { get; set; }
         public DateTime DateTime { get; set; }
         public string Address { get; set; }
+        public bool IsEnd { get; set; } = false;
     }
 }

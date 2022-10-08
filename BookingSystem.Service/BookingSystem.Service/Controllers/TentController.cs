@@ -3,6 +3,7 @@ using BookingSystem.Service.Entities;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,9 +20,9 @@ namespace BookingSystem.Service.Controllers
         }
         
         [HttpGet]
-        public ActionResult<List<TentDto>> GetTents()
+        public async Task<ActionResult> GetTents()
         {
-            var tents = _tentService.GetTents().Result;
+            var tents = await _tentService.GetTents();
 
             if (tents == null)
                 return NotFound();
@@ -30,9 +31,9 @@ namespace BookingSystem.Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TentDto> GetTentById(int id)
+        public async Task<ActionResult> GetTentById(int id)
         {
-            var tent = _tentService.GetTentById(id).Result;
+            var tent = await _tentService.GetTentById(id);
 
             if (tent == null)
                 return NotFound();
