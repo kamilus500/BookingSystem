@@ -1,4 +1,5 @@
 using BookingSystem.Service.Entities;
+using BookingSystem.Service.Models;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,8 @@ namespace BookingSystem.Service
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SmtpSettings>(options => Configuration.GetSection("SmtpSettings").Bind(options));
+
             services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("conString")));
 
@@ -34,6 +37,8 @@ namespace BookingSystem.Service
             services.AddTransient<IOrderService, OrderService>();
 
             services.AddTransient<Seeder>();
+            services.AddTransient<EmailService>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllersWithViews()
