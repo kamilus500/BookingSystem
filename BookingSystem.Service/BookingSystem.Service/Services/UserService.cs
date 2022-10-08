@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Services
@@ -23,6 +23,8 @@ namespace BookingSystem.Service.Services
             {
                 var user = _mapper.Map<User>(newUserDto);
 
+                user.Password = BCrypt.Net.BCrypt.HashPassword(newUserDto.Password);
+
                 await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
             }
@@ -30,16 +32,18 @@ namespace BookingSystem.Service.Services
             {
                 throw;
             }
-
         }
 
         public async Task<bool> IsExist(UserLoginDto userLoginDto)
         {
             try
             {
-                bool isExist = _dbContext.Users.Any(x => x.UserName == userLoginDto.Login && x.Password == userLoginDto.Password);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userLoginDto.Login);
 
-                return isExist;
+                if (!BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
+                    return false;
+
+                return true;
             }
             catch (Exception)
             {

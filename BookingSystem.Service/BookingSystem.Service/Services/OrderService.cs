@@ -11,12 +11,15 @@ namespace BookingSystem.Service.Services
 {
     public class OrderService : IOrderService
     {
+        private readonly EmailService _emailService;
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        public OrderService(ApplicationDbContext dbContext, IMapper mapper)
+
+        public OrderService(ApplicationDbContext dbContext, IMapper mapper, EmailService emailService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task Create(OrderDto newOrderDto)
@@ -30,6 +33,8 @@ namespace BookingSystem.Service.Services
 
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
+
+                await _emailService.Send("kkurzeja321@gmail.com", "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
             }
             catch(Exception)
             {
