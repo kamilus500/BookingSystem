@@ -1,11 +1,8 @@
 ﻿using BookingSystem.Service.Dtos;
-using BookingSystem.Service.Entities;
 using BookingSystem.Service.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BookingSystem.Service.Controllers
 {
@@ -18,11 +15,11 @@ namespace BookingSystem.Service.Controllers
         {
             _commentService = commentService;
         }
-        // GET: api/<CommentController>
+
         [HttpGet]
-        public ActionResult<List<CommentDto>> Get()
+        public async Task<ActionResult> Get()
         {
-            var comments = _commentService.GetAll().Result;
+            var comments = await _commentService.GetAll();
 
             if (comments == null)
                 return NotFound();
@@ -30,11 +27,10 @@ namespace BookingSystem.Service.Controllers
             return Ok(comments);
         }
 
-        // GET api/<CommentController>/5
         [HttpGet("{id}")]
-        public ActionResult<CommentDto> Get(int id)
+        public async Task<ActionResult> GetById(int id)
         {
-            var comment = _commentService.GetById(id).Result;
+            var comment = await _commentService.GetById(id);
 
             if (comment == null)
                 return NotFound();
@@ -42,26 +38,26 @@ namespace BookingSystem.Service.Controllers
             return Ok(comment);
         }
 
-        // POST api/<CommentController>
+        [Authorize]
         [HttpPost]
-        public ActionResult Post([FromBody] CommentDto comment)
+        public async Task<ActionResult> Post([FromBody] CommentDto comment)
         {
             if (comment == null)
                 return BadRequest("Comment is null");
 
-            _commentService.Create(comment);
+            await _commentService.Create(comment);
 
             return Ok();
         }        
 
-        // DELETE api/<CommentController>/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             if (id == 0)
                 return BadRequest("Id is 0");
 
-            _commentService.Delete(id);
+            await _commentService.Delete(id);
 
             return Ok();
         }

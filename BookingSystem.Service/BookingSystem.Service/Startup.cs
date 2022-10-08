@@ -23,7 +23,6 @@ namespace BookingSystem.Service
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => 
@@ -32,6 +31,7 @@ namespace BookingSystem.Service
             services.AddTransient<ITentService, TentService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddTransient<Seeder>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -53,9 +53,9 @@ namespace BookingSystem.Service
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "https://localhost:5001",
-                    ValidAudience = "https://localhost:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
 
@@ -65,7 +65,6 @@ namespace BookingSystem.Service
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             seeder.SeedData();

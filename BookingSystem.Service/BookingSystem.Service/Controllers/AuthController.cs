@@ -3,6 +3,7 @@ using BookingSystem.Service.Models;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,11 @@ namespace BookingSystem.Service.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
-        public AuthController(IUserService userService)
+        private readonly IConfiguration _configuration;
+        public AuthController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -29,13 +32,16 @@ namespace BookingSystem.Service.Controllers
             {
                 return BadRequest("Invalid client request");
             }
-            if (_userService.IsExist(loginUser).Result)
+
+            bool isExist = _userService.IsExist(loginUser).Result;
+
+            if (isExist)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Audience"],
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials

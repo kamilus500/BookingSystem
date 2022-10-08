@@ -82,25 +82,25 @@ namespace BookingSystem.Service
                         new Comment()
                         {
                             UserId = 1,
-                            Grade = Grade.Verygood,
+                            Grade = Grade.Five,
                             Message = "Good one"
                         },
                         new Comment()
                         {
                             UserId = 2,
-                            Grade = Grade.Bad,
+                            Grade = Grade.Two,
                             Message = "Bad one"
                         },
                         new Comment()
                         {
                             UserId = 3,
-                            Grade = Grade.Good,
+                            Grade = Grade.Two,
                             Message = "Kurwa dobre"
                         },
                         new Comment()
                         {
                             UserId = 4,
-                            Grade = Grade.Bad,
+                            Grade = Grade.Six,
                             Message = "Japierdole, orzygałem namiot"
                         }
                     };
