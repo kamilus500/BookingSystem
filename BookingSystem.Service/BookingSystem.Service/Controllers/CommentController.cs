@@ -1,4 +1,5 @@
-﻿using BookingSystem.Service.Entities;
+﻿using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace BookingSystem.Service.Controllers
         }
         // GET: api/<CommentController>
         [HttpGet]
-        public ActionResult<List<Comment>> Get()
+        public ActionResult<List<CommentDto>> Get()
         {
             var comments = _commentService.GetAll().Result;
 
@@ -31,7 +32,7 @@ namespace BookingSystem.Service.Controllers
 
         // GET api/<CommentController>/5
         [HttpGet("{id}")]
-        public ActionResult<Comment> Get(int id)
+        public ActionResult<CommentDto> Get(int id)
         {
             var comment = _commentService.GetById(id).Result;
 
@@ -43,7 +44,7 @@ namespace BookingSystem.Service.Controllers
 
         // POST api/<CommentController>
         [HttpPost]
-        public ActionResult Post([FromBody] Comment comment)
+        public ActionResult Post([FromBody] CommentDto comment)
         {
             if (comment == null)
                 return BadRequest("Comment is null");

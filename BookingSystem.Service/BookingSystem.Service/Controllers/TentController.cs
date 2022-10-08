@@ -1,4 +1,5 @@
-﻿using BookingSystem.Service.Entities;
+﻿using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BookingSystem.Service.Controllers
         }
         
         [HttpGet]
-        public ActionResult<List<Tent>> GetTents()
+        public ActionResult<List<TentDto>> GetTents()
         {
             var tents = _tentService.GetTents().Result;
 
@@ -29,7 +30,7 @@ namespace BookingSystem.Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Tent> GetTentById(int id)
+        public ActionResult<TentDto> GetTentById(int id)
         {
             var tent = _tentService.GetTentById(id).Result;
 
