@@ -1,15 +1,8 @@
 ﻿using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Models;
 using BookingSystem.Service.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Controllers
 {
@@ -18,15 +11,15 @@ namespace BookingSystem.Service.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
-        public AuthController(IUserService userService, IConfiguration configuration)
+        private readonly IAuthService _authService;
+        public AuthController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
-            _configuration = configuration;
+            _authService = authService;
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromBody] UserLoginDto loginUser)
+        public async Task<ActionResult> Login([FromBody] UserLoginDto loginUser)
         {
             if (loginUser is null)
             {
@@ -35,25 +28,18 @@ namespace BookingSystem.Service.Controllers
 
             bool isExist = _userService.IsExist(loginUser).Result;
 
+            var role = await _userService.GetRole(loginUser);
+
             if (isExist)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: _configuration["Jwt:Issuer"],
-                    audience: _configuration["Jwt:Audience"],
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                string tokenString = _authService.GenerateToken(loginUser.Login, role);
                 return Ok(new AuthenticatedResponse { Token = tokenString });
             }
             return Unauthorized();
         }
 
         [HttpPost("registration")]
-        public ActionResult Registration([FromBody] UserRegistrationDto registrationUser)
+        public async Task<ActionResult> Registration([FromBody] UserRegistrationDto registrationUser)
         {
             if(string.IsNullOrWhiteSpace(registrationUser.UserName) || 
                 string.IsNullOrWhiteSpace(registrationUser.Password) ||
@@ -63,7 +49,7 @@ namespace BookingSystem.Service.Controllers
                 return BadRequest("One or more fields are empty");
             }
 
-            _userService.Create(registrationUser);
+            await _userService.Create(registrationUser);
 
             return Ok();            
         }

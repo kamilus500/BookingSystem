@@ -44,35 +44,15 @@ namespace BookingSystem.Service
                 }
 
                 //Users
-                if (!_dbContext.Users.Any())
-                {
-                    var users = new List<User>()
-                    {
-                        new User()
-                        {
-                            FirstName = "Kamil",
-                            LastName = "Kurzeja"
-                        },
-                        new User()
-                        {
-                            FirstName = "Jakub",
-                            LastName = "Róg"
-                        },
-                        new User()
-                        {
-                            FirstName = "Damian",
-                            LastName = "Puś",
-                        },
-                        new User()
-                        {
-                            FirstName = "Emil",
-                            LastName = "Knysak"
-                        }
-                    };
+                //if (!_dbContext.Users.Any())
+                //{
+                //    var users = new List<User>()
+                //    {
+                //    };
 
-                    _dbContext.Users.AddRange(users);
-                    _dbContext.SaveChanges();
-                }
+                //    _dbContext.Users.AddRange(users);
+                //    _dbContext.SaveChanges();
+                //}
 
                 //Comments
                 if (!_dbContext.Comments.Any())
@@ -90,18 +70,6 @@ namespace BookingSystem.Service
                             UserId = 2,
                             Grade = Grade.Two,
                             Message = "Bad one"
-                        },
-                        new Comment()
-                        {
-                            UserId = 3,
-                            Grade = Grade.Two,
-                            Message = "Kurwa dobre"
-                        },
-                        new Comment()
-                        {
-                            UserId = 4,
-                            Grade = Grade.Six,
-                            Message = "Japierdole, orzygałem namiot"
                         }
                     };
 
