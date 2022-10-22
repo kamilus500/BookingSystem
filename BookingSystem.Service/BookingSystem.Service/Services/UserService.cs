@@ -34,6 +34,20 @@ namespace BookingSystem.Service.Services
             }
         }
 
+        public async Task<string> GetRole(UserLoginDto userLoginDto)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userLoginDto.Login);
+
+                return user.Role.ToString();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> IsExist(UserLoginDto userLoginDto)
         {
             try
