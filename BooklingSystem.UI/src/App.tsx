@@ -10,15 +10,17 @@ import "./theme/tailwind.css";
 import "./theme/variables.css";
 
 import PricingList from "./components/Pricing/PricingList";
+import Home from "./pages/Home";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <>
-    <Nav />
-    <Hero />
-    <FeatureList />
-    <PricingList />
+    {/*<Nav />*/}
+    {/*<Hero />*/}
+    {/*<FeatureList />*/}
+    {/*<PricingList />*/}
+    <Home />
   </>
 );
 
