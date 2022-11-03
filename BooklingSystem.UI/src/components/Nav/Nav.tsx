@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white px-4 sm:px-4 py-2.5">
+    <nav className="px-4 sm:px-4 py-2.5">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Logo />
         <button

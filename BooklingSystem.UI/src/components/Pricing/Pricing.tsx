@@ -6,7 +6,7 @@ const Pricing: React.FC<{ size: string; price: string }> = ({
   price,
 }) => {
   return (
-    <section className="max-w-xs md:max-w-none shrink-0 md:shrink snap-center">
+    <div className="max-w-sm md:max-w-md shrink-0 md:shrink snap-center mx-auto">
       <Card imgSrc="https://flowbite.com/docs/images/blog/image-1.jpg">
         <h5 className="text-2xl  tracking-tight text-gray-900 dark:text-white">
           {size}
@@ -25,7 +25,7 @@ const Pricing: React.FC<{ size: string; price: string }> = ({
           Reserve
         </button>
       </Card>
-    </section>
+    </div>
   );
 };
 

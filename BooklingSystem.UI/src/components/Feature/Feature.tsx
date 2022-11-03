@@ -6,7 +6,7 @@ const Feature: React.FC<{ title: string; icon: any; text?: string }> = ({
   text,
 }) => {
   return (
-    <section className="max-w-xs space-y-4 shrink mx-auto">
+    <div className="max-w-md space-y-4 shrink mx-auto">
       <header className="flex gap-2 items-center justify-center">
         <div className="bg-violet-100 rounded-full w-12 h-12 flex justify-center items-center">
           <img src={icon} alt="" />
@@ -21,7 +21,7 @@ const Feature: React.FC<{ title: string; icon: any; text?: string }> = ({
           </p>
         )}
       </main>
-    </section>
+    </div>
   );
 };
 
