@@ -1,4 +1,5 @@
 ﻿using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities.Enums;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,14 +63,26 @@ namespace BookingSystem.Service.Controllers
             return Ok();
         }
 
-        [Authorize] //Todo dodać role Admin ?
+        [Authorize(Roles = "Admin")]
         [HttpPut("finish/{id}")]
-        public async Task<ActionResult> Put(int id)
+        public async Task<ActionResult> FinishOrder(int id)
         {
             if (id == 0)
                 return BadRequest("Order is 0");
 
             await _orderService.EndReservation(id);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("accept/{id}")]
+        public async Task<ActionResult> AcceptOrder(int id)
+        {
+            if (id == 0)
+                return BadRequest("Order is 0");
+
+            await _orderService.AcceptOrder(id);
 
             return Ok();
         }

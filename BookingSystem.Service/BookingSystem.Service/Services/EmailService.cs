@@ -52,15 +52,9 @@ namespace BookingSystem.Service.Services
                 Credentials = new NetworkCredential(_senderEmail, _senderEmailPassword)
             };
 
-            _smtp.SendCompleted += OnSendCompleted;
-
             await _smtp.SendMailAsync(mail);
-        }
 
-        private void OnSendCompleted(object sender, AsyncCompletedEventArgs e)
-        {
             _smtp.Dispose();
-            mail.Dispose();
         }
     }
 }

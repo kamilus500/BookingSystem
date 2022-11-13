@@ -12,5 +12,6 @@ namespace BookingSystem.Service.Services
         public Task Update(int id, OrderDto updateOrderDto);
         public Task Delete(int id);
         public Task EndReservation(int id);
+        public Task AcceptOrder(int id);
     }
 }

@@ -22,6 +22,25 @@ namespace BookingSystem.Service.Services
             _emailService = emailService;
         }
 
+        public async Task AcceptOrder(int id)
+        {
+            try
+            {
+                if (id == 0)
+                    throw new Exception("Id is 0");
+
+                var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+                order.IsAccepted = true;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task Create(OrderDto newOrderDto)
         {
             try
