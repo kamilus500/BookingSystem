@@ -20,5 +20,6 @@ namespace BookingSystem.Service.Entities
         public DateTime DateTime { get; set; }
         public string Address { get; set; }
         public bool IsEnd { get; set; } = false;
+        public bool IsAccepted { get; set; } = false;
     }
 }
