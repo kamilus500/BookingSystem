@@ -2,25 +2,30 @@ import React from "react";
 
 import { setupIonicReact } from "@ionic/react";
 
-import FeatureList from "./components/Feature/FeatureList";
-import Hero from "./components/Hero/Hero";
-import Nav from "./components/Nav/Nav";
-
 import "./theme/tailwind.css";
 import "./theme/variables.css";
 
-import PricingList from "./components/Pricing/PricingList";
 import Home from "./pages/Home";
+import Nav from "./components/Nav/Nav";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import LoginForm from "./components/LoginForm/LoginForm";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <>
-    {/*<Nav />*/}
-    {/*<Hero />*/}
-    {/*<FeatureList />*/}
-    {/*<PricingList />*/}
-    <Home />
+    <Nav />
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <LoginForm />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   </>
 );
 

@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
   };
 
   return (
-    <nav className="px-4 sm:px-4 py-2.5">
+    <nav className="px-4 py-2.5">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Logo />
         <button
@@ -24,10 +24,10 @@ const Nav: React.FC = () => {
         </button>
         <div className={`${navOpen ? "" : "hidden"} w-full md:block md:w-auto`}>
           <NavList>
-            <ListItem>Home</ListItem>
-            <ListItem>Features</ListItem>
-            <ListItem>Pricing</ListItem>
-            <ListItem>About Us</ListItem>
+            <ListItem aHref="#">Home</ListItem>
+            <ListItem aHref="#features">Features</ListItem>
+            <ListItem aHref="#pricing">Pricing</ListItem>
+            <ListItem aHref="#about">About Us</ListItem>
             {/*<ListItem hidden>Sign In</ListItem>*/}
             {/*<ListItem hidden>Sign Up</ListItem>*/}
             {/*<ListItem hidden>🇵🇱</ListItem>*/}
