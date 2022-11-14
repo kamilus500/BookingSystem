@@ -2,7 +2,7 @@ import React from "react";
 
 const Summary = () => {
   return (
-    <div>
+    <div className="my-12">
       <p className="mb-5 text-base text-gray-500 dark:text-gray-400 sm:text-lg lg:w-2/3 mx-auto text-center">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum
         odio ac turpis facilisis egestas. Sed a quam dignissim, cursus ex vitae,
