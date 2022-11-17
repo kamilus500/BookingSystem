@@ -22,10 +22,19 @@ namespace BookingSystem.Service
             Configuration = configuration;
         }
 
+        public string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                    builder =>
+                                    {
+                                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                                    })); ;
+
             services.Configure<SmtpSettings>(options => Configuration.GetSection("SmtpSettings").Bind(options));
 
             services.AddDbContext<ApplicationDbContext>(options => 
@@ -107,6 +116,7 @@ namespace BookingSystem.Service
 
             app.UseHttpsRedirection();
 
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseRouting();
 
             app.UseAuthentication();
