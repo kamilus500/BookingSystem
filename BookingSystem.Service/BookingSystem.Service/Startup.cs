@@ -32,7 +32,7 @@ namespace BookingSystem.Service
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                     builder =>
                                     {
-                                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                                        builder.WithOrigins("https://tentsnation.netlify.app/","http:localhost:3000").AllowAnyHeader().AllowAnyMethod();
                                     })); ;
 
             services.Configure<SmtpSettings>(options => Configuration.GetSection("SmtpSettings").Bind(options));
