@@ -1,5 +1,6 @@
 ﻿using BookingSystem.Service.Entities;
 using BookingSystem.Service.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,12 @@ namespace BookingSystem.Service
 
         public void SeedData()
         {
+            var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+            if(pendingMigrations != null && pendingMigrations.Any()) 
+            {
+                _dbContext.Database.Migrate();
+            }
+
             if(_dbContext.Database.CanConnect())
             {
                 //Tents
