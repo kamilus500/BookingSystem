@@ -1,5 +1,6 @@
 ﻿using BookingSystem.Service.Entities;
 using BookingSystem.Service.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,7 @@ namespace BookingSystem.Service
 
         public void SeedData()
         {
+
             if(_dbContext.Database.CanConnect())
             {
                 //Tents
@@ -44,15 +46,31 @@ namespace BookingSystem.Service
                 }
 
                 //Users
-                //if (!_dbContext.Users.Any())
-                //{
-                //    var users = new List<User>()
-                //    {
-                //    };
+                if (!_dbContext.Users.Any())
+                {
+                    var users = new List<User>()
+                    {
+                        new User()
+                        {
+                            FirstName = "Adam",
+                            LastName = "Kowalski",
+                            Password = "admin123",
+                            UserName = "admin",
+                            Role = RoleValue.Admin
+                        },
+                        new User()
+                        {
+                            FirstName = "Kamil",
+                            LastName = "Kurzeja",
+                            Password = "kamil123",
+                            UserName = "kamilus500",
+                            Role = RoleValue.User
+                        }
+                    };
 
-                //    _dbContext.Users.AddRange(users);
-                //    _dbContext.SaveChanges();
-                //}
+                    _dbContext.Users.AddRange(users);
+                    _dbContext.SaveChanges();
+                }
 
                 //Comments
                 if (!_dbContext.Comments.Any())

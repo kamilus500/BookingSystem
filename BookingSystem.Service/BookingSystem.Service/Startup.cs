@@ -38,7 +38,7 @@ namespace BookingSystem.Service
             services.Configure<SmtpSettings>(options => Configuration.GetSection("SmtpSettings").Bind(options));
 
             services.AddDbContext<ApplicationDbContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("conString")));
+                options.UseSqlServer(Configuration.GetConnectionString("BookingTentDbConnection")));
 
             services.AddTransient<ITentService, TentService>();
             services.AddTransient<ICommentService, CommentService>();
