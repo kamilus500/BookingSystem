@@ -16,11 +16,6 @@ namespace BookingSystem.Service
 
         public void SeedData()
         {
-            var pendingMigrations = _dbContext.Database.GetPendingMigrations();
-            if(pendingMigrations != null && pendingMigrations.Any()) 
-            {
-                _dbContext.Database.Migrate();
-            }
 
             if(_dbContext.Database.CanConnect())
             {
@@ -51,15 +46,31 @@ namespace BookingSystem.Service
                 }
 
                 //Users
-                //if (!_dbContext.Users.Any())
-                //{
-                //    var users = new List<User>()
-                //    {
-                //    };
+                if (!_dbContext.Users.Any())
+                {
+                    var users = new List<User>()
+                    {
+                        new User()
+                        {
+                            FirstName = "Adam",
+                            LastName = "Kowalski",
+                            Password = "admin123",
+                            UserName = "admin",
+                            Role = RoleValue.Admin
+                        },
+                        new User()
+                        {
+                            FirstName = "Kamil",
+                            LastName = "Kurzeja",
+                            Password = "kamil123",
+                            UserName = "kamilus500",
+                            Role = RoleValue.User
+                        }
+                    };
 
-                //    _dbContext.Users.AddRange(users);
-                //    _dbContext.SaveChanges();
-                //}
+                    _dbContext.Users.AddRange(users);
+                    _dbContext.SaveChanges();
+                }
 
                 //Comments
                 if (!_dbContext.Comments.Any())
