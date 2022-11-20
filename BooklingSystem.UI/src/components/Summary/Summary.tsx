@@ -12,7 +12,9 @@ const Summary = () => {
       </p>
       <div className="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
         <a
-          href="#"
+          href="https://www.apple.com/pl/app-store/"
+          target="_blank"
+          rel="noreferrer"
           className="inline-flex w-full items-center justify-center rounded-lg bg-gray-800 px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto"
         >
           <svg
@@ -38,7 +40,9 @@ const Summary = () => {
           </div>
         </a>
         <a
-          href="#"
+          href="https://play.google.com/store/games?hl=pl&gl=US"
+          target="_blank"
+          rel="noreferrer"
           className="inline-flex w-full items-center justify-center rounded-lg bg-gray-800 px-4 py-2.5 text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto"
         >
           <svg

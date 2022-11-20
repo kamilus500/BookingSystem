@@ -3,6 +3,7 @@ import Logo from "../Logo/Logo";
 import NavList from "./NavList";
 import NavIcon from "./NavIcon";
 import ListItem from "./ListItem";
+import { HashRouter, Link } from "react-router-dom";
 
 const Nav: React.FC = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -24,7 +25,7 @@ const Nav: React.FC = () => {
         </button>
         <div className={`${navOpen ? "" : "hidden"} w-full md:block md:w-auto`}>
           <NavList>
-            <ListItem aHref="#">Home</ListItem>
+            {/* <ListItem>Home</ListItem> */}
             <ListItem aHref="#features">Features</ListItem>
             <ListItem aHref="#pricing">Pricing</ListItem>
             <ListItem aHref="#about">About Us</ListItem>
@@ -34,10 +35,16 @@ const Nav: React.FC = () => {
           </NavList>
         </div>
         <div className="hidden md:block">
-          <button className="text-black">Sign In</button>
-          <button className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white">
-            Sign Up
-          </button>
+          <Link to="/login">
+            <button className="py-2 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparenttext-gray-700">
+              Sign In
+            </button>
+          </Link>
+          <Link to="/register">
+            <button className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white">
+              Sign Up
+            </button>
+          </Link>
           <span>🇵🇱</span>
         </div>
       </div>
