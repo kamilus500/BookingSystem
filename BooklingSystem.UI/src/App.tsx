@@ -8,15 +8,15 @@ import "./theme/variables.css";
 import Home from "./pages/Home";
 import Nav from "./components/Nav/Nav";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <>
-    <Nav />
     <Router>
+      <Nav />
       <Switch>
         <Route path="/login">
           <LoginForm />

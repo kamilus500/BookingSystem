@@ -23,10 +23,18 @@ const Footer = () => {
           <ListItem aHref="#about">About Us</ListItem>
         </NavList>
         <div className="space-x-4">
-          <IonIcon icon={logoFacebook} size="large" />
-          <IonIcon icon={logoTwitter} size="large" />
-          <IonIcon icon={logoLinkedin} size="large" />
-          <IonIcon icon={logoGoogle} size="large" />
+          <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <IonIcon icon={logoFacebook} size="large" />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noreferrer">
+            <IonIcon icon={logoTwitter} size="large" />
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
+            <IonIcon icon={logoLinkedin} size="large" />
+          </a>
+          <a href="https://www.google.com" target="_blank" rel="noreferrer">
+            <IonIcon icon={logoGoogle} size="large" />
+          </a>
         </div>
       </div>
       <div className="flex justify-between items-center">
