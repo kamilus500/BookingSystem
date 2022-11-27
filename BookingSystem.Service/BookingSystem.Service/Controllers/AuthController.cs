@@ -32,7 +32,7 @@ namespace BookingSystem.Service.Controllers
 
             if (isExist)
             {
-                string tokenString = _authService.GenerateToken(loginUser.Login, role);
+                string tokenString = _authService.GenerateToken(loginUser.Email, role);
                 return Ok(new AuthenticatedResponse { Token = tokenString });
             }
             return Unauthorized();
@@ -41,7 +41,7 @@ namespace BookingSystem.Service.Controllers
         [HttpPost("registration")]
         public async Task<ActionResult> Registration([FromBody] UserRegistrationDto registrationUser)
         {
-            if(string.IsNullOrWhiteSpace(registrationUser.UserName) || 
+            if(string.IsNullOrWhiteSpace(registrationUser.Email) || 
                 string.IsNullOrWhiteSpace(registrationUser.Password) ||
                 string.IsNullOrWhiteSpace(registrationUser.FirstName) || 
                 string.IsNullOrWhiteSpace(registrationUser.LastName))

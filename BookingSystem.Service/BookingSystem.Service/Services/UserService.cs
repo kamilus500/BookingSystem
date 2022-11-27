@@ -38,7 +38,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userLoginDto.Login);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
                 return user.Role.ToString();
             }
@@ -52,7 +52,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userLoginDto.Login);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
                 if (!BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
                     return false;

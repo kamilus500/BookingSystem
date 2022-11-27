@@ -17,7 +17,7 @@ namespace BookingSystem.Service.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(string login, string role)
+        public string GenerateToken(string email, string role)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -26,7 +26,7 @@ namespace BookingSystem.Service.Services
                 audience: _configuration["Jwt:Audience"],
                 claims: new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, login),
+                    new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Role, role)
                 },
                 expires: DateTime.Now.AddMinutes(5),
