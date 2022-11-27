@@ -55,7 +55,7 @@ namespace BookingSystem.Service
                             FirstName = "Adam",
                             LastName = "Kowalski",
                             Password = "admin123",
-                            UserName = "admin",
+                            Email = "admin@o2.pl",
                             Role = RoleValue.Admin
                         },
                         new User()
@@ -63,7 +63,7 @@ namespace BookingSystem.Service
                             FirstName = "Kamil",
                             LastName = "Kurzeja",
                             Password = "kamil123",
-                            UserName = "kamilus500",
+                            Email = "kamil1011-1990@o2.pl",
                             Role = RoleValue.User
                         }
                     };
