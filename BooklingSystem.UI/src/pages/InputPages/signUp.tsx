@@ -2,19 +2,14 @@ import React, { useState } from "react";
 
 export const SignUp: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
-
-  const [data, setData] = useState<{ login: string; password: string }>({
-    login: "",
+  const[login,setLogin]=useState<boolean>(true)
+  const [data, setData] = useState<{ email: string; password: string }>({
+    email: "",
     password: "",
   });
 
   const handleSubmit = async () => {
-    const emailRegex = new RegExp(
-      /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
-      "gm"
-    );
-
-    console.log(data);
+    try{
     const resp = await fetch(
       "https://booking-tent-api.azurewebsites.net/api/Auth/login",
       {
@@ -26,6 +21,11 @@ export const SignUp: React.FC = () => {
       }
     );
     await console.log(await resp.json());
+    setLogin(resp.status===200)
+    }catch(e)
+    {
+      setLogin(false)
+    }
   };
 
   return (
@@ -41,13 +41,14 @@ export const SignUp: React.FC = () => {
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
+              {login?undefined:"Zły mail lub hasło"}
               <label htmlFor="email-address" className="sr-only">
                 Email
               </label>
               <input
-                value={data.login}
+                value={data.email}
                 onChange={(e) => {
-                  setData({ ...data, login: e.target.value });
+                  setData({ ...data, email: e.target.value });
                 }}
                 name="email"
                 type="email"
@@ -80,6 +81,7 @@ export const SignUp: React.FC = () => {
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
+
                 <label
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-900"
