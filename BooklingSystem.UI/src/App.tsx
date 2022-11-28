@@ -12,8 +12,8 @@ import Nav from "./components/Nav/Nav";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
-import { SignUp } from "./pages/signUp";
-import { Registration } from "./pages/registration";
+import { SignUp } from "./pages/InputPages/signUp";
+import { Registration } from "./pages/InputPages/registration";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";
 
 setupIonicReact();
