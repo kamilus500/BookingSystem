@@ -1,0 +1,12 @@
+.valid{
+    box-shadow: inset 0 0 1em green, 0 0 1em green;
+  }
+  .notValid{
+    box-shadow: inset 0 0 1em red, 0 0 1em red;
+  }
+  .medium{
+    box-shadow: inset 0 0 1em orange, 0 0 1em orange;
+  }
+  .strong{
+    box-shadow: inset 0 0 1em green, 0 0 1em green;
+  }

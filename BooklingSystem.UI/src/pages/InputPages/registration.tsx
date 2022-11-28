@@ -1,43 +1,22 @@
 import React, { useState } from "react";
-
+import { Valid } from "./Validation";
+import './Validation.css'
 export const Registration: React.FC = () => {
   const [email2, setEmail2] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
-  const [valid, setValid] = useState<boolean>();
+  const [valid, setValid] = useState<{name:boolean,lastname:boolean,email:boolean,password:boolean}>({name:true,lastname:true,email:true,password:true});
+  const [passwordStrenght,setPasswordStrenght]=useState<number|boolean>(1);
   const [data, setData] = useState<{
     firstName: string;
     lastName: string;
-    username: string;
+    email: string;
     password: string;
-  }>({ firstName: "", lastName: "", username: "", password: "" });
+  }>({ firstName: "", lastName: "", email: "", password: "" });
+
+  
 
   const handleSubmit = async () => {
-    /* const emailRegex:RegExp = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
-      setValid(true)
-        try{
-          if(data.password.length<8)
-          {
-            throw new Error("incorrect password")
-
-          }
-        if(!emailRegex.test(data.email))
-        {
-
-            throw new Error("incorrect email")
-
-        }
-        if(data.email!==email2)
-        {
-            throw new Error("emails are not the same")
-
-        }
-      }catch(e)
-      {
-        setValid(false)
-        console.log(e)
-      }
-       if(valid)
-       {*/
+    
     const resp: Response = await fetch(
       "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
       {
@@ -48,19 +27,21 @@ export const Registration: React.FC = () => {
         },
       }
     );
+
     console.log(resp.statusText);
-  };
+    
+}
 
   return (
     <div className="place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-14 text-center text-3xl font-bold tracking-tight text-gray-900">
             Zarejestruj się
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
-        <div className="mt-8 space-y-6">
+        <div className="mt-10 gap-y-5 space-y-10">
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <label htmlFor="email-address" className="sr-only">
@@ -70,7 +51,9 @@ export const Registration: React.FC = () => {
               value={data.firstName}
               onChange={(e) => {
                 setData({ ...data, firstName: e.target.value });
+               setValid( {...valid,name:Valid(e)})
               }}
+              id="name"
               name="name"
               type="name"
               autoComplete="name"
@@ -78,7 +61,7 @@ export const Registration: React.FC = () => {
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Imie"
             />
-
+              {!valid.name?"Imie nie może być puste":undefined}
             <label htmlFor="email-address" className="sr-only">
               Nazwisko
             </label>
@@ -86,23 +69,27 @@ export const Registration: React.FC = () => {
               value={data.lastName}
               onChange={(e) => {
                 setData({ ...data, lastName: e.target.value });
+                setValid({...valid,lastname:Valid(e)})
               }}
-              name="name"
-              type="name"
-              autoComplete="name"
+              id="lastname"
+              name="lastname"
+              type="lastname"
+              autoComplete="lastname"
               required
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Imie"
+              placeholder="Nazwisko"
             />
-
+          {!valid.lastname?"Nazwisko nie może być puste":undefined}
             <label htmlFor="email-address" className="sr-only">
               Email
             </label>
             <input
-              value={data.username}
+              value={data.email}
               onChange={(e) => {
-                setData({ ...data, username: e.target.value });
+                setData({ ...data, email: e.target.value });
+                setValid({...valid,email:Valid(e)})
               }}
+              id="email"
               name="email"
               type="email"
               autoComplete="email"
@@ -110,7 +97,7 @@ export const Registration: React.FC = () => {
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Email"
             />
-
+            {!valid.email?"Zły email":undefined}
             <label htmlFor="email-address" className="sr-only">
               Powtórz email
             </label>
@@ -118,20 +105,26 @@ export const Registration: React.FC = () => {
               value={email2}
               onChange={(e) => {
                 setEmail2(e.target.value);
+                Valid(e)
               }}
+              id="email2"
               name="email"
               type="email"
               required
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Powtórz email"
             />
-
+            {!(email2===data.email)?"Emaile nie są takiem same":undefined}
             <label htmlFor="password" className="sr-only">
               Password
             </label>
             <input
               value={data.password}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
+              onChange={(e) => {
+                setData({ ...data, password: e.target.value });
+               setPasswordStrenght(Valid(e));
+              }
+              }
               id="password"
               name="password"
               type={show ? "text" : "password"}
@@ -140,6 +133,8 @@ export const Registration: React.FC = () => {
               className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Hasło"
             />
+            {!valid.password?"Hasło za słabe":undefined}
+            <br/>
             <div className="flex items-center">
               <input
                 onClick={() => setShow(!show)}
