@@ -30,12 +30,13 @@ const Size: React.FC<{
       </select>
 
       <div className="flex gap-4">
-        <button
+        {/* <button
           className="border p-2 bg-blue-50"
           onClick={() => setStep((state) => state - 1)}
+          disabled
         >
           Wróć
-        </button>
+        </button> */}
         <button
           className="border p-2 bg-blue-50"
           onClick={() => setStep((state) => state + 1)}

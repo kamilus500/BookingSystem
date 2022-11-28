@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "../Ui/Button";
 
 import Pricing from "./Pricing";
@@ -17,8 +18,16 @@ const PricingList: React.FC = () => {
         tech={["5x6 M", "30 osób", "Otwierane frontowe ścianki."]}
         text="Dobry mały namiot, na mniejsze imprezy!"
       >
-        <Button />
+        <Link
+          to={{
+            pathname: "/reservation",
+            state: { size: "small" },
+          }}
+        >
+          <Button />
+        </Link>
       </Pricing>
+
       <Pricing
         size="Medium"
         price="589 pln"
@@ -26,8 +35,16 @@ const PricingList: React.FC = () => {
         tech={["5x8 M", "50 osób", "Otwierane wszystkie ścianki."]}
         text="Idealny namiot na średnie imprezy, każdy będzie zadowolony!"
       >
-        <Button accent />
+        <Link
+          to={{
+            pathname: "/reservation",
+            state: { size: "medium" },
+          }}
+        >
+          <Button accent />
+        </Link>
       </Pricing>
+
       <Pricing
         size="Giga"
         price="889 pln"
@@ -39,7 +56,14 @@ const PricingList: React.FC = () => {
         ]}
         text="Nawet największa impreza nie jest nam straszna!"
       >
-        <Button />
+        <Link
+          to={{
+            pathname: "/reservation",
+            state: { size: "giga" },
+          }}
+        >
+          <Button />
+        </Link>
       </Pricing>
     </div>
   );
