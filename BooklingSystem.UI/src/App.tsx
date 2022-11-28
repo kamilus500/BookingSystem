@@ -2,6 +2,8 @@ import React from "react";
 
 import { setupIonicReact } from "@ionic/react";
 
+import "./localization/i18n"
+
 import "./theme/tailwind.css";
 import "./theme/variables.css";
 
