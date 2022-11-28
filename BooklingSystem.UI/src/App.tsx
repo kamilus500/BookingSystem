@@ -9,7 +9,6 @@ import Home from "./pages/Home/Home";
 import Nav from "./components/Nav/Nav";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import LoginForm from "./components/LoginForm/LoginForm";
 import { SignUp } from "./pages/signUp";
 import { Registration } from "./pages/registration";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";

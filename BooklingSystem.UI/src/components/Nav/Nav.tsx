@@ -3,7 +3,7 @@ import Logo from "../Logo/Logo";
 import NavList from "./NavList";
 import NavIcon from "./NavIcon";
 import ListItem from "./ListItem";
-import { HashRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Nav: React.FC = () => {
   const [navOpen, setNavOpen] = useState(false);
