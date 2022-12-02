@@ -7,6 +7,7 @@ import ListItem from "./ListItem";
 import {  Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+
 const Nav: React.FC = () => {
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
@@ -53,7 +54,7 @@ const Nav: React.FC = () => {
             {t("Sign Up")}
             </button>
           </Link>
-          <button onClick={changeLanguage}>{language ? "🇬🇧" : "🇵🇱"}</button>
+          <button id={"languageButton"} onClick={changeLanguage}>{language ? "🇬🇧" : "🇵🇱"}</button>
         </div>
       </div>
     </nav>

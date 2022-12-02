@@ -15,11 +15,14 @@
 
 
 @media (prefers-color-scheme: dark) {
-  input{
+
+  input[id=password],input[id=email],input[id=name],input[id=lastname],input[id=email2]{
     background: #2a2a2a !important;
     border-color: #1a1a1a !important;
     color: #b0afaf !important;
+
   }
+
   .elements{
     color:rgb(99 102 241);
   }
