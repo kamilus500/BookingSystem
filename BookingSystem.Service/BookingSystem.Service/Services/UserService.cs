@@ -64,5 +64,19 @@ namespace BookingSystem.Service.Services
                 throw;
             }
         }
+
+        public async Task<User> GetUser(UserLoginDto userLoginDto)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
