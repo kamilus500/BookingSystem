@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import './Validation.css'
+import {useCookies} from "react-cookie";
 export const SignUp: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
   const[login,setLogin]=useState<boolean>(true)
@@ -8,31 +9,35 @@ export const SignUp: React.FC = () => {
     password: "",
   });
 
+  const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
+
   const handleSubmit = async () => {
-    try{
-    const resp = await fetch(
-      "https://booking-tent-api.azurewebsites.net/api/Auth/login",
-      {
-        body: JSON.stringify(data),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    await console.log(await resp.json());
-    setLogin(resp.status===200)
-    }catch(e)
-    {
-      setLogin(false)
-    }
+    // try{
+    // const resp = await fetch(
+    //   "https://booking-tent-api.azurewebsites.net/api/Auth/login",
+    //   {
+    //     body: JSON.stringify(data),
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // await console.log(await resp.json());
+    // setLogin(resp.status===200)
+    // }catch(e)
+    // {
+    //   setLogin(false)
+    // }
+    setCookie("loginData",{name:'jan',lastname:'chuj'})
+
   };
 
   return (
     <div className="place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="elements mt-14 text-center text-3xl font-bold tracking-tight text-gray-900">
             Zaloguj się
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
@@ -84,7 +89,7 @@ export const SignUp: React.FC = () => {
 
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="my-10 elements font-medium ml-2 block text-sm text-gray-900"
                 >
                   Pokaż hasło
                 </label>

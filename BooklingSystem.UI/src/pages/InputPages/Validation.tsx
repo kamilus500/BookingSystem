@@ -1,9 +1,8 @@
 
 
 export const Valid:(e: React.ChangeEvent<HTMLInputElement>) => boolean =(e: React.ChangeEvent<HTMLInputElement>)=>{
-    console.log(e.target.id)
     let input:any=document.getElementById(`${[e.target.id]}`);
-   console.log(input)
+
     if(e.target.id==="username"||e.target.id==="lastname"||e.target.id==="name"||e.target.id==="lastname") {
         if(e.target.value.length > 0)
         {
