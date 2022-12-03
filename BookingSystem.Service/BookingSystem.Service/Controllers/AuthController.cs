@@ -18,6 +18,7 @@ namespace BookingSystem.Service.Controllers
             _authService = authService;
         }
 
+
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UserLoginDto loginUser)
         {
