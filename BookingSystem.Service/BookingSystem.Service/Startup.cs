@@ -29,11 +29,15 @@ namespace BookingSystem.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                    builder =>
-                                    {
-                                        builder.WithOrigins("https://tentsnation.netlify.app/","http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
-                                    })); ;
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("https://booking-tent-api.azurewebsites.net", "http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             services.Configure<SmtpSettings>(options => Configuration.GetSection("SmtpSettings").Bind(options));
 
