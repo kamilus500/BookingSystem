@@ -60,7 +60,6 @@ namespace BookingSystem.Service.Services
             try
             {
                 var comment = await _dbContext.Comments
-                    .Include(x => x.User)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (comment == null)
@@ -81,7 +80,6 @@ namespace BookingSystem.Service.Services
             try
             {
                 var comments = await _dbContext.Comments
-                    .Include(x => x.User)
                     .ToListAsync();
 
                 if (comments == null)
