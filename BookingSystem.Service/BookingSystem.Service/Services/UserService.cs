@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
+using Isopoh.Cryptography.Argon2;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Services
@@ -23,14 +27,16 @@ namespace BookingSystem.Service.Services
             {
                 var user = _mapper.Map<User>(newUserDto);
 
-                user.Password = BCrypt.Net.BCrypt.HashPassword(newUserDto.Password);
+                var hashedPassword = Argon2.Hash(user.Password);
+
+                user.Password = hashedPassword;
 
                 await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -54,7 +60,7 @@ namespace BookingSystem.Service.Services
             {
                 var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
-                if (!BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
+                if (!Argon2.Verify(user.Password, userLoginDto.Password))
                     return false;
 
                 return true;
