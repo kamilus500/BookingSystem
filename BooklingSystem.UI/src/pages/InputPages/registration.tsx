@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Valid } from "./Validation";
-import './Validation.css'
-import{t,i18n} from "i18next";
-import {useCookies} from "react-cookie";
-import {useTranslation} from "react-i18next";
+import "./Validation.css";
+import { t, i18n } from "i18next";
+import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
+
 export const Registration: React.FC = () => {
   const [email2, setEmail2] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
-  const [valid, setValid] = useState<{name:boolean,lastname:boolean,email:boolean,password:boolean}>({name:true,lastname:true,email:true,password:true});
+  const [valid, setValid] = useState<{
+    name: boolean;
+    lastname: boolean;
+    email: boolean;
+    password: boolean;
+  }>({ name: true, lastname: true, email: true, password: true });
   const { t, i18n } = useTranslation();
   const [data, setData] = useState<{
     firstName: string;
@@ -15,29 +21,29 @@ export const Registration: React.FC = () => {
     email: string;
     password: string;
   }>({ firstName: "", lastName: "", email: "", password: "" });
-  const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
-  
+  const [cookies] = useCookies(["loginData"]);
 
   const handleSubmit = async () => {
-    if(valid.name&&valid.lastname&&valid.email&&valid.password) {
+    if (valid.name && valid.lastname && valid.email && valid.password) {
       const resp: Response = await fetch(
-          "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
-          {
-            body: JSON.stringify(data),
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+        "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
+        {
+          body: JSON.stringify(data),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       console.log(resp.statusText);
     }
-    {console.log(valid.password)}
+    {
+      console.log(valid.password);
+    }
 
-    console.log(cookies)
-    
-}
+    console.log(cookies);
+  };
 
   return (
     <div className=" place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -50,12 +56,36 @@ export const Registration: React.FC = () => {
         </div>
 
         <div className={"errorMessages"}>
-
-          {valid.name?null:<span>{t("ValidName")}<br/></span>}
-          {valid.lastname?null:<span>{t("ValidLastName")}<br/></span>}
-          {valid.email?null:<span>{t("ValidEmail")}<br/></span>}
-          {valid.password?null:<span>{t("ValidPassword")}<br/></span>}
-          {data.email===email2?null:<span>{t("ValidEmails")}<br/></span>}
+          {valid.name ? null : (
+            <span>
+              {t("ValidName")}
+              <br />
+            </span>
+          )}
+          {valid.lastname ? null : (
+            <span>
+              {t("ValidLastName")}
+              <br />
+            </span>
+          )}
+          {valid.email ? null : (
+            <span>
+              {t("ValidEmail")}
+              <br />
+            </span>
+          )}
+          {valid.password ? null : (
+            <span>
+              {t("ValidPassword")}
+              <br />
+            </span>
+          )}
+          {data.email === email2 ? null : (
+            <span>
+              {t("ValidEmails")}
+              <br />
+            </span>
+          )}
         </div>
         <div className="mt-10 space-y-10">
           <input type="hidden" name="remember" value="true" />
@@ -67,7 +97,7 @@ export const Registration: React.FC = () => {
               value={data.firstName}
               onChange={(e) => {
                 setData({ ...data, firstName: e.target.value });
-               setValid( {...valid,name:Valid(e)})
+                setValid({ ...valid, name: Valid(e) });
               }}
               id="name"
               name="name"
@@ -85,7 +115,7 @@ export const Registration: React.FC = () => {
               value={data.lastName}
               onChange={(e) => {
                 setData({ ...data, lastName: e.target.value });
-                setValid({...valid,lastname:Valid(e)})
+                setValid({ ...valid, lastname: Valid(e) });
               }}
               id="lastname"
               name="lastname"
@@ -103,7 +133,7 @@ export const Registration: React.FC = () => {
               value={data.email}
               onChange={(e) => {
                 setData({ ...data, email: e.target.value });
-                setValid({...valid,email:Valid(e)})
+                setValid({ ...valid, email: Valid(e) });
               }}
               id="email"
               name="email"
@@ -121,7 +151,7 @@ export const Registration: React.FC = () => {
               value={email2}
               onChange={(e) => {
                 setEmail2(e.target.value);
-                Valid(e)
+                Valid(e);
               }}
               id="email2"
               name="email"
@@ -138,9 +168,8 @@ export const Registration: React.FC = () => {
               value={data.password}
               onChange={(e) => {
                 setData({ ...data, password: e.target.value });
-               setValid({...valid,password:Valid(e)});
-              }
-              }
+                setValid({ ...valid, password: Valid(e) });
+              }}
               id="password"
               name="password"
               type={show ? "text" : "password"}
@@ -149,7 +178,6 @@ export const Registration: React.FC = () => {
               className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder={`${t("Password")}`}
             />
-
 
             <div className=" flex items-center">
               <input

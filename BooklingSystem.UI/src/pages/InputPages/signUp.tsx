@@ -1,45 +1,44 @@
-import React, {useEffect, useState} from "react";
-import './Validation.css'
-import {useCookies} from "react-cookie";
-import {useTranslation} from "react-i18next";
+import React, { useState } from "react";
+import "./Validation.css";
+import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
+
 export const SignUp: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
-  const [check,setCheck]=useState(false);
-  const[login,setLogin]=useState<boolean>(true)
+  const [login, setLogin] = useState<boolean>(true);
   const [data, setData] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   });
   const { t, i18n } = useTranslation();
-  const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
+  const [cookies, setCookie] = useCookies(["loginData"]);
 
   const handleSubmit = async () => {
-    try{
-    const resp = await fetch(
-      "https://booking-tent-api.azurewebsites.net/api/Auth/login",
-      {
-        body: JSON.stringify(data),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const respData=await resp.json()
-      console.log(respData)
-    setLogin(resp.status===200);
-    await setCookie("loginData",{name:respData.firstName,lastname:respData.lastName,token:respData.token});
-    console.log(cookies)
-
-    }catch(e)
-    {
-      setLogin(false)
+    try {
+      const resp = await fetch(
+        "https://booking-tent-api.azurewebsites.net/api/Auth/login",
+        {
+          body: JSON.stringify(data),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const respData = await resp.json();
+      setLogin(resp.status === 200);
+      setCookie("loginData", {
+        name: respData.firstName,
+        lastname: respData.lastName,
+        token: respData.token,
+      });
+      console.log(cookies);
+    } catch (e) {
+      setLogin(false);
     }
-
   };
 
   return (
-
     <div className="place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
@@ -52,7 +51,7 @@ export const SignUp: React.FC = () => {
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
-              {login?undefined: t("ErrLog")}
+              {login ? undefined : t("ErrLog")}
               <label htmlFor="email-address" className="sr-only">
                 Email
               </label>
