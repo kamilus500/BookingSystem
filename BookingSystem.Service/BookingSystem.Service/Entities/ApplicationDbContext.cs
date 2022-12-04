@@ -9,6 +9,7 @@ namespace BookingSystem.Service.Entities
         public DbSet<Tent> Tents { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Adress> Adresses { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
@@ -21,6 +22,9 @@ namespace BookingSystem.Service.Entities
 
             modelBuilder.Entity<Item>()
                 .HasNoKey();
+
+            modelBuilder.Entity<Adress>()
+                .HasKey(x => x.Id);
         }
     }
 }

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
-
+import React, {useEffect, useState} from "react";
+import './Validation.css'
+import {useCookies} from "react-cookie";
+import {useTranslation} from "react-i18next";
 export const SignUp: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
+  const [check,setCheck]=useState(false);
   const[login,setLogin]=useState<boolean>(true)
   const [data, setData] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   });
+  const { t, i18n } = useTranslation();
+  const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
 
   const handleSubmit = async () => {
     try{
@@ -20,20 +25,26 @@ export const SignUp: React.FC = () => {
         },
       }
     );
-    await console.log(await resp.json());
-    setLogin(resp.status===200)
+    const respData=await resp.json()
+      console.log(respData)
+    setLogin(resp.status===200);
+    await setCookie("loginData",{name:respData.firstName,lastname:respData.lastName,token:respData.token});
+    console.log(cookies)
+
     }catch(e)
     {
       setLogin(false)
     }
+
   };
 
   return (
+
     <div className="place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Zaloguj się
+          <h2 className="elements mt-14 text-center text-3xl font-bold tracking-tight text-gray-900">
+            {t("Sign In")}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
@@ -41,7 +52,7 @@ export const SignUp: React.FC = () => {
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
-              {login?undefined:"Zły mail lub hasło"}
+              {login?undefined: t("ErrLog")}
               <label htmlFor="email-address" className="sr-only">
                 Email
               </label>
@@ -50,6 +61,7 @@ export const SignUp: React.FC = () => {
                 onChange={(e) => {
                   setData({ ...data, email: e.target.value });
                 }}
+                id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -71,22 +83,21 @@ export const SignUp: React.FC = () => {
                 autoComplete="current-password"
                 required
                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Hasło"
+                placeholder={`${t("Password")}`}
               />
+
               <div className="flex items-center">
                 <input
                   onClick={() => setShow(!show)}
-                  id="remember-me"
-                  name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
                 />
 
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="my-10 elements font-medium ml-2 block text-sm text-gray-900"
                 >
-                  Pokaż hasło
+                  {t("ShowPassword")}
                 </label>
               </div>
             </div>
@@ -98,7 +109,7 @@ export const SignUp: React.FC = () => {
                 href="#"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                Zapomniałes hasła?
+                {t("ForgotPassword")}
               </a>
             </div>
           </div>
@@ -123,7 +134,7 @@ export const SignUp: React.FC = () => {
                   />
                 </svg>
               </span>
-              Zaloguj
+              {t("Sign In")}
             </button>
           </div>
         </div>

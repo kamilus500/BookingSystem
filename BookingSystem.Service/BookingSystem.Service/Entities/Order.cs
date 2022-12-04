@@ -18,7 +18,10 @@ namespace BookingSystem.Service.Entities
         public Tent Tent { get; set; }
         public decimal Cost { get; set; }
         public DateTime DateTime { get; set; }
-        public string Address { get; set; }
+
+        [ForeignKey("Adress")]
+        public int AdressId { get; set; }
+        public Adress Adress { get; set; }
         public bool IsEnd { get; set; } = false;
         public bool IsAccepted { get; set; } = false;
     }

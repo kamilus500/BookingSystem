@@ -59,7 +59,8 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Id == id);
+                var comment = await _dbContext.Comments
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (comment == null)
                     throw new ArgumentNullException(nameof(comment));
@@ -78,7 +79,8 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var comments = await _dbContext.Comments.ToListAsync();
+                var comments = await _dbContext.Comments
+                    .ToListAsync();
 
                 if (comments == null)
                     throw new ArgumentNullException(nameof(comments));

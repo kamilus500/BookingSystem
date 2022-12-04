@@ -18,6 +18,7 @@ namespace BookingSystem.Service.Controllers
             _authService = authService;
         }
 
+
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UserLoginDto loginUser)
         {
@@ -33,7 +34,10 @@ namespace BookingSystem.Service.Controllers
             if (isExist)
             {
                 string tokenString = _authService.GenerateToken(loginUser.Email, role);
-                return Ok(new AuthenticatedResponse { Token = tokenString });
+
+                var user = await _userService.GetUser(loginUser);
+
+                return Ok(new AuthenticatedResponse { Token = tokenString, FirstName = user.FirstName, LastName = user.LastName});
             }
             return Unauthorized();
         }

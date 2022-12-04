@@ -15,7 +15,9 @@ namespace BookingSystem.Service
                 .ReverseMap();
 
             CreateMap<Comment, CommentDto>()
-                .ReverseMap();
+                .ForMember(x => x.Name, src => src.MapFrom(y => string.Format("{0} {1}", y.User.FirstName, y.User.LastName)));
+
+            CreateMap<CommentDto, Comment>();
 
             CreateMap<UserRegistrationDto, User>();
 

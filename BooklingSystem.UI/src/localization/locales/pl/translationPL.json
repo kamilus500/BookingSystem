@@ -4,5 +4,18 @@
     "Opinions": "Opinie",
     "Sign In": "Zaloguj",
     "Sign Up": "Zarejestruj",
-    "Home": "Główna"
+    "Home": "Główna",
+    "ErrLog": "Zły mail lub hasło",
+    "Password": "Hasło",
+    "ShowPassword": "Pokaż Hasło",
+    "ForgotPassword":"Zapomniałeś hasła?",
+    "Name": "Imie",
+    "LastName": "Nazwisko",
+    "RepEmail": "Powtórz Email",
+    "ValidName": "Imie musi mieć conajmniej jeden znak",
+    "ValidLastName": "Nazwisko musi mieć conajmniej jeden znak",
+    "ValidEmail": "Proszę podać poprawny email",
+    "ValidPassword": "Hasło musi mieć conajmniej 8 znaków w tym liczby i litery małe i duże",
+    "ValidEmails": "Emaile nie są takie same",
+    "Logout": "Wyloguj się"
 }

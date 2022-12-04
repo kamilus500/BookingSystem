@@ -1,51 +1,67 @@
 import React, { useState } from "react";
 import { Valid } from "./Validation";
 import './Validation.css'
+import{t,i18n} from "i18next";
+import {useCookies} from "react-cookie";
+import {useTranslation} from "react-i18next";
 export const Registration: React.FC = () => {
   const [email2, setEmail2] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
   const [valid, setValid] = useState<{name:boolean,lastname:boolean,email:boolean,password:boolean}>({name:true,lastname:true,email:true,password:true});
-  const [passwordStrenght,setPasswordStrenght]=useState<number|boolean>(1);
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState<{
     firstName: string;
     lastName: string;
     email: string;
     password: string;
   }>({ firstName: "", lastName: "", email: "", password: "" });
-
+  const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
   
 
   const handleSubmit = async () => {
-    
-    const resp: Response = await fetch(
-      "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
-      {
-        body: JSON.stringify(data),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    if(valid.name&&valid.lastname&&valid.email&&valid.password) {
+      const resp: Response = await fetch(
+          "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
+          {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+      );
 
-    console.log(resp.statusText);
+      console.log(resp.statusText);
+    }
+    {console.log(valid.password)}
+
+    console.log(cookies)
     
 }
 
   return (
-    <div className="place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className=" place-items-center content-center flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-14 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Zarejestruj się
+          <h2 className="elements mt-14 text-center text-3xl font-bold tracking-tight text-gray-900">
+            {t("Sign Up")}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600"></p>
         </div>
-        <div className="mt-10 gap-y-5 space-y-10">
+
+        <div className={"errorMessages"}>
+
+          {valid.name?null:<span>{t("ValidName")}<br/></span>}
+          {valid.lastname?null:<span>{t("ValidLastName")}<br/></span>}
+          {valid.email?null:<span>{t("ValidEmail")}<br/></span>}
+          {valid.password?null:<span>{t("ValidPassword")}<br/></span>}
+          {data.email===email2?null:<span>{t("ValidEmails")}<br/></span>}
+        </div>
+        <div className="mt-10 space-y-10">
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <label htmlFor="email-address" className="sr-only">
-              Imie
+              {t("Name")}
             </label>
             <input
               value={data.firstName}
@@ -59,11 +75,11 @@ export const Registration: React.FC = () => {
               autoComplete="name"
               required
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Imie"
+              placeholder={`${t("Name")}`}
             />
-              {!valid.name?"Imie nie może być puste":undefined}
+
             <label htmlFor="email-address" className="sr-only">
-              Nazwisko
+              {t("LastName")}
             </label>
             <input
               value={data.lastName}
@@ -76,10 +92,10 @@ export const Registration: React.FC = () => {
               type="lastname"
               autoComplete="lastname"
               required
-              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Nazwisko"
+              className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder={`${t("LastName")}`}
             />
-          {!valid.lastname?"Nazwisko nie może być puste":undefined}
+
             <label htmlFor="email-address" className="sr-only">
               Email
             </label>
@@ -94,12 +110,12 @@ export const Registration: React.FC = () => {
               type="email"
               autoComplete="email"
               required
-              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Email"
             />
-            {!valid.email?"Zły email":undefined}
+
             <label htmlFor="email-address" className="sr-only">
-              Powtórz email
+              {t("RepEmail")}
             </label>
             <input
               value={email2}
@@ -111,18 +127,18 @@ export const Registration: React.FC = () => {
               name="email"
               type="email"
               required
-              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Powtórz email"
+              className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder={`${t("RepEmail")}`}
             />
-            {!(email2===data.email)?"Emaile nie są takiem same":undefined}
+
             <label htmlFor="password" className="sr-only">
-              Password
+              {t("Password")}
             </label>
             <input
               value={data.password}
               onChange={(e) => {
                 setData({ ...data, password: e.target.value });
-               setPasswordStrenght(Valid(e));
+               setValid({...valid,password:Valid(e)});
               }
               }
               id="password"
@@ -131,39 +147,27 @@ export const Registration: React.FC = () => {
               autoComplete="current-password"
               required
               className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Hasło"
+              placeholder={`${t("Password")}`}
             />
-            {!valid.password?"Hasło za słabe":undefined}
-            <br/>
-            <div className="flex items-center">
+
+
+            <div className=" flex items-center">
               <input
                 onClick={() => setShow(!show)}
                 id="show-password"
                 name="show-password"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
                 htmlFor="show-password"
-                className="ml-2 block text-sm text-gray-900"
+                className="my-10 elements ml-2 block text-sm text-gray-900"
               >
-                Pokaż hasło
+                {t("ShowPassword")}
               </label>
             </div>
           </div>
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Zapomniałes hasła?
-            </a>
-          </div>
-        </div>
-
         <div>
           <button
             onClick={handleSubmit}
@@ -184,7 +188,7 @@ export const Registration: React.FC = () => {
                 />
               </svg>
             </span>
-            Zarejestruj
+            {t("Sign Up")}
           </button>
         </div>
       </div>
