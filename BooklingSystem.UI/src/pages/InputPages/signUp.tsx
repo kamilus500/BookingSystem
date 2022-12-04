@@ -14,24 +14,28 @@ export const SignUp: React.FC = () => {
   const [cookies,setCookie,removeCookie]=useCookies(['loginData'])
 
   const handleSubmit = async () => {
-    // try{
-    // const resp = await fetch(
-    //   "https://booking-tent-api.azurewebsites.net/api/Auth/login",
-    //   {
-    //     body: JSON.stringify(data),
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // await console.log(await resp.json());
-    // setLogin(resp.status===200)
-    // }catch(e)
-    // {
-    //   setLogin(false)
-    // }
-    setCookie("loginData",{name:'jan',lastname:'chuj'})
+    try{
+    const resp = await fetch(
+      "https://booking-tent-api.azurewebsites.net/api/Auth/login",
+      {
+        body: JSON.stringify(data),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const respData=await resp.json()
+      console.log(respData)
+    setLogin(resp.status===200);
+    await setCookie("loginData",{name:respData.firstName,lastname:respData.lastName,token:respData.token});
+    console.log(cookies)
+
+    }catch(e)
+    {
+      setLogin(false)
+    }
+
   };
 
   return (
@@ -48,7 +52,7 @@ export const SignUp: React.FC = () => {
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
-              {false?undefined: t("ErrLog")}
+              {login?undefined: t("ErrLog")}
               <label htmlFor="email-address" className="sr-only">
                 Email
               </label>

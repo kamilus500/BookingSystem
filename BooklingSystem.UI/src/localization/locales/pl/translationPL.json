@@ -16,5 +16,6 @@
     "ValidLastName": "Nazwisko musi mieć conajmniej jeden znak",
     "ValidEmail": "Proszę podać poprawny email",
     "ValidPassword": "Hasło musi mieć conajmniej 8 znaków w tym liczby i litery małe i duże",
-    "ValidEmails": "Emaile nie są takie same"
+    "ValidEmails": "Emaile nie są takie same",
+    "Logout": "Wyloguj się"
 }

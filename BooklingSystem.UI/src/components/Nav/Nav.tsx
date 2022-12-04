@@ -19,8 +19,7 @@ const Nav: React.FC = () => {
     setLanguage(!language);
     i18n.changeLanguage(language ? "en" : "pl");
   };
-  const [cookies] = useCookies(["loginData"]);
-
+  const [cookies, setCookie, removeCookie] = useCookies(["loginData"]);
   return (
     <nav className="sticky top-0 z-50 bg-black">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -43,31 +42,48 @@ const Nav: React.FC = () => {
             {/*<ListItem hidden>🇵🇱</ListItem>*/}
           </NavList>
         </div>
-        <div className="hidden md:block">
-          {cookies.loginData ? (
-            <Link to="/userpanel">
-              <button className="mx-2 py-2 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparenttext-gray-700">
-                {cookies.loginData.name + " " + cookies.loginData.lastname}
-              </button>
-            </Link>
-          ) : (
-            <>
-              <Link to="/login">
-                <button className="py-2 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparenttext-gray-700">
-                  {t("Sign In")}
+        {cookies.loginData ? (
+          <div>
+            {cookies.loginData.name}
+            <button
+              className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white"
+              onClick={() => {
+                removeCookie("loginData");
+              }}
+            >
+              {t("Logout")}
+            </button>
+            <button id={"languageButton"} onClick={changeLanguage}>
+              {language ? "🇬🇧" : "🇵🇱"}
+            </button>
+          </div>
+        ) : (
+          <div className="hidden md:block">
+            {cookies.loginData ? (
+              <Link to="/userpanel">
+                <button className="mx-2 py-2 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparenttext-gray-700">
+                  {cookies.loginData.name + " " + cookies.loginData.lastname}
                 </button>
               </Link>
-              <Link to="/register">
-                <button className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white">
-                  {t("Sign Up")}
-                </button>
-              </Link>
-            </>
-          )}
-          <button id={"languageButton"} onClick={changeLanguage}>
-            {language ? "🇬🇧" : "🇵🇱"}
-          </button>
-        </div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="py-2 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparenttext-gray-700">
+                    {t("Sign In")}
+                  </button>
+                </Link>
+                <Link to="/register">
+                  <button className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white">
+                    {t("Sign Up")}
+                  </button>
+                </Link>
+              </>
+            )}
+            <button id={"languageButton"} onClick={changeLanguage}>
+              {language ? "🇬🇧" : "🇵🇱"}
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
