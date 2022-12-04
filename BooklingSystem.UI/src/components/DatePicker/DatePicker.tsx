@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 
 import "react-calendar/dist/Calendar.css";
+import {
+  OrderAction,
+  OrderActions,
+  OrderState,
+} from "../../pages/ReservationPage/ReservationPage";
+import Wrapper from "../Ui/Wrapper";
+import Button from "../Ui/Button";
 
 const Calendarr: React.FC<{
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-  date: Date;
-}> = ({ setDate, setStep, date }) => {
+  orderState: OrderState;
+  setOrderStateReducer: React.Dispatch<OrderAction>;
+}> = ({ orderState, setOrderStateReducer }) => {
   const allMonthValues = [
     "January",
     "February",
@@ -23,7 +29,9 @@ const Calendarr: React.FC<{
     "December",
   ];
 
-  const [selectedDate, setSelectedDate] = useState<Date>(date);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    orderState.date
+  );
 
   const [calendarText, setCalendarText] = useState(`Data nie jest wybrana!`);
 
@@ -46,11 +54,14 @@ const Calendarr: React.FC<{
   };
 
   useEffect(() => {
-    setDate(selectedDate);
-  }, [selectedDate, setDate]);
+    setOrderStateReducer({
+      type: OrderActions.SET_DATE,
+      payload: selectedDate,
+    });
+  }, [selectedDate, setOrderStateReducer]);
 
   return (
-    <div>
+    <Wrapper>
       <h2 className="calander-details">
         {selectedDate ? selectedDate.toLocaleDateString() : calendarText}
       </h2>
@@ -62,21 +73,25 @@ const Calendarr: React.FC<{
       />
 
       <div className="flex gap-4">
-        <button
-          className="border p-2 bg-blue-50"
-          onClick={() => setStep((state) => state - 1)}
+        <Button
+          disabled={!orderState.size}
+          clickHandler={() =>
+            setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
+          }
         >
           Wróć
-        </button>
-        <button
-          className="border p-2 bg-blue-50"
-          onClick={() => setStep((state) => state + 1)}
-          disabled={selectedDate ? false : true}
+        </Button>
+        <Button
+          disabled={!selectedDate}
+          clickHandler={() =>
+            setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
+          }
+          accent
         >
           Dalej
-        </button>
+        </Button>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
