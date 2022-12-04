@@ -1,50 +1,57 @@
 import React, { useRef } from "react";
+import {
+  OrderAction,
+  OrderActions,
+  OrderState,
+} from "../../pages/ReservationPage/ReservationPage";
+import Wrapper from "../Ui/Wrapper";
+import Button from "../Ui/Button";
 
 const Addons: React.FC<{
-  bbq: boolean;
-  setBbq: React.Dispatch<React.SetStateAction<boolean>>;
-  speaker: boolean;
-  setSpeaker: React.Dispatch<React.SetStateAction<boolean>>;
-  chairs: number;
-  setChairs: React.Dispatch<React.SetStateAction<number>>;
-  tables: number;
-  setTables: React.Dispatch<React.SetStateAction<number>>;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}> = ({
-  bbq,
-  speaker,
-  chairs,
-  tables,
-  setBbq,
-  setChairs,
-  setTables,
-  setSpeaker,
-  setStep,
-}) => {
+  orderState: OrderState;
+  setOrderStateReducer: React.Dispatch<OrderAction>;
+}> = ({ orderState, setOrderStateReducer }) => {
   const chairsRef = useRef<HTMLInputElement>(null);
   const tablesRef = useRef<HTMLInputElement>(null);
 
   const chairHandler = () => {
     if (chairsRef.current) {
-      setChairs(chairsRef.current.valueAsNumber);
+      setOrderStateReducer({
+        type: OrderActions.SET_CHAIRS,
+        payload: chairsRef.current.valueAsNumber,
+      });
     }
   };
-
   const tableHandler = () => {
     if (tablesRef.current) {
-      setTables(tablesRef.current.valueAsNumber);
+      setOrderStateReducer({
+        type: OrderActions.SET_TABLES,
+        payload: tablesRef.current.valueAsNumber,
+      });
     }
+  };
+  const bbqHandler = () => {
+    setOrderStateReducer({
+      type: OrderActions.SET_BBQ,
+      payload: !orderState.bbq,
+    });
+  };
+  const speakerHandler = () => {
+    setOrderStateReducer({
+      type: OrderActions.SET_SPEAKER,
+      payload: !orderState.speaker,
+    });
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <Wrapper>
       <label>
         Dodatkowy grill
         <input
           type="checkbox"
           name="bbq"
-          onInput={() => setBbq((state) => !state)}
-          defaultChecked={bbq}
+          onChange={bbqHandler}
+          defaultChecked={orderState.bbq}
         />
       </label>
 
@@ -53,8 +60,8 @@ const Addons: React.FC<{
         <input
           type="checkbox"
           name="speaker"
-          onInput={() => setSpeaker((state) => !state)}
-          defaultChecked={speaker}
+          onChange={speakerHandler}
+          defaultChecked={orderState.speaker}
         />
       </label>
 
@@ -64,9 +71,9 @@ const Addons: React.FC<{
           type="number"
           placeholder="Podaj liczbę..."
           min={0}
-          onInput={chairHandler}
+          onChange={chairHandler}
           ref={chairsRef}
-          value={isNaN(chairs) ? 0 : chairs}
+          value={orderState.chairs}
         />
       </label>
 
@@ -76,27 +83,32 @@ const Addons: React.FC<{
           type="number"
           placeholder="Podaj liczbę..."
           min={0}
-          onInput={tableHandler}
+          onChange={tableHandler}
           ref={tablesRef}
-          value={isNaN(tables) ? 0 : tables}
+          value={orderState.tables}
         />
       </label>
 
       <div className="flex gap-4">
-        <button
-          className="border p-2 bg-blue-50"
-          onClick={() => setStep((state) => state - 1)}
+        <Button
+          disabled={!orderState.size}
+          clickHandler={() =>
+            setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
+          }
         >
           Wróć
-        </button>
-        <button
-          className="border p-2 bg-blue-50"
-          onClick={() => setStep((state) => state + 1)}
+        </Button>
+        <Button
+          disabled={!orderState.size}
+          clickHandler={() =>
+            setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
+          }
+          accent
         >
           Dalej
-        </button>
+        </Button>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
