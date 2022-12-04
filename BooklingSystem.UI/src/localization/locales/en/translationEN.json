@@ -16,5 +16,6 @@
     "ValidLastName": "Last name must have at least one character",
     "ValidEmail": "Please enter a valid email",
     "ValidPassword": "Password must be at least 8 characters long, including numbers and uppercase and lowercase letters",
-    "ValidEmails": "Emails are not the same"
+    "ValidEmails": "Emails are not the same",
+    "Logout": "Logout"
 }
