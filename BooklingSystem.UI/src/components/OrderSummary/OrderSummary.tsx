@@ -58,18 +58,19 @@ const OrderSummary: React.FC<{
           </p>
         </div>
       </div>
-
-      <Button
-        disabled={!orderState.size}
-        clickHandler={() =>
-          setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
-        }
-      >
-        Wróć
-      </Button>
-      <Button disabled={!orderState.size} clickHandler={orderHandler}>
-        Wróć
-      </Button>
+      <div className="w-1/4 flex gap-4">
+        <Button
+          disabled={!orderState.size}
+          clickHandler={() =>
+            setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
+          }
+        >
+          Wróć
+        </Button>
+        <Button disabled={!orderState.size} clickHandler={orderHandler} accent>
+          Zamów
+        </Button>
+      </div>
     </Wrapper>
   );
 };
