@@ -28,7 +28,7 @@ const OpinionList = () => {
         {opinions.map((opinion, index) => (
           <Opinion key={index} opinion={opinion} />
         ))}
-        {cookies.loginData && <AddOpinion />}
+        {cookies.loginData && <AddOpinion setOpinions={setOpinions} />}
       </div>
     </div>
   );

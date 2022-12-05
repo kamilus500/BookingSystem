@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Validation.css";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
-
+import { useHistory } from "react-router-dom";
 export const SignUp: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(true);
@@ -10,15 +10,18 @@ export const SignUp: React.FC = () => {
     email: "",
     password: "",
   });
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [cookies, setCookie] = useCookies(["loginData"]);
-
+  const history = useHistory();
   const handleSubmit = async () => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
     try {
       const resp = await fetch(
         "https://booking-tent-api.azurewebsites.net/api/Auth/login",
         {
           body: JSON.stringify(data),
+          signal: signal,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,10 +35,13 @@ export const SignUp: React.FC = () => {
         lastname: respData.lastName,
         token: respData.token,
       });
-      console.log(cookies);
+      history.push("/");
     } catch (e) {
       setLogin(false);
     }
+    return () => {
+      abortController.abort();
+    };
   };
 
   return (

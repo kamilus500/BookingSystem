@@ -6,6 +6,7 @@ import { useLocation } from "react-router";
 import AddressInput from "../../components/AddressInput/AddressInput";
 import UserInput from "../../components/UserInput/UserInput";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
+import { useCookies } from "react-cookie";
 
 type LocationState = {
   size: string;
@@ -102,7 +103,7 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
 
 const ReservationPage: React.FC = () => {
   const { state } = useLocation<LocationState>();
-
+  const [cookies] = useCookies(["loginData"]);
   const initialOrderState: OrderState = {
     step: 0,
     size: state.size,
@@ -118,8 +119,8 @@ const ReservationPage: React.FC = () => {
       city: "",
     },
     user: {
-      firstName: "",
-      lastName: "",
+      firstName: cookies.loginData.name ?? "",
+      lastName: cookies.loginData.lastname ?? "",
       userId: undefined,
     },
   };

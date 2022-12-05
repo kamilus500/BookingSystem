@@ -17,5 +17,7 @@
     "ValidEmail": "Please enter a valid email",
     "ValidPassword": "Password must be at least 8 characters long, including numbers and uppercase and lowercase letters",
     "ValidEmails": "Emails are not the same",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Add new opinion": "Add new opinion",
+    "Your comment": "Your comment"
 }

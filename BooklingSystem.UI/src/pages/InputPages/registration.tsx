@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Valid } from "./Validation";
 import "./Validation.css";
-import { t, i18n } from "i18next";
-import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
 export const Registration: React.FC = () => {
   const [email2, setEmail2] = useState<string>("");
@@ -14,35 +13,44 @@ export const Registration: React.FC = () => {
     email: boolean;
     password: boolean;
   }>({ name: true, lastname: true, email: true, password: true });
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const history = useHistory();
+
   const [data, setData] = useState<{
     firstName: string;
     lastName: string;
     email: string;
     password: string;
   }>({ firstName: "", lastName: "", email: "", password: "" });
-  const [cookies] = useCookies(["loginData"]);
 
   const handleSubmit = async () => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
     if (valid.name && valid.lastname && valid.email && valid.password) {
-      const resp: Response = await fetch(
-        "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
-        {
-          body: JSON.stringify(data),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log(resp.statusText);
+      try {
+        const resp: Response = await fetch(
+          "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
+          {
+            body: JSON.stringify(data),
+            signal: signal,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        history.push("/login");
+        console.log(resp.statusText);
+      } catch (e) {
+        console.error(e);
+      }
     }
     {
       console.log(valid.password);
     }
-
-    console.log(cookies);
+    return () => {
+      abortController.abort();
+    };
   };
 
   return (

@@ -14,7 +14,7 @@ const Nav: React.FC = () => {
   const openNavHeader = () => {
     setNavOpen(!navOpen);
   };
-  const [language, setLanguage] = useState(false);
+  const [language, setLanguage] = useState(true);
   const changeLanguage = () => {
     setLanguage(!language);
     i18n.changeLanguage(language ? "en" : "pl");

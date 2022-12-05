@@ -1,8 +1,20 @@
 import { Avatar } from "flowbite-react/lib/esm/components/Avatar";
 import React from "react";
+import { useCookies } from "react-cookie";
 import Comment from "../../models/Comment";
 
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
+  const [cookies] = useCookies(["loginData"]);
+
+  function deleteClick(id: number) {
+    fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.loginData.token,
+      },
+    }).then((res) => console.log(res));
+  }
   return (
     <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4">
       <header className="flex gap-2 items-center">
@@ -21,6 +33,12 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
           </span>
         );
       })}
+      <button
+        onClick={() => deleteClick(6)}
+        className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
+      >
+        Delete
+      </button>
     </div>
   );
 };

@@ -17,5 +17,7 @@
     "ValidEmail": "Proszę podać poprawny email",
     "ValidPassword": "Hasło musi mieć conajmniej 8 znaków w tym liczby i litery małe i duże",
     "ValidEmails": "Emaile nie są takie same",
-    "Logout": "Wyloguj się"
+    "Logout": "Wyloguj się",
+    "Add new opinion": "Dodaj nową opinię",
+    "Your comment": "Twój komentarz"
 }
