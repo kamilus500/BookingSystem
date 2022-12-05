@@ -3,6 +3,7 @@ import Opinion from "./Opinion";
 import Comment from "../../models/Comment";
 import { useCookies } from "react-cookie";
 import AddOpinion from "./AddOpinion";
+import OpinionLoader from "../OpinionLoader/OpinionLoader";
 
 const OpinionList = () => {
   const [opinions, setOpinions] = useState<Comment[]>([]);
@@ -25,6 +26,13 @@ const OpinionList = () => {
     <div id="about" className="container my-12 mx-auto px-4">
       <h2 className="my-12 text-4xl">Comments From People</h2>
       <div className="container flex flex-wrap gap-4 lg:gap-16">
+        {opinions.length === 0 && (
+          <>
+            <OpinionLoader />
+            <OpinionLoader />
+            <OpinionLoader />
+          </>
+        )}
         {opinions.map((opinion, index) => (
           <Opinion key={index} opinion={opinion} />
         ))}
