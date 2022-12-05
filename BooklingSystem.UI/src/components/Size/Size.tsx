@@ -31,6 +31,7 @@ const Size: React.FC<{
         onChange={selectHandler}
         ref={selectRef}
         defaultValue={orderState.size}
+        className="dark:text-black"
       >
         <option value="">--Wybierz rozmiar--</option>
         <option value="small">Mały</option>

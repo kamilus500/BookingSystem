@@ -66,6 +66,7 @@ const Calendarr: React.FC<{
         {selectedDate ? selectedDate.toLocaleDateString() : calendarText}
       </h2>
       <Calendar
+        className="dark:text-black"
         onClickMonth={handleMonthChange}
         onClickYear={handleYearChange}
         onChange={handleDateChange}

@@ -46,6 +46,7 @@ const UserInput: React.FC<{
       <label>
         Imię: <br />
         <input
+          className="dark:text-black"
           type="text"
           required
           ref={firstNameRef}
@@ -57,6 +58,7 @@ const UserInput: React.FC<{
       <label>
         Nazwisko: <br />
         <input
+          className="dark:text-black"
           type="text"
           required
           ref={lastNameRef}

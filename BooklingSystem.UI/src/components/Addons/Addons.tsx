@@ -48,6 +48,7 @@ const Addons: React.FC<{
       <label>
         Dodatkowy grill
         <input
+          className="dark:text-black"
           type="checkbox"
           name="bbq"
           onChange={bbqHandler}
@@ -58,6 +59,7 @@ const Addons: React.FC<{
       <label>
         Zestaw muzyczny - głośniki oraz mikrofon
         <input
+          className="dark:text-black"
           type="checkbox"
           name="speaker"
           onChange={speakerHandler}
@@ -68,6 +70,7 @@ const Addons: React.FC<{
       <label>
         Liczba krzeseł:
         <input
+          className="dark:text-black"
           type="number"
           placeholder="Podaj liczbę..."
           min={0}
@@ -80,6 +83,7 @@ const Addons: React.FC<{
       <label>
         Liczba stołów:
         <input
+          className="dark:text-black"
           type="number"
           placeholder="Podaj liczbę..."
           min={0}

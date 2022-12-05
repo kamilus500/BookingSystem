@@ -74,6 +74,7 @@ const AddressInput: React.FC<{
         <label>
           Ulica: <br />
           <input
+            className="dark:text-black"
             type="text"
             required
             ref={streetRef}
@@ -87,6 +88,7 @@ const AddressInput: React.FC<{
         <label>
           Numer mieszkania/domu: <br />
           <input
+            className="dark:text-black"
             type="text"
             required
             ref={buildingNumberRef}
@@ -100,6 +102,7 @@ const AddressInput: React.FC<{
         <label>
           Miejscowość: <br />
           <input
+            className="dark:text-black"
             type="text"
             required
             ref={cityRef}
@@ -113,6 +116,7 @@ const AddressInput: React.FC<{
         <label>
           Kod pocztowy: <br />
           <input
+            className="dark:text-black"
             type="text"
             required
             ref={zipCodeRef}
