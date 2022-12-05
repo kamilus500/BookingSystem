@@ -1,11 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import Button from "../Ui/Button";
 import {useTranslation} from "react-i18next";
 import Pricing from "./Pricing";
+import useCookies from "react-cookie/cjs/useCookies";
+
 
 const PricingList: React.FC = () => {
     const { t, i18n } = useTranslation();
+
+    const [cookies]=useCookies(['loginData'])
+    console.log(cookies.loginData)
+
+    useEffect(()=>{
+        console.log("zmiena")
+    },[cookies.loginData])
   return (
     //bg-hero bg-origin-border
     <div
@@ -19,15 +28,16 @@ const PricingList: React.FC = () => {
         tech={["5x6 M", `30 ${t("People")}`, t("SmallTech"),]}
         text={t("SmallText")}
       >
-        <Link
+          {cookies.loginData?<Link
           to={{
             pathname: "/reservation",
             state: { size: "small" },
           }}
         >
           <Button>Reserve</Button>
-        </Link>
+        </Link>:<Button>Reserve</Button>}
       </Pricing>
+        <button onClick={()=>{console.log(cookies.loginData)}}>kurwaaaaaaaa</button>
       <Pricing
         size={t("Medium")}
         price="589 pln"
@@ -35,14 +45,14 @@ const PricingList: React.FC = () => {
         tech={["5x8 M", `50 ${t("People")}`, t("MediumTech"),]}
         text={t("MediumText")}
       >
-        <Link
-          to={{
-            pathname: "/reservation",
-            state: { size: "medium" },
-          }}
-        >
-          <Button accent>Reserve</Button>
-        </Link>
+          {cookies.loginData?<Link
+              to={{
+                  pathname: "/reservation",
+                  state: { size: "medium" },
+              }}
+          >
+              <Button>Reserve</Button>
+          </Link>:<Button>Reserve</Button>}
       </Pricing>
 
       <Pricing
@@ -56,14 +66,14 @@ const PricingList: React.FC = () => {
         ]}
         text={t("GigaText")}
       >
-        <Link
-          to={{
-            pathname: "/reservation",
-            state: { size: "giga" },
-          }}
-        >
-          <Button>Reserve</Button>
-        </Link>
+          {cookies.loginData?<Link
+              to={{
+                  pathname: "/reservation",
+                  state: { size: "giga" },
+              }}
+          >
+              <Button>Reserve</Button>
+          </Link>:<Button>Reserve</Button>}
       </Pricing>
     </div>
   );

@@ -53,6 +53,7 @@ const Nav: React.FC = () => {
               className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white"
               onClick={() => {
                 removeCookie("loginData");
+                document.location.reload()
               }}
             >
               {t("Logout")}

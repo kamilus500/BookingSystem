@@ -6,14 +6,14 @@ import {
 } from "../../pages/ReservationPage/ReservationPage";
 import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
-
+import {useTranslation} from "react-i18next";
 const OrderSummary: React.FC<{
   orderState: OrderState;
   setOrderStateReducer: React.Dispatch<OrderAction>;
 }> = ({ orderState, setOrderStateReducer }) => {
   const { speaker, chairs, tables, user, address, date, bbq, size } =
     orderState;
-
+const {t}=useTranslation();
   const orderHandler = () => {
     alert("Twoje zamówienie zostało złożone");
   };
@@ -22,11 +22,11 @@ const OrderSummary: React.FC<{
     <Wrapper>
       <div>
         <div>
-          <p>Rozmiar namiotu: {size}</p>
+          <p>{t("TentSize")}: {size}</p>
         </div>
 
         <div>
-          <p>Głośnik: {speaker ? "✔︎" : "✕"}</p>
+          <p>{t("LoudSpeaker")}: {speaker ? "✔︎" : "✕"}</p>
         </div>
 
         <div>
@@ -34,26 +34,26 @@ const OrderSummary: React.FC<{
         </div>
 
         <div>
-          <p>Ilość krzeseł: {chairs}</p>
+          <p>{t("NumberOfChairs")}: {chairs}</p>
         </div>
 
         <div>
-          <p>Ilość stołów: {tables}</p>
+          <p>{t("NumberOfTables")}: {tables}</p>
         </div>
 
         <div>
-          <p>Data rezerwacji: {date?.toLocaleDateString()}</p>
+          <p>{t("ReservationDate")}: {date?.toLocaleDateString()}</p>
         </div>
 
         <div>
           <p>
-            Dane zamawiającego: {user.firstName} {user.lastName}
+            {t("CustomerData")}: {user.firstName} {user.lastName}
           </p>
         </div>
 
         <div>
           <p>
-            Adres zamawiającego: {address.street} {address.buildingNumber}{" "}
+            {t("CustomerAddress")}: {address.street} {address.buildingNumber}{" "}
             {address.city} {address.zipCode}
           </p>
         </div>
@@ -65,10 +65,10 @@ const OrderSummary: React.FC<{
             setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
           }
         >
-          Wróć
+          {t("Back")}
         </Button>
         <Button disabled={!orderState.size} clickHandler={orderHandler} accent>
-          Zamów
+          {t("Order")}
         </Button>
       </div>
     </Wrapper>

@@ -41,5 +41,13 @@
     "People": "People",
     "Comments From People": "Comments From People",
     "About Us": "About Us",
-    "Submit": "Submit"
+    "Submit": "Submit",
+    "TentSize": "Tent size",
+    "Loudspeaker": "Loudspeaker",
+    "NumberOfChairs": "Number of chairs",
+    "NumberOfTables": "Number of tables",
+    "ReservationDate": "Reservation date",
+    "CustomerData": "Customer data",
+    "CustomerAddress": "Customer address",
+    "Order": "order"
 }

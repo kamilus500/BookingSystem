@@ -30,7 +30,7 @@ export const SignUp: React.FC = () => {
       );
       const respData = await resp.json();
       const date=new Date();
-      date.setSeconds(date.getSeconds()+20)
+      date.setMinutes(date.getMinutes()+5)
       setLogin(resp.status === 200);
       if(login) {
         setCookie("loginData", {

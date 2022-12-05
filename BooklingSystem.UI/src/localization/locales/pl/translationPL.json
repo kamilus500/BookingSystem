@@ -41,5 +41,13 @@
     "People": "Osób",
     "Comments From People": "Komentarze użytkowników",
     "About Us": "O nas",
-    "Submit": "Wyślij"
+    "Submit": "Wyślij",
+    "TentSize": "Rozmiar namiotu:",
+    "Loudspeaker": "Głośnik",
+    "NumberOfChairs": "Liczba krzeseł",
+    "NumberOfTables": "Liczba stołów",
+    "ReservationDate": "Data rezerwacji",
+    "CustomerData": "Dane zamawiającego",
+    "CustomerAddress": "Adres zamawiającego",
+    "Order": "Zamów"
 }
