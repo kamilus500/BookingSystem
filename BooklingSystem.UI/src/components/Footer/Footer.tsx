@@ -10,17 +10,20 @@ import {
   logoTwitter,
   logoLinkedin,
 } from "ionicons/icons";
+import {useTranslation} from "react-i18next";
+import Pricing from "../Pricing/Pricing";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="px-4 py-2.5 mx-auto container">
       <div className="flex justify-between items-center">
         <Logo />
         <NavList>
-          <ListItem aHref="#">Home</ListItem>
-          <ListItem aHref="#features">Features</ListItem>
-          <ListItem aHref="#pricing">Pricing</ListItem>
-          <ListItem aHref="#about">About Us</ListItem>
+          <ListItem aHref="#">{t("Home")}</ListItem>
+          <ListItem aHref="#features">{t("Tents")}</ListItem>
+          <ListItem aHref="#pricing">{t("Pricing")}</ListItem>
+          <ListItem aHref="#about">{t("About Us")}</ListItem>
         </NavList>
         <div className="space-x-4">
           <a href="https://facebook.com" target="_blank" rel="noreferrer">

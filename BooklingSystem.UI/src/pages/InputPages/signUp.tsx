@@ -11,7 +11,7 @@ export const SignUp: React.FC = () => {
     password: "",
   });
   const { t } = useTranslation();
-  const [cookies, setCookie] = useCookies(["loginData"]);
+  const [cookies, setCookie,removeCookie] = useCookies(["loginData"]);
   const history = useHistory();
   const handleSubmit = async () => {
     const abortController = new AbortController();
@@ -29,12 +29,16 @@ export const SignUp: React.FC = () => {
         }
       );
       const respData = await resp.json();
+      const date=new Date();
+      date.setSeconds(date.getSeconds()+20)
       setLogin(resp.status === 200);
-      setCookie("loginData", {
-        name: respData.firstName,
-        lastname: respData.lastName,
-        token: respData.token,
-      });
+      if(login) {
+        setCookie("loginData", {
+          name: respData.firstName,
+          lastname: respData.lastName,
+          token: respData.token,
+        }, {expires: date});
+      }
       history.push("/");
     } catch (e) {
       setLogin(false);

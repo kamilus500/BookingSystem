@@ -9,6 +9,7 @@ import OpinionList from "../../components/Opinions/OpinionList";
 import Footer from "../../components/Footer/Footer";
 
 const Home: React.FC = () => {
+
   return (
     <>
       <Hero />

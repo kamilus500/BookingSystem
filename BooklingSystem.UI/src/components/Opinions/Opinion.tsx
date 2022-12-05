@@ -2,11 +2,12 @@ import { Avatar } from "flowbite-react/lib/esm/components/Avatar";
 import React from "react";
 import { useCookies } from "react-cookie";
 import Comment from "../../models/Comment";
-
+import {useTranslation} from "react-i18next";
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
-
+    const { t, i18n } = useTranslation();
   function deleteClick(id: number) {
+
     fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
       method: "POST",
       headers: {
@@ -37,7 +38,7 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
         onClick={() => deleteClick(6)}
         className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
       >
-        Delete
+          {t("Delete")}
       </button>
     </div>
   );

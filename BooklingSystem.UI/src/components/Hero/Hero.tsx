@@ -1,7 +1,8 @@
 import React from "react";
 import HeroImg from "./HeroImg";
-
+import {useTranslation} from "react-i18next";
 const Hero: React.FC = () => {
+  const { t, i18n } = useTranslation();
   return (
     <section>
       <div>
@@ -10,10 +11,10 @@ const Hero: React.FC = () => {
             Tentsnation
           </h1>
           <h1 className="font-bold text-2xl md:text-5xl py-6 w-9/12 md:w-6/12 md:pt-26 mx-auto">
-            Wiemy co to dobra impreza pod gołym niebem!
+            {t("PageText1")}
           </h1>
           <p className="md:pt-6">
-            Zapraszamy do składania zamówień z naszej nieopłacalnej oferty!
+            {t("PageText2")}
           </p>
         </header>
       </div>

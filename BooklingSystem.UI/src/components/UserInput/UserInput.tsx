@@ -6,14 +6,16 @@ import {
 } from "../../pages/ReservationPage/ReservationPage";
 import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
+import {useTranslation} from "react-i18next";
 
 const UserInput: React.FC<{
+
   orderState: OrderState;
   setOrderStateReducer: React.Dispatch<OrderAction>;
 }> = ({ orderState, setOrderStateReducer }) => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-
+  const { t, i18n } = useTranslation();
   const firstNameHandler = () => {
     if (firstNameRef.current) {
       setOrderStateReducer({
@@ -44,7 +46,7 @@ const UserInput: React.FC<{
   return (
     <Wrapper>
       <label>
-        Imię: <br />
+        {t("Name")}: <br />
         <input
           className="dark:text-black"
           type="text"
@@ -56,7 +58,7 @@ const UserInput: React.FC<{
       </label>
       <br />
       <label>
-        Nazwisko: <br />
+        {t("LastName")}: <br />
         <input
           className="dark:text-black"
           type="text"
@@ -74,7 +76,7 @@ const UserInput: React.FC<{
             setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
           }
         >
-          Wróć
+          {t("Back")}
         </Button>
         <Button
           clickHandler={() =>
@@ -83,7 +85,7 @@ const UserInput: React.FC<{
           accent
           disabled={userInputValid}
         >
-          Dalej
+          {t("Next")}
         </Button>
       </div>
     </Wrapper>

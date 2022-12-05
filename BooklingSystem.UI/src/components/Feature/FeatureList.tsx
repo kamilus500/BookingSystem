@@ -2,8 +2,10 @@ import squareIcon from "../../images/Icons/Square.svg";
 import starIcon from "../../images/Icons/Star.svg";
 import square2Icon from "../../images/Icons/Square2.svg";
 import Feature from "./Feature";
+import {useTranslation} from "react-i18next";
 
-const FeatureList = () => {
+const FeatureList = (): JSX.Element => {
+  const { t, i18n } = useTranslation();
   return (
     //bg-features bg-center
     <div
@@ -11,18 +13,18 @@ const FeatureList = () => {
       className="container my-12 mx-auto flex flex-wrap gap-4 lg:gap-16 px-4"
     >
       <Feature
-        title="Namioty"
-        text="Szeroki wybór pięknych namiotów imprezowych, niezapomniane wrażenia!"
+        title={t("FeaturesTitle1")}
+        text={t("FeaturesText1")}
         icon={squareIcon}
       />
       <Feature
-        title="Sprzęt imprezowy"
-        text="Nagłośnienie, muzyka, karaoke! To wszystko dostępne u nas!"
+          title={t("FeaturesTitle2")}
+          text={t("FeaturesText2")}
         icon={starIcon}
       />
       <Feature
         title="Grill"
-        text="Większa impreza? Może grill wieczorem? Oczywiście!"
+        text={t("FeaturesText3")}
         icon={square2Icon}
       />
     </div>

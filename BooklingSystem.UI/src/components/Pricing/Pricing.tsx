@@ -6,7 +6,7 @@ const Pricing: React.FC<{
   price: string;
   imgSrc: string;
   tech: string[];
-  text?: string;
+  text: string;
   children?: any;
 }> = ({ size, price, imgSrc, tech, text, children }) => {
   return (

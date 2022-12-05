@@ -1,6 +1,6 @@
 import React from "react";
 
-const Feature: React.FC<{ title: string; icon: any; text?: string }> = ({
+const Feature: React.FC<{ title: string; icon: any; text: string }> = ({
   title,
   icon,
   text,
