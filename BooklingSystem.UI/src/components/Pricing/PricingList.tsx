@@ -37,7 +37,6 @@ const PricingList: React.FC = () => {
           <Button>Reserve</Button>
         </Link>:<Button>Reserve</Button>}
       </Pricing>
-        <button onClick={()=>{console.log(cookies.loginData)}}>kurwaaaaaaaa</button>
       <Pricing
         size={t("Medium")}
         price="589 pln"
