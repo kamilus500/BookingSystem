@@ -111,12 +111,23 @@ namespace BookingSystem.Service
         {
             seeder.SeedData();
 
-            if (env.IsDevelopment())
+            app.UseSwagger(options =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookingSystem.Service v1"));
-            }
+                options.SerializeAsV2 = true;
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookingSystem.Service v1");
+                c.RoutePrefix = string.Empty;
+            });
+
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookingSystem.Service v1"));
+            //}
 
             app.UseHttpsRedirection();
 
