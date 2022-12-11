@@ -29,7 +29,7 @@ namespace BookingSystem.Service.Services
                     new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Role, role)
                 },
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: signinCredentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
