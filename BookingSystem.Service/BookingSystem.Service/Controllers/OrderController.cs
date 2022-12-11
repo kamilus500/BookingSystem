@@ -39,7 +39,7 @@ namespace BookingSystem.Service.Controllers
             return Ok(orders);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] OrderDto orderDto)
         {
