@@ -9,6 +9,7 @@ namespace BookingSystem.Service
         public MapperProfiles()
         {
             CreateMap<Order, OrderDto>()
+                .ForMember(x => x.OrderId, src => src.MapFrom(x => x.Id))
                 .ReverseMap();
 
             CreateMap<Tent, TentDto>()
