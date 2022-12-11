@@ -9,4 +9,5 @@ export enum OrderActions {
   SET_DATE = "SETDATE",
   SET_ADDRESS = "SETADDRESS",
   SET_USER = "SETUSER",
+  SET_PRICE = "SETPRICE",
 }

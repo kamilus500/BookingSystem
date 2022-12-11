@@ -2,20 +2,15 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 
 import "react-calendar/dist/Calendar.css";
-import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
-<<<<<<< HEAD
 import { OrderActions } from "../../models/OrderAtions";
-const disableDates = new Date('August 19, 2022 23:15:30');
-const date1=disableDates.getDate();
-const disableDates2 = new Date('August 18, 2022 23:15:30');
-const date2=disableDates2.getDate();
-const dateArray=[date1,date2]//Tablica dat będzie pobierana od kamila
-
-import { OrderActions } from "../../models/OrderActions";
-
+const disableDates = new Date("August 19, 2022 23:15:30");
+const date1 = disableDates.getDate();
+const disableDates2 = new Date("August 18, 2022 23:15:30");
+const date2 = disableDates2.getDate();
+const dateArray = [date1, date2]; //Tablica dat będzie pobierana od kamila
 
 const Calendarr: React.FC<{
   orderState: OrderState;
@@ -68,7 +63,7 @@ const Calendarr: React.FC<{
   }, [selectedDate, setOrderStateReducer]);
 
   return (
-    <Wrapper>
+    <>
       <h2 className="calander-details">
         {selectedDate ? selectedDate.toLocaleDateString() : calendarText}
       </h2>
@@ -78,7 +73,7 @@ const Calendarr: React.FC<{
         onClickYear={handleYearChange}
         onChange={handleDateChange}
         value={selectedDate}
-        tileDisabled={({date})=>dateArray.includes(date.getDate())}
+        tileDisabled={({ date }) => dateArray.includes(date.getDate())}
       />
 
       <div className="flex gap-4">
@@ -100,7 +95,7 @@ const Calendarr: React.FC<{
           Dalej
         </Button>
       </div>
-    </Wrapper>
+    </>
   );
 };
 

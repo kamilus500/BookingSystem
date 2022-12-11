@@ -1,6 +1,4 @@
 import React, { useRef } from "react";
-import Wrapper from "../Ui/Wrapper";
-import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderAtions";
@@ -21,7 +19,7 @@ const Size: React.FC<{
   };
 
   return (
-    <Wrapper>
+    <>
       <h3>Wybierz rozmiar namiotu!</h3>
 
       <select
@@ -36,19 +34,7 @@ const Size: React.FC<{
         <option value="medium">Średni</option>
         <option value="giga">Giga</option>
       </select>
-
-      <div className="flex gap-4">
-        <Button
-          disabled={!orderState.size}
-          clickHandler={() =>
-            setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
-          }
-          accent
-        >
-          Dalej
-        </Button>
-      </div>
-    </Wrapper>
+    </>
   );
 };
 

@@ -49,5 +49,7 @@
     "ReservationDate": "Reservation date",
     "CustomerData": "Customer data",
     "CustomerAddress": "Customer address",
-    "Order": "order"
+    "Order": "order",
+    "Price": "Price"
+
 }
