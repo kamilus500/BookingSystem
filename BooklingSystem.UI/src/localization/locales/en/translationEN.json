@@ -49,10 +49,20 @@
     "ReservationDate": "Reservation date",
     "CustomerData": "Customer data",
     "CustomerAddress": "Customer address",
-    "Order": "Order",
+    "Order": "order",
     "Price": "Price",
     "BackToHome": "Back to home page!",
-    "OrderSubmit": "Your order has been accepted!"
+    "OrderSubmit": "Your order has been accepted!",
+    "ErrLogWrongCred": "Wrong login credentials",
+    "Processing": "Processing...",
+    "Date": "Date",
+    "Status": "Status",
+    "Cost": "Cost",
+    "Address": "Address",
+    "Actions:": "Actions",
+    "Completed": "Completed",
+    "Accepted": "Accepted",
+    "Awaiting acception": "Awaiting acception",
+    "Pending": "Pending",
+    "Price": "Price"
 }
-
-

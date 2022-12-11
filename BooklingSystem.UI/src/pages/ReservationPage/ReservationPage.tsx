@@ -7,7 +7,7 @@ import AddressInput from "../../components/AddressInput/AddressInput";
 import UserInput from "../../components/UserInput/UserInput";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import { useCookies } from "react-cookie";
-import { OrderActions } from "../../models/OrderAtions";
+import { OrderActions } from "../../models/OrderActions";
 import { OrderState } from "../../models/OrderState";
 import Wrapper from "../../components/Ui/Wrapper";
 

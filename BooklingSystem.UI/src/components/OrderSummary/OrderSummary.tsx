@@ -6,7 +6,7 @@ import {
   LocationState,
   OrderAction,
 } from "../../pages/ReservationPage/ReservationPage";
-import { OrderActions } from "../../models/OrderAtions";
+import { OrderActions } from "../../models/OrderActions";
 import { OrderState } from "../../models/OrderState";
 import { useHistory, useLocation } from "react-router";
 import { useCookies } from "react-cookie";

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
 import { OrderState } from "../../models/OrderState";
-import { OrderActions } from "../../models/OrderAtions";
+import { OrderActions } from "../../models/OrderActions";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 
 const UserInput: React.FC<{

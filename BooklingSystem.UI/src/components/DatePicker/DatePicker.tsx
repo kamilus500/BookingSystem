@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
-import { OrderActions } from "../../models/OrderAtions";
+import { OrderActions } from "../../models/OrderActions";
 const disableDates = new Date("August 19, 2022 23:15:30");
 const date1 = disableDates.getDate();
 const disableDates2 = new Date("August 18, 2022 23:15:30");

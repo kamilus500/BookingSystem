@@ -1,9 +1,12 @@
 import Address from "./Address";
 
 export default interface Order {
-  Address: Address;
-  UserId: number;
-  TentId: number;
-  Cost: number;
-  DateTime: Date;
+  orderId: number;
+  userId: number;
+  textId: number;
+  cost: number;
+  dateTime: Date;
+  address: Address;
+  isEnd: boolean;
+  isAccepted: boolean;
 }

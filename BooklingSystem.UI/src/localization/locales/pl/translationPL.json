@@ -51,7 +51,18 @@
     "CustomerAddress": "Adres zamawiającego",
     "Order": "Zamów",
     "Price": "Cena",
+    "ErrLogWrongCred": "Złe dane logowania",
+    "Processing": "Przetwarzanie...",
+    "Date": "Data",
+    "Status": "Status",
+    "Cost": "Koszt",
+    "Address": "Adres",
+    "Actions:": "Akcje",
+    "Completed": "Zakończony",
+    "Accepted": "Zaakceptowany",
+    "Awaiting acception": "Czeka na akceptacje",
+    "Pending": "W trakcie",
+    "Price": "Cena",
     "BackToHome": "Wróć na stronę główną!",
     "OrderSubmit": "Twoje zamówienie zostało przyjęte!"
-
 }

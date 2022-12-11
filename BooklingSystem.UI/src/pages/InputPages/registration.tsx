@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
 export const Registration: React.FC = () => {
+  const [error, setError] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const [email2, setEmail2] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
   const [valid, setValid] = useState<{
@@ -28,6 +30,8 @@ export const Registration: React.FC = () => {
     const { signal } = abortController;
     if (valid.name && valid.lastname && valid.email && valid.password) {
       try {
+        setDisabled(true);
+
         const resp: Response = await fetch(
           "https://booking-tent-api.azurewebsites.net/api/Auth/registration",
           {
@@ -39,9 +43,17 @@ export const Registration: React.FC = () => {
             },
           }
         );
-        history.push("/login");
+
+        if (resp.ok === true) {
+          setDisabled(false);
+          history.push("/login");
+        } else {
+          setDisabled(false);
+          setError(true);
+        }
         console.log(resp.statusText);
       } catch (e) {
+        setDisabled(false);
         console.error(e);
       }
     }
@@ -205,27 +217,52 @@ export const Registration: React.FC = () => {
           </div>
         </div>
         <div>
-          <button
-            onClick={handleSubmit}
-            className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+          {disabled ? (
+            <button className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg
+                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
               <svg
-                className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-            {t("Sign Up")}
-          </button>
+                className="animate-spin h-5 w-5 mr-3 ..."
+                viewBox="0 0 24 24"
+              ></svg>
+              {t("Processing")}
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg
+                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              {t("Sign Up")}
+            </button>
+          )}
         </div>
       </div>
     </div>
