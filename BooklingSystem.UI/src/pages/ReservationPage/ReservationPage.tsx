@@ -7,8 +7,8 @@ import AddressInput from "../../components/AddressInput/AddressInput";
 import UserInput from "../../components/UserInput/UserInput";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import { useCookies } from "react-cookie";
-import { OrderState } from "../../models/OrderState";
 import { OrderActions } from "../../models/OrderAtions";
+import { OrderState } from "../../models/OrderState";
 
 type LocationState = {
   size: string;

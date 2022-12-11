@@ -1,15 +1,12 @@
 import React, { useRef } from "react";
-import {
-  OrderAction,
-  OrderActions,
-  OrderState,
-} from "../../pages/ReservationPage/ReservationPage";
 import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { OrderState } from "../../models/OrderState";
+import { OrderActions } from "../../models/OrderAtions";
+import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 
 const UserInput: React.FC<{
-
   orderState: OrderState;
   setOrderStateReducer: React.Dispatch<OrderAction>;
 }> = ({ orderState, setOrderStateReducer }) => {

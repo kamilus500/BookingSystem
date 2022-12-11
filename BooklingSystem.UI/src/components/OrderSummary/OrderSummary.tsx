@@ -1,19 +1,17 @@
 import React from "react";
-import {
-  OrderAction,
-  OrderActions,
-  OrderState,
-} from "../../pages/ReservationPage/ReservationPage";
 import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
+import { OrderActions } from "../../models/OrderAtions";
+import { OrderState } from "../../models/OrderState";
 const OrderSummary: React.FC<{
   orderState: OrderState;
   setOrderStateReducer: React.Dispatch<OrderAction>;
 }> = ({ orderState, setOrderStateReducer }) => {
   const { speaker, chairs, tables, user, address, date, bbq, size } =
     orderState;
-const {t}=useTranslation();
+  const { t } = useTranslation();
   const orderHandler = () => {
     alert("Twoje zamówienie zostało złożone");
   };
@@ -22,11 +20,16 @@ const {t}=useTranslation();
     <Wrapper>
       <div>
         <div>
-          <p>{t("TentSize")}: {size}</p>
+          x
+          <p>
+            {t("TentSize")}: {size}
+          </p>
         </div>
 
         <div>
-          <p>{t("LoudSpeaker")}: {speaker ? "✔︎" : "✕"}</p>
+          <p>
+            {t("LoudSpeaker")}: {speaker ? "✔︎" : "✕"}
+          </p>
         </div>
 
         <div>
@@ -34,15 +37,21 @@ const {t}=useTranslation();
         </div>
 
         <div>
-          <p>{t("NumberOfChairs")}: {chairs}</p>
+          <p>
+            {t("NumberOfChairs")}: {chairs}
+          </p>
         </div>
 
         <div>
-          <p>{t("NumberOfTables")}: {tables}</p>
+          <p>
+            {t("NumberOfTables")}: {tables}
+          </p>
         </div>
 
         <div>
-          <p>{t("ReservationDate")}: {date?.toLocaleDateString()}</p>
+          <p>
+            {t("ReservationDate")}: {date?.toLocaleDateString()}
+          </p>
         </div>
 
         <div>
