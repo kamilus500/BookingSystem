@@ -3,12 +3,13 @@ import Logo from "../Logo/Logo";
 import NavList from "./NavList";
 import NavIcon from "./NavIcon";
 import ListItem from "./ListItem";
-
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
 
 const Nav: React.FC = () => {
+  const history = useHistory();
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const openNavHeader = () => {
@@ -53,6 +54,7 @@ const Nav: React.FC = () => {
               className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white"
               onClick={() => {
                 removeCookie("loginData");
+                history.push("/");
                 document.location.reload();
               }}
             >

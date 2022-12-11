@@ -1,7 +1,7 @@
 import Order from "./Order";
 
 export default interface User {
-  Id: number;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;

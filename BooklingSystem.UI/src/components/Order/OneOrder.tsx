@@ -2,15 +2,42 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 
-import OrderModel from "../../models/Order";
+import Order from "../../models/Order";
 
-export const OneOrder: React.FC<{ order: OrderModel }> = ({ order }) => {
+export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
   const [cookies] = useCookies(["loginData"]);
   function deleteOrder() {
     fetch(
       "https://booking-tent-api.azurewebsites.net/api/order/" + order.orderId,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.loginData.token,
+        },
+      }
+    );
+  }
+
+  function acceptOrder() {
+    fetch(
+      "https://booking-tent-api.azurewebsites.net/api/order/accept/" +
+        order.orderId,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.loginData.token,
+        },
+      }
+    );
+  }
+  function endOrder() {
+    fetch(
+      "https://booking-tent-api.azurewebsites.net/api/order/finish/" +
+        order.orderId,
+      {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + cookies.loginData.token,
@@ -43,12 +70,18 @@ export const OneOrder: React.FC<{ order: OrderModel }> = ({ order }) => {
           <span className="lg:hidden absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase">
             {t("Status")}
           </span>
-          <span className="rounded bg-green-700 py-1 px-3 text-xs font-bold">
+          <button
+            onClick={acceptOrder}
+            className="rounded bg-green-700 py-1 px-3 text-xs font-bold"
+          >
             {order.isAccepted ? t("Accepted") : t("Awaiting acception")}
-          </span>
-          <span className="rounded bg-blue-700 py-1 px-3 text-xs font-bold">
+          </button>
+          <button
+            onClick={endOrder}
+            className="rounded bg-blue-700 py-1 px-3 text-xs font-bold"
+          >
             {order.isEnd ? t("Completed") : t("Pending")}
-          </span>
+          </button>
         </>
       </td>
       <td className="w-full lg:w-auto p-3 border border-b text-center block lg:table-cell relative lg:static">

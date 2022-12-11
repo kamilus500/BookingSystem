@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
   const { t, i18n } = useTranslation();
-  function deleteClick(id: number) {
-    fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
-      method: "POST",
+  function deleteClick() {
+    fetch("https://booking-tent-api.azurewebsites.net/api/delete/" + opinion, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + cookies.loginData.token,
@@ -36,7 +36,7 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
       })}
       {opinion.userId === cookies.loginData?.userId && (
         <button
-          onClick={() => deleteClick(6)}
+          onClick={deleteClick}
           className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
         >
           {t("Delete")}
