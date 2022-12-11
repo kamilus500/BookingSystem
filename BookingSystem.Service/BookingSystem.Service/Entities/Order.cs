@@ -10,7 +10,7 @@ namespace BookingSystem.Service.Entities
         public int Id { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public User User { get; set; }
 
         [ForeignKey("Tent")]
@@ -24,5 +24,6 @@ namespace BookingSystem.Service.Entities
         public Adress Adress { get; set; }
         public bool IsEnd { get; set; } = false;
         public bool IsAccepted { get; set; } = false;
+        public bool IsGrill { get; set; } = false;
     }
 }

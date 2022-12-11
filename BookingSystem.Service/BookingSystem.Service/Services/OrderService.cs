@@ -2,6 +2,7 @@
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace BookingSystem.Service.Services
         private readonly EmailService _emailService;
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILogger<OrderService> _logger;
 
-        public OrderService(ApplicationDbContext dbContext, IMapper mapper, EmailService emailService)
+        public OrderService(ApplicationDbContext dbContext, IMapper mapper, EmailService emailService, ILogger<OrderService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _emailService = emailService;
+            _logger = logger;
         }
 
         public async Task AcceptOrder(int id)
@@ -35,9 +38,10 @@ namespace BookingSystem.Service.Services
 
                 await _dbContext.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -55,9 +59,10 @@ namespace BookingSystem.Service.Services
 
                 await _emailService.Send("kkurzeja321@gmail.com", "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -77,9 +82,10 @@ namespace BookingSystem.Service.Services
                 await _dbContext.SaveChangesAsync();
 
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -87,18 +93,19 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                if (id == 0)
-                    throw new Exception("Id is 0");
-
                 var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
 
                 order.IsEnd = true;
 
                 await _dbContext.SaveChangesAsync();
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -106,18 +113,19 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                if(id == 0)
-                    throw new Exception("Id is 0");
-
                 var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
 
                 var orderDto = _mapper.Map<OrderDto>(order);
 
                 return orderDto;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -134,9 +142,10 @@ namespace BookingSystem.Service.Services
 
                 return ordersDto;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -144,21 +153,22 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                if (id == 0)
-                    throw new Exception("Id is 0");
-
                 var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
 
                 order.Cost = updateOrderDto.Cost;
                 order.TentId = updateOrderDto.TentId;
-                order.Address = updateOrderDto.Address;
+                order.Adress = updateOrderDto.Address;
                 order.DateTime = updateOrderDto.DateTime;
 
                 await _dbContext.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
     }

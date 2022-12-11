@@ -7,48 +7,17 @@ import AddressInput from "../../components/AddressInput/AddressInput";
 import UserInput from "../../components/UserInput/UserInput";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import { useCookies } from "react-cookie";
+import { OrderState } from "../../models/OrderState";
+import { OrderActions } from "../../models/OrderAtions";
 
 type LocationState = {
   size: string;
+  tentId: number;
 };
-
-export enum OrderActions {
-  SET_STEP_INC = "SETSTEPINC",
-  SET_STEP_DEC = "SETSTEPDEC",
-  SET_SIZE = "SETSIZE",
-  SET_BBQ = "SETBBQ",
-  SET_SPEAKER = "SETSPEAKER",
-  SET_CHAIRS = "SETCHAIRS",
-  SET_TABLES = "SETTABLES",
-  SET_DATE = "SETDATE",
-  SET_ADDRESS = "SETADDRESS",
-  SET_USER = "SETUSER",
-}
 
 export interface OrderAction {
   type: OrderActions;
   payload?: any;
-}
-
-export interface OrderState {
-  step: number;
-  size: string;
-  bbq: boolean;
-  speaker: boolean;
-  chairs: number;
-  tables: number;
-  date: Date | null;
-  address: {
-    street: string;
-    buildingNumber: string;
-    zipCode: string;
-    city: string;
-  };
-  user: {
-    firstName: string;
-    lastName: string;
-    userId?: number;
-  };
 }
 
 const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
@@ -104,7 +73,9 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
 const ReservationPage: React.FC = () => {
   const { state } = useLocation<LocationState>();
   const [cookies] = useCookies(["loginData"]);
+
   const initialOrderState: OrderState = {
+    tentId: state.tentId,
     step: 0,
     size: state.size,
     bbq: false,
@@ -119,8 +90,8 @@ const ReservationPage: React.FC = () => {
       city: "",
     },
     user: {
-      firstName: cookies.loginData.name ?? "",
-      lastName: cookies.loginData.lastname ?? "",
+      firstName: cookies?.loginData?.name ? cookies.loginData.name : "",
+      lastName: cookies?.loginData?.lastname ? cookies.loginData.lastname : "",
       userId: undefined,
     },
   };
