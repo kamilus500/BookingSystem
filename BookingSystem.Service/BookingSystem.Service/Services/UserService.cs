@@ -117,7 +117,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+                var user = await _dbContext.Users.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == id);
 
                 if (user is null)
                     throw new ArgumentNullException(nameof(user));
