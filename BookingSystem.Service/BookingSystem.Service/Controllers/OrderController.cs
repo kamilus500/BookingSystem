@@ -29,7 +29,7 @@ namespace BookingSystem.Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var orders = await _orderService.GetOrderById(id);
 
@@ -77,7 +77,7 @@ namespace BookingSystem.Service.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("accept/{id}")]
-        public async Task<ActionResult> AcceptOrder(int id)
+        public async Task<ActionResult> AcceptOrder([FromRoute] int id)
         {
             if (id == 0)
                 return BadRequest("Order is 0");

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace BookingSystem.Service.Controllers
 {
     [Route("api/Tent")]
@@ -31,7 +29,7 @@ namespace BookingSystem.Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetTentById(int id)
+        public async Task<ActionResult> GetTentById([FromRoute]int id)
         {
             var tent = await _tentService.GetTentById(id);
 
