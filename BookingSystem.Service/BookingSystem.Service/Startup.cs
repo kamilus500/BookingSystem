@@ -33,7 +33,7 @@ namespace BookingSystem.Service
                 options.AddPolicy(MyAllowSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins("https://booking-tent-api.azurewebsites.net", "http://localhost:3000")
+                        policy.WithOrigins("https://booking-tent-api.azurewebsites.net", "http://localhost:3000", "https://tentsnation.netlify.app")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });

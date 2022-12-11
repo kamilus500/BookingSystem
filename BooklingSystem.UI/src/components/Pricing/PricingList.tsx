@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
@@ -65,4 +65,4 @@ const PricingList: React.FC = () => {
   );
 };
 
-export default PricingList;
+export default memo(PricingList);

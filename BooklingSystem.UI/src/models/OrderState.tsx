@@ -16,6 +16,7 @@ export interface OrderState {
     city: string;
   };
   user: {
+    email: string;
     firstName: string;
     lastName: string;
     userId?: number;

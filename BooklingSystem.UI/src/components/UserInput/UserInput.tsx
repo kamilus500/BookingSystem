@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { OrderState } from "../../models/OrderState";
 import { OrderActions } from "../../models/OrderActions";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
+import { useCookies } from "react-cookie";
 
 const UserInput: React.FC<{
   orderState: OrderState;
@@ -11,8 +12,10 @@ const UserInput: React.FC<{
 }> = ({ orderState, setOrderStateReducer }) => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const { t } = useTranslation();
+  const [cookie] = useCookies(["loginData"]);
 
   const firstNameHandler = () => {
     if (firstNameRef.current) {
@@ -32,6 +35,17 @@ const UserInput: React.FC<{
         payload: {
           id: "lastName",
           value: lastNameRef.current.value,
+        },
+      });
+    }
+  };
+  const emailHandler = () => {
+    if (emailRef.current) {
+      setOrderStateReducer({
+        type: OrderActions.SET_USER,
+        payload: {
+          id: "email",
+          value: emailRef.current.value,
         },
       });
     }
@@ -69,6 +83,20 @@ const UserInput: React.FC<{
           value={orderState.user.lastName}
         />
       </label>
+
+      {!cookie.loginData && (
+        <label>
+          Email: <br />
+          <input
+            className="dark:text-black"
+            type="email"
+            required
+            ref={emailRef}
+            onChange={emailHandler}
+            value={orderState.user.email}
+          />
+        </label>
+      )}
 
       <div className="flex gap-4">
         <Button

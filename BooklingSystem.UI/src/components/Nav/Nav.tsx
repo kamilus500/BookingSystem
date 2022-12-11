@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import Logo from "../Logo/Logo";
 import NavList from "./NavList";
 import NavIcon from "./NavIcon";
@@ -86,4 +86,4 @@ const Nav: React.FC = () => {
   );
 };
 
-export default Nav;
+export default memo(Nav);

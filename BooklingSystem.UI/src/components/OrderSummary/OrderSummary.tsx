@@ -17,6 +17,7 @@ const OrderSummary: React.FC<{
 }> = ({ orderState, setOrderStateReducer }) => {
   const [message, setMessage] = useState("");
   const [disable, setDisable] = useState(false);
+  const [distanceCost, setDistanceCost] = useState("0");
 
   const history = useHistory();
 
@@ -36,9 +37,18 @@ const OrderSummary: React.FC<{
   useEffect(() => {
     setOrderStateReducer({ type: OrderActions.SET_PRICE });
 
+    fetch(
+      `https://app.zipcodebase.com/api/v1/distance?apikey=048560a0-7986-11ed-8c67-e7b60bbc3d71&code=42-214&compare=${address.zipCode}%2C10007&country=pl`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const cost = (data.results[address.zipCode] * 2 * 3).toFixed(2);
+        setDistanceCost(cost);
+      });
+
     return () =>
       setOrderStateReducer({ type: OrderActions.SET_PRICE, payload: 0 });
-  }, []);
+  }, [setOrderStateReducer, address.zipCode]);
 
   const { state } = useLocation<LocationState>();
 
@@ -50,23 +60,23 @@ const OrderSummary: React.FC<{
 
   const orderHandler = async () => {
     const orderObj: {
-      address: string;
+      adress: string;
       tentId: number;
       cost: number;
       dateTime: Date | null;
       userId?: number;
+      email?: string;
     } = {
-      address: `${address.street} ${address.buildingNumber} ${address.city} ${address.zipCode}`,
+      adress: `${address.street} ${address.buildingNumber} ${address.city} ${address.zipCode}`,
       tentId: state.tentId,
-      cost: totalValue,
+      cost: Number(totalValue + Number(distanceCost)),
       dateTime: date,
+      email: orderState.user.email,
     };
 
     if (cookie.loginData) {
       orderObj.userId = cookie.loginData.userId;
     }
-
-    console.log(orderObj);
 
     setDisable(true);
     try {
@@ -91,7 +101,6 @@ const OrderSummary: React.FC<{
     <Wrapper>
       {!message && (
         <>
-          {" "}
           <div>
             <div>
               <p>
@@ -143,10 +152,16 @@ const OrderSummary: React.FC<{
 
             <div>
               <p>
-                {t("CustomerAddress")}: {address.street}{" "}
+                {t("CustomerAddress")}: {address.street}
                 {address.buildingNumber} {address.city} {address.zipCode}
               </p>
             </div>
+          </div>
+          <div>
+            <p>Koszt dostawy: {distanceCost} PLN</p>
+          </div>
+          <div>
+            <p>Łączny koszt: {Number(distanceCost) + totalValue} PLN</p>
           </div>
           <div className="w-1/4 flex gap-4">
             <Button
@@ -164,10 +179,10 @@ const OrderSummary: React.FC<{
       )}
       {message && (
         <>
-          <p>Twoje zamówienie zostało przyjęte!</p>
+          <p>{t("OrderSubmit")}</p>
           <div>
             <Button accent clickHandler={onCLickHandler}>
-              Wróć na stronę główną!
+              {t("BackToHome")}
             </Button>
           </div>
         </>

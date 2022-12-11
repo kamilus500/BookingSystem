@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import { OneOrder } from "../../components/Order/OneOrder";
 import Order from "../../models/Order";
 
-import OrderModel from "../../models/Order";
-
 export const ManageOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const { t } = useTranslation();
@@ -41,8 +39,8 @@ export const ManageOrders: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {orders.map((order) => (
-          <OneOrder order={order} />
+        {orders.map((order, index) => (
+          <OneOrder key={index} order={order} />
         ))}
       </tbody>
     </table>
