@@ -3,7 +3,7 @@ import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
-import { OrderActions } from "../../models/OrderAtions";
+import { OrderActions } from "../../models/OrderActions";
 
 const Addons: React.FC<{
   orderState: OrderState;
