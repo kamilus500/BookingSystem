@@ -28,6 +28,7 @@ const OpinionList = () => {
         {opinions
           .map((opinion) => ({ opinion, sort: Math.random() }))
           .sort((a, b) => a.sort - b.sort)
+          .slice(0, 4)
           .map(({ opinion }, index) => (
             <Opinion key={index} opinion={opinion} />
           ))}

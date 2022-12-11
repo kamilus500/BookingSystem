@@ -55,7 +55,6 @@ const Nav: React.FC = () => {
               onClick={() => {
                 removeCookie("loginData");
                 history.push("/");
-                document.location.reload();
               }}
             >
               {t("Logout")}

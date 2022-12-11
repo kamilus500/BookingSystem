@@ -56,7 +56,12 @@ const UserInput: React.FC<{
   const { street, buildingNumber, city, zipCode } = address;
 
   const disableButton =
-    firstName && lastName && street && buildingNumber && city && zipCode;
+    firstName &&
+    lastName &&
+    street &&
+    buildingNumber &&
+    city &&
+    /[\d]{2}-[\d]{3}/g.test(zipCode);
 
   return (
     <>

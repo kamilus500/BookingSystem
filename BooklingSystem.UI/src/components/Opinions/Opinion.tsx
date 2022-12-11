@@ -7,13 +7,17 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
   const { t, i18n } = useTranslation();
   function deleteClick() {
-    fetch("https://booking-tent-api.azurewebsites.net/api/delete/" + opinion, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.loginData.token,
-      },
-    }).then((res) => console.log(res));
+    fetch(
+      "https://booking-tent-api.azurewebsites.net/api/comment/" +
+        opinion.commentId,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.loginData.token,
+        },
+      }
+    ).then((res) => console.log(res));
   }
 
   return (

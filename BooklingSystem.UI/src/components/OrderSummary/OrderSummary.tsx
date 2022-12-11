@@ -68,7 +68,8 @@ const OrderSummary: React.FC<{
       email?: string;
     } = {
       adress: `${address.street} ${address.buildingNumber} ${address.city} ${address.zipCode}`,
-      tentId: state.tentId,
+      tentId:
+        orderState.size === "giga" ? 3 : orderState.size === "medium" ? 2 : 1,
       cost: Number(totalValue + Number(distanceCost)),
       dateTime: date,
       email: orderState.user.email,

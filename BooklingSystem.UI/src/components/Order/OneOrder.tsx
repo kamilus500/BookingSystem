@@ -33,6 +33,7 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
       }
     );
   }
+
   function endOrder() {
     fetch(
       "https://booking-tent-api.azurewebsites.net/api/order/finish/" +
