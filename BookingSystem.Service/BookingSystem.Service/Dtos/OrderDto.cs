@@ -10,5 +10,6 @@ namespace BookingSystem.Service.Dtos
         public int TentId { get; set; }
         public decimal Cost { get; set; }
         public DateTime DateTime { get; set; }
+        public string Email { get; set; }
     }
 }
