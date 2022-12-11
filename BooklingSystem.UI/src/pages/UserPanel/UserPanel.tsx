@@ -9,22 +9,25 @@ import { Account } from "./Account";
 import { UserOrders } from "./UserOrders";
 
 export const UserPanel: React.FC = () => {
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User>();
 
   const [cookies] = useCookies(["loginData"]);
   useEffect(() => {
-    fetch("https://booking-tent-api.azurewebsites.net/api/order/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      "https://booking-tent-api.azurewebsites.net/api/user/" +
+        cookies.loginData.userId,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
-      .then((res: User[]) => {
+      .then((res: User) => {
         setUser(res);
       });
   }, []);
-  console.log(user);
 
   return (
     <div className="flex">
