@@ -1,6 +1,4 @@
 import React, { useRef } from "react";
-import Wrapper from "../Ui/Wrapper";
-import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
@@ -59,91 +57,57 @@ const AddressInput: React.FC<{
     }
   };
 
-  const addressValid = !(
-    orderState.address.zipCode &&
-    orderState.address.city &&
-    orderState.address.street &&
-    orderState.address.buildingNumber
-  );
-
   return (
-    <Wrapper>
-      <div>
-        <label>
-          Ulica: <br />
-          <input
-            className="dark:text-black"
-            type="text"
-            required
-            ref={streetRef}
-            onChange={streetHandler}
-            value={orderState.address.street}
-          />
-        </label>
+    <>
+      <label>
+        Ulica: <br />
+        <input
+          className="dark:text-black"
+          type="text"
+          required
+          ref={streetRef}
+          onChange={streetHandler}
+          value={orderState.address.street}
+        />
+      </label>
 
-        <br />
+      <label>
+        Numer mieszkania/domu: <br />
+        <input
+          className="dark:text-black"
+          type="text"
+          required
+          ref={buildingNumberRef}
+          onChange={buildingNumberHandler}
+          value={orderState.address.buildingNumber}
+        />
+      </label>
 
-        <label>
-          Numer mieszkania/domu: <br />
-          <input
-            className="dark:text-black"
-            type="text"
-            required
-            ref={buildingNumberRef}
-            onChange={buildingNumberHandler}
-            value={orderState.address.buildingNumber}
-          />
-        </label>
+      <label>
+        Miejscowość: <br />
+        <input
+          className="dark:text-black"
+          type="text"
+          required
+          ref={cityRef}
+          onChange={cityHandler}
+          value={orderState.address.city}
+        />
+      </label>
 
-        <br />
-
-        <label>
-          Miejscowość: <br />
-          <input
-            className="dark:text-black"
-            type="text"
-            required
-            ref={cityRef}
-            onChange={cityHandler}
-            value={orderState.address.city}
-          />
-        </label>
-
-        <br />
-
-        <label>
-          Kod pocztowy: <br />
-          <input
-            className="dark:text-black"
-            type="text"
-            required
-            ref={zipCodeRef}
-            onChange={zipCodeHandler}
-            value={orderState.address.zipCode}
-          />
-        </label>
-      </div>
-
-      <div className="flex gap-4">
-        <Button
-          disabled={!orderState.size}
-          clickHandler={() =>
-            setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
-          }
-        >
-          Wróć
-        </Button>
-        <Button
-          clickHandler={() =>
-            setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
-          }
-          accent
-          disabled={addressValid}
-        >
-          Dalej
-        </Button>
-      </div>
-    </Wrapper>
+      <label>
+        Kod pocztowy: <br />
+        <input
+          className="dark:text-black"
+          type="text"
+          required
+          ref={zipCodeRef}
+          onChange={zipCodeHandler}
+          value={orderState.address.zipCode}
+          pattern="[0-9]*"
+        />
+      </label>
+    </>
   );
 };
 

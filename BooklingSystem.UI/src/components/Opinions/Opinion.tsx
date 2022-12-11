@@ -5,8 +5,7 @@ import Comment from "../../models/Comment";
 import { useTranslation } from "react-i18next";
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
   function deleteClick(id: number) {
     fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
       method: "POST",

@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
   };
   const [cookies, setCookie, removeCookie] = useCookies(["loginData"]);
   return (
-    <nav className="sticky top-0 z-50 bg-black">
+    <nav className="sticky top-0 z-50 dark:bg-black bg-white">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Logo />
         <button
@@ -53,7 +53,7 @@ const Nav: React.FC = () => {
               className="mx-2 p-2 px-4 rounded-lg bg-violet-600 text-white"
               onClick={() => {
                 removeCookie("loginData");
-                document.location.reload()
+                document.location.reload();
               }}
             >
               {t("Logout")}

@@ -42,7 +42,7 @@
   "Comments From People": "Komentarze użytkowników",
   "About Us": "O nas",
   "Submit": "Wyślij",
-  "TentSize": "Rozmiar namiotu:",
+  "TentSize": "Rozmiar namiotu",
   "Loudspeaker": "Głośnik",
   "NumberOfChairs": "Liczba krzeseł",
   "NumberOfTables": "Liczba stołów",
@@ -60,5 +60,6 @@
   "Completed": "Zakończony",
   "Accepted": "Zaakceptowany",
   "Awaiting acception": "Czeka na akceptacje",
-  "Pending": "W trakcie"
+  "Pending": "W trakcie",
+  "Price": "Cena"
 }

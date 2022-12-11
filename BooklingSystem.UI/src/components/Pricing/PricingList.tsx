@@ -22,7 +22,7 @@ const PricingList: React.FC = () => {
         <Link
           to={{
             pathname: "/reservation",
-            state: { size: "small", tentId: 1 },
+            state: { size: "small", tentId: 1, price: 489 },
           }}
         >
           <Button>Reserve</Button>
@@ -38,7 +38,7 @@ const PricingList: React.FC = () => {
         <Link
           to={{
             pathname: "/reservation",
-            state: { size: "medium", tentId: 2 },
+            state: { size: "medium", tentId: 2, price: 589 },
           }}
         >
           <Button accent>Reserve</Button>
@@ -55,7 +55,7 @@ const PricingList: React.FC = () => {
         <Link
           to={{
             pathname: "/reservation",
-            state: { size: "giga", tentId: 3 },
+            state: { size: "giga", tentId: 3, price: 889 },
           }}
         >
           <Button>Reserve</Button>

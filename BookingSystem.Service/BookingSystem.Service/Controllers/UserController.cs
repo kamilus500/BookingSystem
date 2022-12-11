@@ -15,7 +15,7 @@ namespace BookingSystem.Service.Controllers
             _userService = userService;
         }
 
-        [HttpPost("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetUserById([FromRoute] int id)
         {
             var user = await _userService.GetUserById(id);
@@ -24,6 +24,17 @@ namespace BookingSystem.Service.Controllers
                 return NotFound();
 
             return Ok(user);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _userService.GetUsers();
+
+            if (users is null)
+                return NoContent();
+
+            return Ok(users);
         }
     }
 }

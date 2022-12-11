@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
@@ -42,7 +41,7 @@ const Addons: React.FC<{
   };
 
   return (
-    <Wrapper>
+    <>
       <label>
         Dodatkowy grill
         <input
@@ -93,15 +92,6 @@ const Addons: React.FC<{
 
       <div className="flex gap-4">
         <Button
-          disabled={!orderState.size}
-          clickHandler={() =>
-            setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
-          }
-        >
-          Wróć
-        </Button>
-        <Button
-          disabled={!orderState.size}
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
           }
@@ -110,7 +100,7 @@ const Addons: React.FC<{
           Dalej
         </Button>
       </div>
-    </Wrapper>
+    </>
   );
 };
 

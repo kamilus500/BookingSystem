@@ -57,7 +57,9 @@ namespace BookingSystem.Service.Services
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
 
-                await _emailService.Send("kkurzeja321@gmail.com", "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                var email = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId).Email;
+
+                await _emailService.Send(email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
             }
             catch (Exception ex)
             {
@@ -160,7 +162,7 @@ namespace BookingSystem.Service.Services
 
                 order.Cost = updateOrderDto.Cost;
                 order.TentId = updateOrderDto.TentId;
-                order.Adress = updateOrderDto.Address;
+                order.Adress = updateOrderDto.Adress;
                 order.DateTime = updateOrderDto.DateTime;
 
                 await _dbContext.SaveChangesAsync();

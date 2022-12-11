@@ -1,4 +1,6 @@
 export interface OrderState {
+  totalValue: number;
+  price: number;
   tentId: number;
   step: number;
   size: string;

@@ -9,10 +9,12 @@ import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import { useCookies } from "react-cookie";
 import { OrderActions } from "../../models/OrderActions";
 import { OrderState } from "../../models/OrderState";
+import Wrapper from "../../components/Ui/Wrapper";
 
-type LocationState = {
+export type LocationState = {
   size: string;
   tentId: number;
+  price: number;
 };
 
 export interface OrderAction {
@@ -65,6 +67,34 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     case OrderActions.SET_SPEAKER: {
       return { ...state, speaker: action.payload };
     }
+    case OrderActions.SET_PRICE: {
+      if (action.payload) {
+        return { ...state, totalValue: action.payload };
+      }
+
+      let totalValue = 0;
+
+      totalValue += state.price;
+
+      if (state.bbq) {
+        totalValue += 60;
+      }
+
+      if (state.speaker) {
+        totalValue += 100;
+      }
+
+      if (state.tables) {
+        totalValue += state.tables * 15;
+      }
+
+      if (state.chairs) {
+        totalValue += state.tables * 10;
+      }
+
+      return { ...state, totalValue };
+    }
+
     default:
       return state;
   }
@@ -75,6 +105,8 @@ const ReservationPage: React.FC = () => {
   const [cookies] = useCookies(["loginData"]);
 
   const initialOrderState: OrderState = {
+    price: state.price,
+    totalValue: 0,
     tentId: state.tentId,
     step: 0,
     size: state.size,
@@ -105,16 +137,26 @@ const ReservationPage: React.FC = () => {
 
   switch (orderState.step) {
     case 0:
-      return <Size {...propsToPass} />;
+      return (
+        <Wrapper>
+          <Size {...propsToPass} />
+          <Addons {...propsToPass} />
+        </Wrapper>
+      );
     case 1:
-      return <Addons {...propsToPass} />;
+      return (
+        <Wrapper>
+          <DatePicker {...propsToPass} />
+        </Wrapper>
+      );
     case 2:
-      return <DatePicker {...propsToPass} />;
+      return (
+        <Wrapper>
+          <AddressInput {...propsToPass} />
+          <UserInput {...propsToPass} />
+        </Wrapper>
+      );
     case 3:
-      return <AddressInput {...propsToPass} />;
-    case 4:
-      return <UserInput {...propsToPass} />;
-    case 5:
       return <OrderSummary {...propsToPass} />;
   }
 

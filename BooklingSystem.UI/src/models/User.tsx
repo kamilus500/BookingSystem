@@ -1,5 +1,3 @@
-import Order from "./Order";
-
 export default interface User {
   Id: number;
   firstName: string;
