@@ -8,7 +8,7 @@ namespace BookingSystem.Service.Services
     {
         public Task Create(UserRegistrationDto newUserDto);
         public Task<string> GetRole(UserLoginDto userLoginDto);
-        public Task<bool> IsExist(string email);
+        public Task<bool> IsExist(UserLoginDto userLoginDto);
         public Task<bool> IsSameEmailExist(string email);
         public Task<User> GetUser(UserLoginDto userLoginDto);
         public Task<User> GetUserById(int id);
