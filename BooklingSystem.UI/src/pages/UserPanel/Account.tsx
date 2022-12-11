@@ -1,15 +1,21 @@
 import React from "react";
 
-import { useCookies } from "react-cookie";
+import User from "../../models/User";
 
-export const Account: React.FC = () => {
-  const [cookies] = useCookies(["loginData"]);
-
+export const Account: React.FC<{ user: User | undefined }> = ({ user }) => {
   return (
-    <div>
-      Your name: {cookies.loginData.name}
-      <br />
-      Your lastname:{cookies.loginData.lastname}
-    </div>
+    <table className="table-auto m-1">
+      <thead>
+        <tr>
+          <td>Your name: {user?.firstName}</td>
+        </tr>
+        <tr>
+          <td>Your lastname: {user?.lastName}</td>
+        </tr>
+        <tr>
+          <td>Your email: {user?.email}</td>
+        </tr>
+      </thead>
+    </table>
   );
 };

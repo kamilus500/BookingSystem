@@ -4,6 +4,9 @@ import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 export const SignUp: React.FC = () => {
+  const [error, setError] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const [show, setShow] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(true);
   const [data, setData] = useState<{ email: string; password: string }>({
@@ -17,6 +20,7 @@ export const SignUp: React.FC = () => {
     const abortController = new AbortController();
     const { signal } = abortController;
     try {
+      setDisabled(true);
       const resp = await fetch(
         "https://booking-tent-api.azurewebsites.net/api/Auth/login",
         {
@@ -28,27 +32,35 @@ export const SignUp: React.FC = () => {
           },
         }
       );
-      const respData = await resp.json();
-      const date = new Date();
-      date.setMinutes(date.getMinutes() + 5);
-      setLogin(resp.status === 200);
-      if (login) {
-        setCookie(
-          "loginData",
-          {
-            name: respData.firstName,
-            lastname: respData.lastName,
-            token: respData.token,
 
-            userId: respData.userId,
+      if (resp.ok === true) {
+        setDisabled(false);
 
-          },
-          { expires: date }
-        );
+        const respData = await resp.json();
+        const date = new Date();
+        date.setMinutes(date.getMinutes() + 5);
+        setLogin(resp.status === 200);
+        if (login) {
+          setCookie(
+            "loginData",
+            {
+              name: respData.firstName,
+              lastname: respData.lastName,
+              token: respData.token,
+
+              userId: respData.userId,
+            },
+            { expires: date }
+          );
+        }
+        history.push("/");
+      } else {
+        setError(true);
+        setDisabled(false);
       }
-      history.push("/");
     } catch (e) {
       setLogin(false);
+      setDisabled(false);
     }
     return () => {
       abortController.abort();
@@ -69,6 +81,8 @@ export const SignUp: React.FC = () => {
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
               {login ? undefined : t("ErrLog")}
+              {error ? t("ErrLogWrongCred") : undefined}
+
               <label htmlFor="email-address" className="sr-only">
                 Email
               </label>
@@ -131,27 +145,52 @@ export const SignUp: React.FC = () => {
           </div>
 
           <div>
-            <button
-              onClick={handleSubmit}
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            {disabled ? (
+              <button className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
                 <svg
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-              {t("Sign In")}
-            </button>
+                  className="animate-spin h-5 w-5 mr-3 ..."
+                  viewBox="0 0 24 24"
+                ></svg>
+                {t("Processing")}
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+                {t("Sign In")}
+              </button>
+            )}
           </div>
         </div>
       </div>

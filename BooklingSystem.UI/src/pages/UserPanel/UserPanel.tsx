@@ -3,26 +3,31 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Switch, Route, Link } from "react-router-dom";
 import User from "../../models/User";
+import { ManageOrders } from "../Manage/ManageOrders";
+import { ManageUsers } from "../Manage/ManageUsers";
 import { Account } from "./Account";
-import { Orders } from "./Orders";
+import { UserOrders } from "./UserOrders";
 
 export const UserPanel: React.FC = () => {
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User>();
 
   const [cookies] = useCookies(["loginData"]);
   useEffect(() => {
-    fetch("https://booking-tent-api.azurewebsites.net/api/order/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      "https://booking-tent-api.azurewebsites.net/api/user/" +
+        cookies.loginData.userId,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
-      .then((res: User[]) => {
+      .then((res: User) => {
         setUser(res);
       });
   }, []);
-  console.log(user);
 
   return (
     <div className="flex">
@@ -32,18 +37,41 @@ export const UserPanel: React.FC = () => {
             Account
           </button>
         </Link>
-        <Link to="/userpanel/orders">
-          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-            Orders
-          </button>
-        </Link>
+        {user?.role === 1 && (
+          <Link to="/userpanel/orders">
+            <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
+              Orders
+            </button>
+          </Link>
+        )}
+
+        {user?.role === 2 && (
+          <>
+            <Link to="/userpanel/manageorders">
+              <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
+                Manage Orders
+              </button>
+            </Link>
+            <Link to="/userpanel/manageusers">
+              <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
+                Manage users
+              </button>
+            </Link>
+          </>
+        )}
       </div>
       <Switch>
         <Route path="/userpanel/account">
-          <Account />
+          <Account user={user} />
         </Route>
         <Route path="/userpanel/orders">
-          <Orders />
+          <UserOrders orders={user?.orders} />
+        </Route>
+        <Route path="/userpanel/manageusers">
+          <ManageUsers />
+        </Route>
+        <Route path="/userpanel/manageorders">
+          <ManageOrders />
         </Route>
       </Switch>
     </div>

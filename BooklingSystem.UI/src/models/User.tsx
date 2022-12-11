@@ -6,6 +6,6 @@ export default interface User {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  role: number;
   orders: Order[];
 }
