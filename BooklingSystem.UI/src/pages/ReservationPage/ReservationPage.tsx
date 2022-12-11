@@ -122,6 +122,7 @@ const ReservationPage: React.FC = () => {
       city: "",
     },
     user: {
+      email: "",
       firstName: cookies?.loginData?.name ? cookies.loginData.name : "",
       lastName: cookies?.loginData?.lastname ? cookies.loginData.lastname : "",
       userId: undefined,

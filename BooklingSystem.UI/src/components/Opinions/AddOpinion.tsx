@@ -16,8 +16,8 @@ const AddOpinion: React.FC<{
     const abortController = new AbortController();
     const { signal } = abortController;
     const newComment: Comment = {
-      name: cookies.loginData.name+''+cookies.loginData.lastname,
-      userId: 4,
+      name: cookies.loginData.name + "" + cookies.loginData.lastname,
+      userId: cookies.loginData.userId,
       message: message,
       grade: rating,
     };
@@ -74,7 +74,7 @@ const AddOpinion: React.FC<{
         onClick={handleSubmit}
         className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
       >
-          {t("Submit")}
+        {t("Submit")}
       </button>
     </div>
   );

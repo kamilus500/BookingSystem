@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
@@ -38,4 +38,4 @@ const Size: React.FC<{
   );
 };
 
-export default Size;
+export default memo(Size);

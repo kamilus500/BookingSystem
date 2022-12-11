@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Opinion from "./Opinion";
 import Comment from "../../models/Comment";
 import { useCookies } from "react-cookie";
 import AddOpinion from "./AddOpinion";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 const OpinionList = () => {
   const [opinions, setOpinions] = useState<Comment[]>([]);
   const [cookies] = useCookies(["loginData"]);
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   useEffect(() => {
     fetch("https://booking-tent-api.azurewebsites.net/api/comment/", {
       method: "GET",
@@ -34,4 +34,4 @@ const OpinionList = () => {
   );
 };
 
-export default OpinionList;
+export default memo(OpinionList);

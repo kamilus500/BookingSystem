@@ -17,7 +17,7 @@ const OrderSummary: React.FC<{
 }> = ({ orderState, setOrderStateReducer }) => {
   const [message, setMessage] = useState("");
   const [disable, setDisable] = useState(false);
-  const [distanceCost, setDistanceCost] = useState(0);
+  const [distanceCost, setDistanceCost] = useState("0");
 
   const history = useHistory();
 
@@ -41,11 +41,14 @@ const OrderSummary: React.FC<{
       `https://app.zipcodebase.com/api/v1/distance?apikey=048560a0-7986-11ed-8c67-e7b60bbc3d71&code=42-214&compare=${address.zipCode}%2C10007&country=pl`
     )
       .then((response) => response.json())
-      .then((data) => setDistanceCost(data.results[address.zipCode] * 2 * 3));
+      .then((data) => {
+        const cost = (data.results[address.zipCode] * 2 * 3).toFixed(2);
+        setDistanceCost(cost);
+      });
 
     return () =>
       setOrderStateReducer({ type: OrderActions.SET_PRICE, payload: 0 });
-  }, []);
+  }, [setOrderStateReducer, address.zipCode]);
 
   const { state } = useLocation<LocationState>();
 
@@ -57,16 +60,18 @@ const OrderSummary: React.FC<{
 
   const orderHandler = async () => {
     const orderObj: {
-      address: string;
+      adress: string;
       tentId: number;
       cost: number;
       dateTime: Date | null;
       userId?: number;
+      email?: string;
     } = {
-      address: `${address.street} ${address.buildingNumber} ${address.city} ${address.zipCode}`,
+      adress: `${address.street} ${address.buildingNumber} ${address.city} ${address.zipCode}`,
       tentId: state.tentId,
-      cost: totalValue + distanceCost,
+      cost: Number(totalValue + Number(distanceCost)),
       dateTime: date,
+      email: orderState.user.email,
     };
 
     if (cookie.loginData) {
@@ -156,7 +161,7 @@ const OrderSummary: React.FC<{
             <p>Koszt dostawy: {distanceCost} PLN</p>
           </div>
           <div>
-            <p>Łączny koszt: {(distanceCost + totalValue).toFixed(2)} PLN</p>
+            <p>Łączny koszt: {Number(distanceCost) + totalValue} PLN</p>
           </div>
           <div className="w-1/4 flex gap-4">
             <Button

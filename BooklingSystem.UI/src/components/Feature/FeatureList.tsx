@@ -2,7 +2,8 @@ import squareIcon from "../../images/Icons/Square.svg";
 import starIcon from "../../images/Icons/Star.svg";
 import square2Icon from "../../images/Icons/Square2.svg";
 import Feature from "./Feature";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { memo } from "react";
 
 const FeatureList = (): JSX.Element => {
   const { t, i18n } = useTranslation();
@@ -18,17 +19,13 @@ const FeatureList = (): JSX.Element => {
         icon={squareIcon}
       />
       <Feature
-          title={t("FeaturesTitle2")}
-          text={t("FeaturesText2")}
+        title={t("FeaturesTitle2")}
+        text={t("FeaturesText2")}
         icon={starIcon}
       />
-      <Feature
-        title="Grill"
-        text={t("FeaturesText3")}
-        icon={square2Icon}
-      />
+      <Feature title="Grill" text={t("FeaturesText3")} icon={square2Icon} />
     </div>
   );
 };
 
-export default FeatureList;
+export default memo(FeatureList);
