@@ -6,6 +6,7 @@ import Order from "../../models/Order";
 
 export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
   const [cookies] = useCookies(["loginData"]);
+  const { t, i18n } = useTranslation();
   function deleteOrder() {
     fetch(
       "https://booking-tent-api.azurewebsites.net/api/order/" + order.orderId,
@@ -45,7 +46,6 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
       }
     );
   }
-  const { t, i18n } = useTranslation();
 
   return (
     <tr className=" lg:hover:bg-gray-600 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
@@ -55,6 +55,16 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
             {t("Date")}
           </span>
           {new Date(order.dateTime).toLocaleDateString(i18n.language)}
+        </>
+      </td>
+      <td className="w-full lg:w-auto p-3  border border-b text-center block lg:table-cell relative lg:static">
+        <>
+          <span className="lg:hidden absolute top-0 left-0  px-2 py-1 text-xs font-bold uppercase">
+            {t("Tent size")}
+          </span>
+          {order.tentId === 1 && t("Small")}
+          {order.tentId === 2 && t("Medium")}
+          {order.tentId === 3 && "Giga"}
         </>
       </td>
       <td className="w-full lg:w-auto p-3  border border-b text-center block lg:table-cell relative lg:static">
@@ -72,7 +82,7 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
           </span>
           <button
             onClick={acceptOrder}
-            className="rounded bg-green-700 py-1 px-3 text-xs font-bold"
+            className="rounded mr-1 bg-green-700 py-1 px-3 text-xs font-bold"
           >
             {order.isAccepted ? t("Accepted") : t("Awaiting acception")}
           </button>

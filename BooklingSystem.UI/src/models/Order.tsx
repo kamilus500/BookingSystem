@@ -6,6 +6,7 @@ export default interface Order {
   textId: number;
   cost: number;
   dateTime: Date;
+  tentId: number;
   address: Address;
   isEnd: boolean;
   isAccepted: boolean;

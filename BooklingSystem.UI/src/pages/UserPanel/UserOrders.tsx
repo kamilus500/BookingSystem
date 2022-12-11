@@ -17,6 +17,9 @@ export const UserOrders: React.FC<{ orders: Order[] | undefined }> = ({
             {t("Date")}
           </th>
           <th className="p-3 font-bold uppercase  hidden lg:table-cell">
+            {t("Tent size")}
+          </th>
+          <th className="p-3 font-bold uppercase  hidden lg:table-cell">
             {t("Cost")}
           </th>
           <th className="p-3 font-bold uppercase  hidden lg:table-cell">
@@ -28,8 +31,8 @@ export const UserOrders: React.FC<{ orders: Order[] | undefined }> = ({
         </tr>
       </thead>
       <tbody>
-        {orders?.map((order) => (
-          <OneOrder order={order} />
+        {orders?.map((order, index) => (
+          <OneOrder key={index} order={order} />
         ))}
       </tbody>
     </table>

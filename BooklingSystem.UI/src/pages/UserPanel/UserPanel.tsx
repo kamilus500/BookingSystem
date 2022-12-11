@@ -28,7 +28,6 @@ export const UserPanel: React.FC = () => {
         setUser(res);
       });
   }, []);
-  console.log(user);
 
   return (
     <div className="flex">
