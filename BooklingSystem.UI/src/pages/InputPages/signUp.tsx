@@ -11,7 +11,7 @@ export const SignUp: React.FC = () => {
     password: "",
   });
   const { t } = useTranslation();
-  const [cookies, setCookie,removeCookie] = useCookies(["loginData"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["loginData"]);
   const history = useHistory();
   const handleSubmit = async () => {
     const abortController = new AbortController();
@@ -29,15 +29,19 @@ export const SignUp: React.FC = () => {
         }
       );
       const respData = await resp.json();
-      const date=new Date();
-      date.setMinutes(date.getMinutes()+5)
+      const date = new Date();
+      date.setMinutes(date.getMinutes() + 5);
       setLogin(resp.status === 200);
-      if(login) {
-        setCookie("loginData", {
-          name: respData.firstName,
-          lastname: respData.lastName,
-          token: respData.token,
-        }, {expires: date});
+      if (login) {
+        setCookie(
+          "loginData",
+          {
+            name: respData.firstName,
+            lastname: respData.lastName,
+            token: respData.token,
+          },
+          { expires: date }
+        );
       }
       history.push("/");
     } catch (e) {
@@ -96,16 +100,16 @@ export const SignUp: React.FC = () => {
               />
 
               <div className="flex items-center">
-                <input
-                  onClick={() => setShow(!show)}
-                  type="checkbox"
-                  className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
-                />
-
                 <label
                   htmlFor="remember-me"
                   className="my-10 elements font-medium ml-2 block text-sm text-gray-900"
                 >
+                  <input
+                    onClick={() => setShow(!show)}
+                    type="checkbox"
+                    className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
+                  />
+
                   {t("ShowPassword")}
                 </label>
               </div>
