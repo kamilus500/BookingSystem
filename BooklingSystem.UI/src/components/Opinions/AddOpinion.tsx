@@ -16,7 +16,7 @@ const AddOpinion: React.FC<{
     const abortController = new AbortController();
     const { signal } = abortController;
     const newComment: Comment = {
-      name: cookies.loginData.name,
+      name: cookies.loginData.name+''+cookies.loginData.lastname,
       userId: 4,
       message: message,
       grade: rating,
