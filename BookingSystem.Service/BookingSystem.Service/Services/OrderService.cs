@@ -52,15 +52,7 @@ namespace BookingSystem.Service.Services
                 if(newOrderDto == null)
                     throw new ArgumentNullException(nameof(newOrderDto));
 
-                _dbContext.Adresses.Add(newOrderDto.Address);
-                _dbContext.SaveChanges();
-
                 var order = _mapper.Map<Order>(newOrderDto);
-
-                var address = _dbContext.Adresses.FirstOrDefault(x => x.ZipCode == newOrderDto.Address.ZipCode && x.Street == newOrderDto.Address.Street
-                                                         && x.BuildingNumber == newOrderDto.Address.BuildingNumber && x.City == newOrderDto.Address.City);
-
-                order.Adress = address;
 
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
@@ -121,7 +113,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var order = await _dbContext.Orders.Include(x=>x.Adress).FirstOrDefaultAsync(x => x.Id == id);
+                var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (order == null)
                     throw new ArgumentNullException(nameof(order));
@@ -141,7 +133,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var orders = await _dbContext.Orders.Include(x=>x.Adress).ToListAsync();
+                var orders = await _dbContext.Orders.ToListAsync();
 
                 if (orders == null)
                     throw new ArgumentNullException(nameof(orders));
@@ -168,7 +160,7 @@ namespace BookingSystem.Service.Services
 
                 order.Cost = updateOrderDto.Cost;
                 order.TentId = updateOrderDto.TentId;
-                order.Adress = updateOrderDto.Address;
+                order.Adress = updateOrderDto.Adress;
                 order.DateTime = updateOrderDto.DateTime;
 
                 await _dbContext.SaveChangesAsync();

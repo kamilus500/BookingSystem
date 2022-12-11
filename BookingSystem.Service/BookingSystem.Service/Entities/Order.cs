@@ -11,17 +11,14 @@ namespace BookingSystem.Service.Entities
 
         [ForeignKey("User")]
         public int? UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [ForeignKey("Tent")]
         public int TentId { get; set; }
         public Tent Tent { get; set; }
         public decimal Cost { get; set; }
         public DateTime DateTime { get; set; }
-
-        [ForeignKey("Adress")]
-        public int AdressId { get; set; }
-        public Adress Adress { get; set; }
+        public string Adress { get; set; }
         public bool IsEnd { get; set; } = false;
         public bool IsAccepted { get; set; } = false;
         public bool IsGrill { get; set; } = false;
