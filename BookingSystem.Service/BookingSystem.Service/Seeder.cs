@@ -1,6 +1,5 @@
 ﻿using BookingSystem.Service.Entities;
 using BookingSystem.Service.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,56 +41,6 @@ namespace BookingSystem.Service
                     };
 
                     _dbContext.Tents.AddRange(tents);
-                    _dbContext.SaveChanges();
-                }
-
-                //Users
-                if (!_dbContext.Users.Any())
-                {
-                    var users = new List<User>()
-                    {
-                        new User()
-                        {
-                            FirstName = "Adam",
-                            LastName = "Kowalski",
-                            Password = "admin123",
-                            Email = "admin@o2.pl",
-                            Role = RoleValue.Admin
-                        },
-                        new User()
-                        {
-                            FirstName = "Kamil",
-                            LastName = "Kurzeja",
-                            Password = "kamil123",
-                            Email = "kamil1011-1990@o2.pl",
-                            Role = RoleValue.User
-                        }
-                    };
-
-                    _dbContext.Users.AddRange(users);
-                    _dbContext.SaveChanges();
-                }
-
-                //Comments
-                if (!_dbContext.Comments.Any())
-                {
-                    var comments = new List<Comment>()
-                    {
-                        new Comment()
-                        {
-                            UserId = 1,
-                            Grade = Grade.Five,
-                            Message = "Good one"
-                        },
-                        new Comment()
-                        {
-                            UserId = 2,
-                            Grade = Grade.Two,
-                            Message = "Bad one"
-                        }
-                    };
-
-                    _dbContext.Comments.AddRange(comments);
                     _dbContext.SaveChanges();
                 }
             }
