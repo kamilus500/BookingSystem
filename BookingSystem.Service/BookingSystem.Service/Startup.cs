@@ -118,6 +118,8 @@ namespace BookingSystem.Service
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookingSystem.Service v1"));
             }
 
+            app.ConfigureExceptionHandlers(logger);
+
             app.UseHttpsRedirection();
 
             app.UseCors(MyAllowSpecificOrigins);

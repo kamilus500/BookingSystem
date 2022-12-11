@@ -27,7 +27,7 @@ namespace BookingSystem.Service.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            bool isExist = _userService.IsExist(loginUser).Result;
+            bool isExist = _userService.IsExist(loginUser.Email).Result;
 
             var role = await _userService.GetRole(loginUser);
 
@@ -37,7 +37,7 @@ namespace BookingSystem.Service.Controllers
 
                 var user = await _userService.GetUser(loginUser);
 
-                return Ok(new AuthenticatedResponse { Token = tokenString, FirstName = user.FirstName, LastName = user.LastName});
+                return Ok(new AuthenticatedResponse { Token = tokenString, FirstName = user.FirstName, LastName = user.LastName, UserId = user.Id});
             }
             return Unauthorized();
         }
@@ -52,6 +52,11 @@ namespace BookingSystem.Service.Controllers
             {
                 return BadRequest("One or more fields are empty");
             }
+
+            bool IsExist = await _userService.IsSameEmailExist(registrationUser.Email);
+
+            if (IsExist)
+                return BadRequest("User with that email is exist");
 
             await _userService.Create(registrationUser);
 

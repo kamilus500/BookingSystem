@@ -2,11 +2,9 @@
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
 using Isopoh.Cryptography.Argon2;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Services
@@ -15,10 +13,12 @@ namespace BookingSystem.Service.Services
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        public UserService(ApplicationDbContext dbContext, IMapper mapper)
+        private readonly ILogger _logger;
+        public UserService(ApplicationDbContext dbContext, IMapper mapper, ILogger<UserService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task Create(UserRegistrationDto newUserDto)
@@ -36,7 +36,8 @@ namespace BookingSystem.Service.Services
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -48,26 +49,49 @@ namespace BookingSystem.Service.Services
 
                 return user.Role.ToString();
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
-        public async Task<bool> IsExist(UserLoginDto userLoginDto)
+        public async Task<bool> IsExist(string email)
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
 
-                if (!Argon2.Verify(user.Password, userLoginDto.Password))
+                if(user is null)
+                    throw new ArgumentNullException(nameof(user));
+
+                if (!Argon2.Verify(user.Password, email))
                     return false;
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        public async Task<bool> IsSameEmailExist(string email)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+                if(user is null)
+                    return false;
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -77,11 +101,33 @@ namespace BookingSystem.Service.Services
             {
                 var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
+                if (user is null)
+                    throw new ArgumentNullException(nameof(user));
+
                 return user;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (user is null)
+                    throw new ArgumentNullException(nameof(user));
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
     }

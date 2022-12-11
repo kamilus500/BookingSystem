@@ -15,7 +15,7 @@ namespace BookingSystem.Service.Entities
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public RoleValue Role { get; set; }
+        public RoleValue Role { get; set; } = RoleValue.User;
 
         public List<Order>? Orders { get; set; }
     }
