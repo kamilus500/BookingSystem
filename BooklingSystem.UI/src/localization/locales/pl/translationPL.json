@@ -50,5 +50,8 @@
     "CustomerData": "Dane zamawiającego",
     "CustomerAddress": "Adres zamawiającego",
     "Order": "Zamów",
-    "Price": "Cena"
+    "Price": "Cena",
+    "BackToHome": "Wróć na stronę główną!",
+    "OrderSubmit": "Twoje zamówienie zostało przyjęte!"
+
 }

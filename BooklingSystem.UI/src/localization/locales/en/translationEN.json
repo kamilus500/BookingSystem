@@ -49,7 +49,10 @@
     "ReservationDate": "Reservation date",
     "CustomerData": "Customer data",
     "CustomerAddress": "Customer address",
-    "Order": "order",
-    "Price": "Price"
-
+    "Order": "Order",
+    "Price": "Price",
+    "BackToHome": "Back to home page!",
+    "OrderSubmit": "Your order has been accepted!"
 }
+
+
