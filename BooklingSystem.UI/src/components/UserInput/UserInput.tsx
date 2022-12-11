@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
 import { OrderState } from "../../models/OrderState";
@@ -12,7 +11,9 @@ const UserInput: React.FC<{
 }> = ({ orderState, setOrderStateReducer }) => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-  const { t, i18n } = useTranslation();
+
+  const { t } = useTranslation();
+
   const firstNameHandler = () => {
     if (firstNameRef.current) {
       setOrderStateReducer({
@@ -36,12 +37,15 @@ const UserInput: React.FC<{
     }
   };
 
-  const userInputValid = !(
-    orderState.user.firstName && orderState.user.lastName
-  );
+  const { address, user } = orderState;
+  const { firstName, lastName } = user;
+  const { street, buildingNumber, city, zipCode } = address;
+
+  const disableButton =
+    firstName && lastName && street && buildingNumber && city && zipCode;
 
   return (
-    <Wrapper>
+    <>
       <label>
         {t("Name")}: <br />
         <input
@@ -53,7 +57,7 @@ const UserInput: React.FC<{
           value={orderState.user.firstName}
         />
       </label>
-      <br />
+
       <label>
         {t("LastName")}: <br />
         <input
@@ -68,7 +72,6 @@ const UserInput: React.FC<{
 
       <div className="flex gap-4">
         <Button
-          disabled={!orderState.size}
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
           }
@@ -80,12 +83,12 @@ const UserInput: React.FC<{
             setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
           }
           accent
-          disabled={userInputValid}
+          disabled={!disableButton}
         >
           {t("Next")}
         </Button>
       </div>
-    </Wrapper>
+    </>
   );
 };
 

@@ -59,7 +59,7 @@ const Calendarr: React.FC<{
   }, [selectedDate, setOrderStateReducer]);
 
   return (
-    <Wrapper>
+    <>
       <h2 className="calander-details">
         {selectedDate ? selectedDate.toLocaleDateString() : calendarText}
       </h2>
@@ -90,7 +90,7 @@ const Calendarr: React.FC<{
           Dalej
         </Button>
       </div>
-    </Wrapper>
+    </>
   );
 };
 
