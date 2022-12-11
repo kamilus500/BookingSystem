@@ -56,16 +56,16 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<bool> IsExist(string email)
+        public async Task<bool> IsExist(UserLoginDto userLoginDto)
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
                 if(user is null)
                     throw new ArgumentNullException(nameof(user));
 
-                if (!Argon2.Verify(user.Password, email))
+                if (!Argon2.Verify(user.Password, userLoginDto.Password))
                     return false;
 
                 return true;
