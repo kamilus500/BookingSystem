@@ -15,7 +15,7 @@ export const UserPanel: React.FC = () => {
   useEffect(() => {
     fetch(
       "https://booking-tent-api.azurewebsites.net/api/user/" +
-        cookies.loginData.userId,
+        cookies.loginData?.userId,
       {
         method: "GET",
         headers: {
@@ -28,6 +28,7 @@ export const UserPanel: React.FC = () => {
         setUser(res);
       });
   }, []);
+  console.log(user);
 
   return (
     <div className="flex">
@@ -60,6 +61,7 @@ export const UserPanel: React.FC = () => {
           </>
         )}
       </div>
+
       <Switch>
         <Route path="/userpanel/account">
           <Account user={user} />
@@ -67,6 +69,7 @@ export const UserPanel: React.FC = () => {
         <Route path="/userpanel/orders">
           <UserOrders orders={user?.orders} />
         </Route>
+
         <Route path="/userpanel/manageusers">
           <ManageUsers />
         </Route>

@@ -138,7 +138,7 @@ namespace BookingSystem.Service.Services
             {
                 var users = await _dbContext.Users.ToListAsync();
 
-                if (users.Any())
+                if (!users.Any())
                     throw new Exception("Users are empty");
 
                 return users;

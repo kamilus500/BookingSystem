@@ -47,6 +47,8 @@ namespace BookingSystem.Service.Services
 
         public async Task Create(OrderDto newOrderDto)
         {
+            string email = string.Empty;
+
             try
             {
                 if(newOrderDto == null)
@@ -57,9 +59,13 @@ namespace BookingSystem.Service.Services
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
 
-                var email = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId).Email;
-
-                await _emailService.Send(email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                if(newOrderDto.UserId == null)
+                    await _emailService.Send(newOrderDto.Email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                else
+                {
+                    email = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId).Email;
+                    await _emailService.Send(email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                }
             }
             catch (Exception ex)
             {

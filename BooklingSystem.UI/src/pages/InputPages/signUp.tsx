@@ -14,7 +14,7 @@ export const SignUp: React.FC = () => {
     password: "",
   });
   const { t } = useTranslation();
-  const [cookies, setCookie, removeCookie] = useCookies(["loginData"]);
+  const [cookies, setCookie] = useCookies(["loginData"]);
   const history = useHistory();
   const handleSubmit = async () => {
     const abortController = new AbortController();
