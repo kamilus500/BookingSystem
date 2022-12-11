@@ -57,7 +57,9 @@ namespace BookingSystem.Service.Services
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
 
-                await _emailService.Send("kkurzeja321@gmail.com", "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                var email = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId).Email;
+
+                await _emailService.Send(email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
             }
             catch (Exception ex)
             {
