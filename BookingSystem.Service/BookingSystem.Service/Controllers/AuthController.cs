@@ -37,7 +37,7 @@ namespace BookingSystem.Service.Controllers
 
                 var user = await _userService.GetUser(loginUser);
 
-                return Ok(new AuthenticatedResponse { Token = tokenString, FirstName = user.FirstName, LastName = user.LastName, UserId = user.Id, Role = (int)user.Role});
+                return Ok(new AuthenticatedResponse { Token = tokenString, FirstName = user.FirstName, LastName = user.LastName, UserId = user.Id});
             }
             return Unauthorized();
         }

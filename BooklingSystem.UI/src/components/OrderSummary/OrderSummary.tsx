@@ -3,7 +3,7 @@ import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
-import { OrderActions } from "../../models/OrderActions";
+import { OrderActions } from "../../models/OrderAtions";
 import { OrderState } from "../../models/OrderState";
 const OrderSummary: React.FC<{
   orderState: OrderState;

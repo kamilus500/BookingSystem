@@ -3,7 +3,7 @@ import Wrapper from "../Ui/Wrapper";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
 import { OrderState } from "../../models/OrderState";
-import { OrderActions } from "../../models/OrderActions";
+import { OrderActions } from "../../models/OrderAtions";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 
 const UserInput: React.FC<{

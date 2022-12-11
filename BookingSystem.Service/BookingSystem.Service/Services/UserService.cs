@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
+using Isopoh.Cryptography.Argon2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,7 +27,7 @@ namespace BookingSystem.Service.Services
             {
                 var user = _mapper.Map<User>(newUserDto);
 
-                var hashedPassword = PasswordHasherService.HashPassword(newUserDto.Password);
+                var hashedPassword = Argon2.Hash(user.Password);
 
                 user.Password = hashedPassword;
 
@@ -64,10 +65,10 @@ namespace BookingSystem.Service.Services
                 if(user is null)
                     throw new ArgumentNullException(nameof(user));
 
-                if (PasswordHasherService.VerifyPassword(user.Password, userLoginDto.Password))
-                    return true;
+                if (!Argon2.Verify(user.Password, userLoginDto.Password))
+                    return false;
 
-                return false;
+                return true;
             }
             catch (Exception ex)
             {
@@ -116,7 +117,7 @@ namespace BookingSystem.Service.Services
         {
             try
             {
-                var user = await _dbContext.Users.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == id);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (user is null)
                     throw new ArgumentNullException(nameof(user));

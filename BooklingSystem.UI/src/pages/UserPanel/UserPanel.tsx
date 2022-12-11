@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { useCookies } from "react-cookie";
 import { Switch, Route, Link } from "react-router-dom";
-import User from "../../models/User";
 import { Account } from "./Account";
 import { Orders } from "./Orders";
 
 export const UserPanel: React.FC = () => {
-  const [user, setUser] = useState<User[]>([]);
-
   const [cookies] = useCookies(["loginData"]);
-  useEffect(() => {
-    fetch("https://booking-tent-api.azurewebsites.net/api/order/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res: User[]) => {
-        setUser(res);
-      });
-  }, []);
-  console.log(user);
 
   return (
     <div className="flex">

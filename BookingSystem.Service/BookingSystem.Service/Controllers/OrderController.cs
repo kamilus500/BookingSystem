@@ -1,4 +1,5 @@
 ﻿using BookingSystem.Service.Dtos;
+using BookingSystem.Service.Entities.Enums;
 using BookingSystem.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,6 @@ namespace BookingSystem.Service.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Get()
         {
