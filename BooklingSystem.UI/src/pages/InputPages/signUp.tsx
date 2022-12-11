@@ -39,7 +39,9 @@ export const SignUp: React.FC = () => {
             name: respData.firstName,
             lastname: respData.lastName,
             token: respData.token,
+
             userId: respData.userId,
+
           },
           { expires: date }
         );
@@ -101,16 +103,16 @@ export const SignUp: React.FC = () => {
               />
 
               <div className="flex items-center">
-                <input
-                  onClick={() => setShow(!show)}
-                  type="checkbox"
-                  className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
-                />
-
                 <label
                   htmlFor="remember-me"
                   className="my-10 elements font-medium ml-2 block text-sm text-gray-900"
                 >
+                  <input
+                    onClick={() => setShow(!show)}
+                    type="checkbox"
+                    className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
+                  />
+
                   {t("ShowPassword")}
                 </label>
               </div>
