@@ -27,7 +27,7 @@ namespace BookingSystem.Service.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            bool isExist = _userService.IsExist(loginUser.Email).Result;
+            bool isExist = _userService.IsExist(loginUser).Result;
 
             var role = await _userService.GetRole(loginUser);
 

@@ -5,6 +5,8 @@ using Isopoh.Cryptography.Argon2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Services
@@ -56,16 +58,16 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<bool> IsExist(string email)
+        public async Task<bool> IsExist(UserLoginDto userLoginDto)
         {
             try
             {
-                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == userLoginDto.Email);
 
                 if(user is null)
                     throw new ArgumentNullException(nameof(user));
 
-                if (!Argon2.Verify(user.Password, email))
+                if (!Argon2.Verify(user.Password, userLoginDto.Password))
                     return false;
 
                 return true;
@@ -123,6 +125,43 @@ namespace BookingSystem.Service.Services
                     throw new ArgumentNullException(nameof(user));
 
                 return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            try
+            {
+                var users = await _dbContext.Users.ToListAsync();
+
+                if (users.Any())
+                    throw new Exception("Users are empty");
+
+                return users;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        public async Task Remove(int id)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id==id);
+
+                if (user is null)
+                    throw new Exception("User is null");
+                
+                _dbContext.Users.Remove(user);
+                _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
