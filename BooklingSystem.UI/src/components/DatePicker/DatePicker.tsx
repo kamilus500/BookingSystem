@@ -13,9 +13,9 @@ const date1=disableDates.getDate();
 const disableDates2 = new Date('August 18, 2022 23:15:30');
 const date2=disableDates2.getDate();
 const dateArray=[date1,date2]//Tablica dat będzie pobierana od kamila
-=======
+
 import { OrderActions } from "../../models/OrderActions";
->>>>>>> 2730c88acf0c3e25dcef76dcfa9442179bad94a4
+
 
 const Calendarr: React.FC<{
   orderState: OrderState;
