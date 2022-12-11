@@ -2,12 +2,11 @@ import { Avatar } from "flowbite-react/lib/esm/components/Avatar";
 import React from "react";
 import { useCookies } from "react-cookie";
 import Comment from "../../models/Comment";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
-    const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   function deleteClick(id: number) {
-
     fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
       method: "POST",
       headers: {
@@ -16,6 +15,8 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
       },
     }).then((res) => console.log(res));
   }
+  console.log(cookies.loginData);
+
   return (
     <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4">
       <header className="flex gap-2 items-center">
@@ -34,12 +35,14 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
           </span>
         );
       })}
-      <button
-        onClick={() => deleteClick(6)}
-        className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
-      >
+      {opinion.userId === cookies.loginData?.userId && (
+        <button
+          onClick={() => deleteClick(6)}
+          className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
+        >
           {t("Delete")}
-      </button>
+        </button>
+      )}
     </div>
   );
 };
