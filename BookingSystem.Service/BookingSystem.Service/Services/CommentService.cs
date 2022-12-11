@@ -2,6 +2,7 @@
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace BookingSystem.Service.Services
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        public CommentService(ApplicationDbContext dbContext, IMapper mapper)
+        private readonly ILogger _logger;
+        public CommentService(ApplicationDbContext dbContext, IMapper mapper, ILogger<CommentService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task Create(CommentDto commentDto)
@@ -30,10 +33,12 @@ namespace BookingSystem.Service.Services
 
                 await _dbContext.Comments.AddAsync(comment);
                 await _dbContext.SaveChangesAsync();
+
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -49,9 +54,10 @@ namespace BookingSystem.Service.Services
                 _dbContext.Comments.Remove(comment);
                 await _dbContext.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -60,6 +66,7 @@ namespace BookingSystem.Service.Services
             try
             {
                 var comment = await _dbContext.Comments
+                    .Include(x => x.User)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (comment == null)
@@ -69,9 +76,10 @@ namespace BookingSystem.Service.Services
 
                 return commentDto;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -80,6 +88,7 @@ namespace BookingSystem.Service.Services
             try
             {
                 var comments = await _dbContext.Comments
+                    .Include(x => x.User)
                     .ToListAsync();
 
                 if (comments == null)
@@ -89,9 +98,10 @@ namespace BookingSystem.Service.Services
 
                 return commentDtos;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
     }

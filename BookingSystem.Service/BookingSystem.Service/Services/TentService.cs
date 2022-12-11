@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using BookingSystem.Service.Dtos;
 using BookingSystem.Service.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +15,12 @@ namespace BookingSystem.Service.Services
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        public TentService(ApplicationDbContext dbContext, IMapper mapper)
+        private readonly ILogger _logger;
+        public TentService(ApplicationDbContext dbContext, IMapper mapper, ILogger<TentService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<TentDto> GetTentById(int id)
@@ -32,9 +36,10 @@ namespace BookingSystem.Service.Services
 
                 return tentDto;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -51,9 +56,10 @@ namespace BookingSystem.Service.Services
 
                 return tentDtos;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Something goes wrong: {ex.Message}");
+                throw new Exception(ex.Message, ex);
             }
         }
     }

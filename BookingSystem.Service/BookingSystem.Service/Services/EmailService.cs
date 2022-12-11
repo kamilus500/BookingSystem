@@ -56,5 +56,7 @@ namespace BookingSystem.Service.Services
 
             _smtp.Dispose();
         }
+
+        
     }
 }
