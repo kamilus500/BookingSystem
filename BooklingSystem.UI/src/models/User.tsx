@@ -1,8 +1,11 @@
+import Order from "./Order";
+
 export default interface User {
   Id: number;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Password: string;
-  Role: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  orders: Order[];
 }

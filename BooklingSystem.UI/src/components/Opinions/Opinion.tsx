@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
   const [cookies] = useCookies(["loginData"]);
   const { t } = useTranslation();
+
   function deleteClick(id: number) {
     fetch("https://booking-tent-api.azurewebsites.net/api/delete/?id=" + id, {
       method: "POST",
@@ -15,7 +16,6 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
       },
     }).then((res) => console.log(res));
   }
-  console.log(cookies.loginData);
 
   return (
     <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4">

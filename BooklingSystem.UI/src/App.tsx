@@ -15,36 +15,47 @@ import { SignUp } from "./pages/InputPages/signUp";
 import { Registration } from "./pages/InputPages/registration";
 import ReservationPage from "./pages/ReservationPage/ReservationPage";
 import { UserPanel } from "./pages/UserPanel/UserPanel";
+import { useCookies } from "react-cookie";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <>
-    <Router>
-      <Nav />
-      <Switch>
-        <Route path="/login">
-          <SignUp />
-        </Route>
+const App: React.FC = () => {
+  const [cookies] = useCookies(["loginData"]);
 
-        <Route path="/register">
-          <Registration />
-        </Route>
+  return (
+    <>
+      <Router>
+        <Nav />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
 
-        <Route path="/reservation">
-          <ReservationPage />
-        </Route>
+          <Route path="/login">
+            <SignUp />
+          </Route>
 
-        <Route path="/userpanel">
-          <UserPanel />
-        </Route>
+          <Route path="/register">
+            <Registration />
+          </Route>
 
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
-  </>
-);
+          <Route path="/reservation">
+            <ReservationPage />
+          </Route>
+
+          {cookies.loginData && (
+            <Route path="/userpanel">
+              <UserPanel />
+            </Route>
+          )}
+
+          <Route>
+            <div>Not found</div>
+          </Route>
+        </Switch>
+      </Router>
+    </>
+  );
+};
 
 export default App;
