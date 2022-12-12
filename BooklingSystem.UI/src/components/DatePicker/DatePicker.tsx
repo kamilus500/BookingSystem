@@ -73,7 +73,9 @@ const Calendarr: React.FC<{
         onClickYear={handleYearChange}
         onChange={handleDateChange}
         value={selectedDate}
-        tileDisabled={({ date }) => dateArray.includes(date.toString())}
+        tileDisabled={({ date }) =>
+          dateArray.includes(date.toString()) || date <= new Date()
+        }
       />
 
       <div className="flex gap-4">

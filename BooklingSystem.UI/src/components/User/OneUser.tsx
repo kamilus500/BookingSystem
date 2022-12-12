@@ -7,13 +7,13 @@ import User from "../../models/User";
 export const OneUser: React.FC<{ user: User }> = ({ user }) => {
   const [cookies] = useCookies(["loginData"]);
   function deleteUser() {
-    // fetch("https://booking-tent-api.azurewebsites.net/api/user/" + user.id, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + cookies.loginData.token,
-    //   },
-    // });
+    fetch("https://booking-tent-api.azurewebsites.net/api/user/" + user.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.loginData.token,
+      },
+    });
   }
   const { t } = useTranslation();
 

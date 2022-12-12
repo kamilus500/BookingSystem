@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 import Comment from "../../models/Comment";
 
 const AddOpinion: React.FC<{
-  setOpinions: Dispatch<SetStateAction<Comment[]>>;
-}> = ({ setOpinions }) => {
+  setAddOpinion: Dispatch<SetStateAction<boolean>>;
+}> = ({ setAddOpinion }) => {
   const [cookies] = useCookies(["loginData"]);
   const [message, setMessage] = useState("");
   const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
   const { t } = useTranslation();
 
   function handleSubmit() {
@@ -31,17 +31,14 @@ const AddOpinion: React.FC<{
         "Content-Type": "application/json",
         Authorization: "Bearer " + cookies.loginData.token,
       },
-    })
-      .then((res) => console.log(res))
-      .then(() => {
-        setOpinions((cs) => [...cs, newComment]);
-      });
+    }).then((res) => setAddOpinion(false));
+
     return () => {
       abortController.abort();
     };
   }
   return (
-    <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4">
+    <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4 absolute top-1/2 left-1/2 bg-gray-900">
       <p className="m=5 text-2xl">{t("Add new opinion")}</p>
       <textarea
         onChange={(e) => setMessage(e.target.value)}
@@ -76,6 +73,12 @@ const AddOpinion: React.FC<{
         className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
       >
         {t("Submit")}
+      </button>
+      <button
+        onClick={() => setAddOpinion(false)}
+        className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
+      >
+        close
       </button>
     </div>
   );
