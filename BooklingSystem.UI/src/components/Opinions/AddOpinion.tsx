@@ -38,7 +38,7 @@ const AddOpinion: React.FC<{
     };
   }
   return (
-    <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4 absolute top-1/2 left-1/2 bg-gray-900">
+    <div className="max-w-md space-y-4 shrink mx-auto border rounded-lg p-4 absolute top-0 left-1/4 bg-gray-900">
       <p className="m=5 text-2xl">{t("Add new opinion")}</p>
       <textarea
         onChange={(e) => setMessage(e.target.value)}
@@ -78,7 +78,7 @@ const AddOpinion: React.FC<{
         onClick={() => setAddOpinion(false)}
         className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
       >
-        close
+        {t("Close")}
       </button>
     </div>
   );

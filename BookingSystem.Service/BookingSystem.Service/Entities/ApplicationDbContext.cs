@@ -21,6 +21,12 @@ namespace BookingSystem.Service.Entities
 
             modelBuilder.Entity<Item>()
                 .HasNoKey();
+
+            modelBuilder.Entity<Order>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Orders)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

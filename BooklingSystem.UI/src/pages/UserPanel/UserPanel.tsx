@@ -3,15 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Switch, Route, Link } from "react-router-dom";
 import User from "../../models/User";
-import { ManageOrders } from "../Manage/ManageOrders";
-import { ManageUsers } from "../Manage/ManageUsers";
+import { ManageOpinions } from "../Manage/Opinion/ManageOpinions";
+import { ManageOrders } from "../Manage/Order/ManageOrders";
+import { ManageUsers } from "../Manage/User/ManageUsers";
 import { Account } from "./Account";
-import { UserOrders } from "./UserOrders";
 
 export const UserPanel: React.FC = () => {
   const [user, setUser] = useState<User>();
 
   const [cookies] = useCookies(["loginData"]);
+
   useEffect(() => {
     fetch(
       "https://booking-tent-api.azurewebsites.net/api/user/" +
@@ -37,21 +38,9 @@ export const UserPanel: React.FC = () => {
             Account
           </button>
         </Link>
-        {user?.role === 1 && (
-          <Link to="/userpanel/orders">
-            <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-              Orders
-            </button>
-          </Link>
-        )}
 
         {user?.role === 2 && (
           <>
-            <Link to="/userpanel/manageorders">
-              <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-                Manage Orders
-              </button>
-            </Link>
             <Link to="/userpanel/manageusers">
               <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
                 Manage users
@@ -59,21 +48,31 @@ export const UserPanel: React.FC = () => {
             </Link>
           </>
         )}
+        <Link to="/userpanel/manageorders">
+          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
+            Manage orders
+          </button>
+        </Link>
+        <Link to="/userpanel/manageopinions">
+          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
+            Manage opinions
+          </button>
+        </Link>
       </div>
 
       <Switch>
         <Route path="/userpanel/account">
           <Account user={user} />
         </Route>
-        <Route path="/userpanel/orders">
-          <UserOrders orders={user?.orders} />
-        </Route>
 
         <Route path="/userpanel/manageusers">
           <ManageUsers />
         </Route>
         <Route path="/userpanel/manageorders">
-          <ManageOrders />
+          <ManageOrders role={user?.role} userId={user?.id} />
+        </Route>
+        <Route path="/userpanel/manageopinions">
+          <ManageOpinions role={user?.role} />
         </Route>
       </Switch>
     </div>

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { OneOrder } from "../../components/Order/OneOrder";
-import Order from "../../models/Order";
+import { OneOrder } from "./OneOrder";
+import Order from "../../../models/Order";
 
-export const ManageOrders: React.FC = () => {
+export const ManageOrders: React.FC<{
+  role: number | undefined;
+  userId: number | undefined;
+}> = ({ role, userId }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  function fetchOrders() {
     fetch("https://booking-tent-api.azurewebsites.net/api/order/", {
       method: "GET",
       headers: {
@@ -18,6 +21,9 @@ export const ManageOrders: React.FC = () => {
       .then((res: Order[]) => {
         setOrders(res);
       });
+  }
+  useEffect(() => {
+    fetchOrders();
   }, []);
 
   return (
@@ -39,9 +45,16 @@ export const ManageOrders: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {orders.map((order, index) => (
-          <OneOrder key={index} order={order} />
-        ))}
+        {role === 2 &&
+          orders.map((order, index) => (
+            <OneOrder key={index} order={order} fetchOrders={fetchOrders} />
+          ))}
+        {role === 1 &&
+          orders
+            .filter((o) => o.userId === userId)
+            .map((order, index) => (
+              <OneOrder key={index} order={order} fetchOrders={fetchOrders} />
+            ))}
       </tbody>
     </table>
   );
