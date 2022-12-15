@@ -117,7 +117,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<OrderDto> GetOrderById(int id)
+        public async Task<Order> GetOrderById(int id)
         {
             try
             {
@@ -126,9 +126,9 @@ namespace BookingSystem.Service.Services
                 if (order == null)
                     throw new ArgumentNullException(nameof(order));
 
-                var orderDto = _mapper.Map<OrderDto>(order);
+                //var orderDto = _mapper.Map<OrderDto>(order);
 
-                return orderDto;
+                return order;
             }
             catch (Exception ex)
             {
@@ -137,7 +137,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<List<OrderDto>> GetOrders()
+        public async Task<List<Order>> GetOrders()
         {
             try
             {
@@ -146,9 +146,9 @@ namespace BookingSystem.Service.Services
                 if (orders == null)
                     throw new ArgumentNullException(nameof(orders));
 
-                var ordersDto = _mapper.Map <List<OrderDto>>(orders);
+                //var ordersDto = _mapper.Map <List<OrderDto>>(orders);
 
-                return ordersDto;
+                return orders;
             }
             catch (Exception ex)
             {

@@ -16,6 +16,7 @@ namespace BookingSystem.Service.Entities
         public string Password { get; set; }
 
         public RoleValue Role { get; set; } = RoleValue.User;
+        public bool IsDeleted { get; set; } = false;
 
         public List<Order>? Orders { get; set; }
     }
