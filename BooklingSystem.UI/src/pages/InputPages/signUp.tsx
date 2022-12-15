@@ -48,6 +48,7 @@ export const SignUp: React.FC = () => {
               lastname: respData.lastName,
               token: respData.token,
               email: respData.email,
+              userId: respData.userId,
             },
             { expires: date }
           );
