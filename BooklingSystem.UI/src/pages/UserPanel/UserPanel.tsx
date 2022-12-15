@@ -32,30 +32,36 @@ export const UserPanel: React.FC = () => {
 
   return (
     <div className="flex">
-      <div className="flex flex-col">
+      <div className="flex flex-col mr-3">
         <Link to="/userpanel/account">
-          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-            Account
+          <button className="m-1 p-2 rounded-lg bg-violet-600 text-white w-full">
+            Konto
           </button>
         </Link>
 
         {user?.role === 2 && (
           <>
             <Link to="/userpanel/manageusers">
-              <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-                Manage users
+              <button className="m-1 p-2 rounded-lg bg-violet-600 text-white  w-full">
+                Zarządzaj
+                <br />
+                użytkownikami
               </button>
             </Link>
           </>
         )}
         <Link to="/userpanel/manageorders">
-          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-            Manage orders
+          <button className="m-1 p-2 rounded-lg bg-violet-600 text-white  w-full">
+            Zarządzaj
+            <br />
+            rezerwacjami
           </button>
         </Link>
         <Link to="/userpanel/manageopinions">
-          <button className="m-1 p-2 px-4 rounded-lg bg-violet-600 text-white">
-            Manage opinions
+          <button className="m-1 p-2 rounded-lg bg-violet-600 text-white  w-full">
+            Zarządzaj
+            <br />
+            opiniami
           </button>
         </Link>
       </div>
