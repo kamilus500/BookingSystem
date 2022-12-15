@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
@@ -11,6 +11,19 @@ const AddressInput: React.FC<{
   const buildingNumberRef = useRef<HTMLInputElement>(null);
   const zipCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
+
+  const [zipExists, setZipExists] = useState(false);
+  function checkZipExistance(zipCode: string) {
+    fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      setZipExists(true);
+    });
+  }
 
   const streetHandler = () => {
     if (streetRef.current) {
