@@ -47,13 +47,23 @@ export const ManageOrders: React.FC<{
       <tbody>
         {role === 2 &&
           orders.map((order, index) => (
-            <OneOrder key={index} order={order} fetchOrders={fetchOrders} />
+            <OneOrder
+              key={index}
+              order={order}
+              role={role}
+              fetchOrders={fetchOrders}
+            />
           ))}
         {role === 1 &&
           orders
             .filter((o) => o.userId === userId)
             .map((order, index) => (
-              <OneOrder key={index} order={order} fetchOrders={fetchOrders} />
+              <OneOrder
+                key={index}
+                order={order}
+                role={role}
+                fetchOrders={fetchOrders}
+              />
             ))}
       </tbody>
     </table>
