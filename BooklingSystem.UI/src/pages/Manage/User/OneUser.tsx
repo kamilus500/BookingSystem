@@ -52,7 +52,10 @@ export const OneUser: React.FC<{ user: User; fetchUsers: () => void }> = ({
             {t("Actions")}
           </span>
           {user.isDeleted ? (
-            <button className="rounded mr-1 bg-red-900 py-1 px-3 text-xs font-bold">
+            <button
+              onClick={deleteUser}
+              className="rounded mr-1 bg-red-900 py-1 px-3 text-xs font-bold"
+            >
               {t("User is removed")}
             </button>
           ) : (
