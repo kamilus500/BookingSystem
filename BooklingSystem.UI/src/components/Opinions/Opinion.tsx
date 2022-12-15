@@ -38,14 +38,6 @@ const Opinion: React.FC<{ opinion: Comment }> = ({ opinion }) => {
           </span>
         );
       })}
-      {opinion.userId === cookies.loginData?.userId && (
-        <button
-          onClick={deleteClick}
-          className="group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 bg-violet-600"
-        >
-          {t("Delete")}
-        </button>
-      )}
     </div>
   );
 };

@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import { OneUser } from "./OneUser";
 import User from "../../../models/User";
 
-export const ManageUsers: React.FC = () => {
+export const ManageUsers: React.FC<{
+  displayModal: (message: string) => void;
+}> = ({ displayModal }) => {
   const [users, setUsers] = useState<User[]>([]);
   const { t } = useTranslation();
   function fetchUsers() {
@@ -43,7 +45,12 @@ export const ManageUsers: React.FC = () => {
       </thead>
       <tbody>
         {users.map((user, index) => (
-          <OneUser key={index} user={user} fetchUsers={fetchUsers} />
+          <OneUser
+            key={index}
+            user={user}
+            fetchUsers={fetchUsers}
+            displayModal={displayModal}
+          />
         ))}
       </tbody>
     </table>

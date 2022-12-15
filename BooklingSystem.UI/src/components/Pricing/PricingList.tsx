@@ -25,7 +25,7 @@ const PricingList: React.FC = () => {
             state: { size: "small", tentId: 1, price: 489 },
           }}
         >
-          <Button>Reserve</Button>
+          <Button accent>Reserve</Button>
         </Link>
       </Pricing>
       <Pricing
@@ -58,7 +58,7 @@ const PricingList: React.FC = () => {
             state: { size: "giga", tentId: 3, price: 889 },
           }}
         >
-          <Button>Reserve</Button>
+          <Button accent>Reserve</Button>
         </Link>
       </Pricing>
     </div>

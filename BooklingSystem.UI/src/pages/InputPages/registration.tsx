@@ -3,6 +3,7 @@ import { Valid } from "./Validation";
 import "./Validation.css";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 export const Registration: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
@@ -213,6 +214,16 @@ export const Registration: React.FC = () => {
               >
                 {t("ShowPassword")}
               </label>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <Link
+                  to="login"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  {t("Already have an account? Log in...")}
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -27,8 +27,8 @@ const OpinionList = () => {
       <div className="container flex flex-wrap gap-4 lg:gap-16">
         {opinions
           .map((opinion) => ({ opinion, sort: Math.random() }))
-          .sort((a, b) => a.sort - b.sort)
-          .slice(0, 4)
+          // .sort((a, b) => a.sort - b.sort)
+          // .slice(0, 4)
           .map(({ opinion }, index) => (
             <Opinion key={index} opinion={opinion} />
           ))}

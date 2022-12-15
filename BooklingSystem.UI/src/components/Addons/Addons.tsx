@@ -3,6 +3,8 @@ import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
+import { useHistory } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Addons: React.FC<{
   orderState: OrderState;
@@ -10,7 +12,7 @@ const Addons: React.FC<{
 }> = ({ orderState, setOrderStateReducer }) => {
   const chairsRef = useRef<HTMLInputElement>(null);
   const tablesRef = useRef<HTMLInputElement>(null);
-
+  const [t] = useTranslation();
   const chairHandler = () => {
     if (chairsRef.current) {
       let charisNumber = Number(chairsRef.current.value);
@@ -61,6 +63,7 @@ const Addons: React.FC<{
       payload: !orderState.speaker,
     });
   };
+  const history = useHistory();
 
   return (
     <>
@@ -114,13 +117,16 @@ const Addons: React.FC<{
       </label>
 
       <div className="flex gap-4">
+        <Button clickHandler={() => history.push("/")} accent>
+          {t("Back")}
+        </Button>
         <Button
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
           }
           accent
         >
-          Dalej
+          {t("Next")}
         </Button>
       </div>
     </>

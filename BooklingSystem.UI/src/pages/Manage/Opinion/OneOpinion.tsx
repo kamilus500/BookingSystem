@@ -6,8 +6,9 @@ import Comment from "../../../models/Comment";
 
 export const OneOpinion: React.FC<{
   opinion: Comment;
+  displayModal: (message: string) => void;
   fetchOpinions: () => void;
-}> = ({ opinion, fetchOpinions }) => {
+}> = ({ opinion, fetchOpinions, displayModal }) => {
   const [cookies] = useCookies(["loginData"]);
   const { t } = useTranslation();
   function deleteOpinion() {
@@ -21,7 +22,10 @@ export const OneOpinion: React.FC<{
           Authorization: "Bearer " + cookies.loginData.token,
         },
       }
-    ).then(() => fetchOpinions());
+    ).then(() => {
+      fetchOpinions();
+      displayModal("Opinia została usunięta.");
+    });
   }
 
   return (

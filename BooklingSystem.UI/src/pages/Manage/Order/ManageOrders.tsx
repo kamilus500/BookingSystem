@@ -6,7 +6,8 @@ import Order from "../../../models/Order";
 export const ManageOrders: React.FC<{
   role: number | undefined;
   userId: number | undefined;
-}> = ({ role, userId }) => {
+  displayModal: (message: string) => void;
+}> = ({ role, userId, displayModal }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const { t } = useTranslation();
 
@@ -34,6 +35,9 @@ export const ManageOrders: React.FC<{
             {t("Date")}
           </th>
           <th className="p-3 font-bold uppercase  hidden lg:table-cell">
+            {t("Size")}
+          </th>
+          <th className="p-3 font-bold uppercase  hidden lg:table-cell">
             {t("Cost")}
           </th>
           <th className="p-3 font-bold uppercase  hidden lg:table-cell">
@@ -48,6 +52,7 @@ export const ManageOrders: React.FC<{
         {role === 2 &&
           orders.map((order, index) => (
             <OneOrder
+              displayModal={displayModal}
               key={index}
               order={order}
               role={role}
@@ -59,6 +64,7 @@ export const ManageOrders: React.FC<{
             .filter((o) => o.userId === userId)
             .map((order, index) => (
               <OneOrder
+                displayModal={displayModal}
                 key={index}
                 order={order}
                 role={role}

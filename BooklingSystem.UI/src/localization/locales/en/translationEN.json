@@ -49,7 +49,7 @@
   "ReservationDate": "Reservation date",
   "CustomerData": "Customer data",
   "CustomerAddress": "Customer address",
-  "Order": "order",
+  "Order": "Order",
   "Price": "Price",
   "BackToHome": "Back to home page!",
   "OrderSubmit": "Your order has been accepted!",
@@ -59,10 +59,13 @@
   "Status": "Status",
   "Cost": "Cost",
   "Address": "Address",
-  "Actions:": "Actions",
+  "Actions": "Actions",
   "Completed": "Completed",
   "Accepted": "Accepted",
   "Awaiting acception": "Awaiting acception",
   "Pending": "Pending",
-  "Tent size": "Tent size"
+  "Tent size": "Tent size",
+  "Remove user": "Remove user",
+  "User is removed": "User is removed",
+  "Delete reservation": "Delete reservation"
 }

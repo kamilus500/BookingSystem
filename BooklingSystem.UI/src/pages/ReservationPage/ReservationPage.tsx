@@ -30,6 +30,9 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     case OrderActions.SET_STEP_INC: {
       return { ...state, step: state.step + 1 };
     }
+    case OrderActions.SET_STEP_1: {
+      return { ...state, step: 1 };
+    }
     case OrderActions.SET_STEP_DEC: {
       if (state.step > 0) return { ...state, step: state.step - 1 };
 
@@ -145,26 +148,30 @@ const ReservationPage: React.FC = () => {
   switch (orderState.step) {
     case 0:
       return (
-        <Wrapper>
+        <Wrapper step={orderState.step}>
           <Size {...propsToPass} />
           <Addons {...propsToPass} />
         </Wrapper>
       );
     case 1:
       return (
-        <Wrapper>
+        <Wrapper step={orderState.step}>
           <DatePicker {...propsToPass} />
         </Wrapper>
       );
     case 2:
       return (
-        <Wrapper>
+        <Wrapper step={orderState.step}>
           <AddressInput {...propsToPass} />
           <UserInput {...propsToPass} />
         </Wrapper>
       );
     case 3:
-      return <OrderSummary {...propsToPass} />;
+      return (
+        <Wrapper step={orderState.step}>
+          <OrderSummary {...propsToPass} />
+        </Wrapper>
+      );
   }
 
   return (

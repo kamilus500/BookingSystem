@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 import Comment from "../../../models/Comment";
 import { OneOpinion } from "./OneOpinion";
 
-export const ManageOpinions: React.FC<{ role: number | undefined }> = ({
-  role,
-}) => {
+export const ManageOpinions: React.FC<{
+  role: number | undefined;
+  displayModal: (message: string) => void;
+}> = ({ role, displayModal }) => {
   const [cookies] = useCookies(["loginData"]);
 
   const [opinions, setOpinions] = useState<Comment[]>([]);
@@ -49,6 +50,7 @@ export const ManageOpinions: React.FC<{ role: number | undefined }> = ({
         {role === 2 &&
           opinions.map((opinion, index) => (
             <OneOpinion
+              displayModal={displayModal}
               key={index}
               opinion={opinion}
               fetchOpinions={fetchOpinions}
@@ -59,6 +61,7 @@ export const ManageOpinions: React.FC<{ role: number | undefined }> = ({
             .filter((o) => o.userId === cookies.loginData.userId)
             .map((opinion, index) => (
               <OneOpinion
+                displayModal={displayModal}
                 key={index}
                 opinion={opinion}
                 fetchOpinions={fetchOpinions}

@@ -5,7 +5,8 @@ import Comment from "../../models/Comment";
 
 const AddOpinion: React.FC<{
   setAddOpinion: Dispatch<SetStateAction<boolean>>;
-}> = ({ setAddOpinion }) => {
+  displayModal: (message: string) => void;
+}> = ({ setAddOpinion, displayModal }) => {
   const [cookies] = useCookies(["loginData"]);
   const [message, setMessage] = useState("");
   const [hover, setHover] = useState(0);
@@ -31,7 +32,10 @@ const AddOpinion: React.FC<{
         "Content-Type": "application/json",
         Authorization: "Bearer " + cookies.loginData.token,
       },
-    }).then((res) => setAddOpinion(false));
+    }).then((res) => {
+      setAddOpinion(false);
+      displayModal("Opinia została dodana.");
+    });
 
     return () => {
       abortController.abort();

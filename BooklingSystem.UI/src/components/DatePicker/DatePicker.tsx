@@ -6,6 +6,7 @@ import Button from "../Ui/Button";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
+import { useTranslation } from "react-i18next";
 const disableDates = new Date("August 19, 2022");
 const date1 = disableDates.getDate();
 const disableDates2 = new Date("August 18, 2022");
@@ -30,6 +31,7 @@ const Calendarr: React.FC<{
     "November",
     "December",
   ];
+  const [t] = useTranslation();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     orderState.date
@@ -80,21 +82,22 @@ const Calendarr: React.FC<{
 
       <div className="flex gap-4">
         <Button
+          accent
           disabled={!orderState.size}
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
           }
         >
-          Wróć
+          {t("Back")}
         </Button>
         <Button
+          accent
           disabled={!selectedDate}
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_INC })
           }
-          accent
         >
-          Dalej
+          {t("Next")}
         </Button>
       </div>
     </>

@@ -120,6 +120,7 @@ const UserInput: React.FC<{
 
       <div className="flex gap-4">
         <Button
+          accent
           clickHandler={() =>
             setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
           }

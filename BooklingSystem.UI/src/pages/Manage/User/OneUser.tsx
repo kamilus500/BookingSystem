@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 
 import User from "../../../models/User";
 
-export const OneUser: React.FC<{ user: User; fetchUsers: () => void }> = ({
-  user,
-  fetchUsers,
-}) => {
+export const OneUser: React.FC<{
+  user: User;
+  fetchUsers: () => void;
+  displayModal: (message: string) => void;
+}> = ({ user, fetchUsers, displayModal }) => {
   const [cookies] = useCookies(["loginData"]);
   function deleteUser() {
     fetch("https://booking-tent-api.azurewebsites.net/api/user/" + user.id, {
@@ -16,7 +17,22 @@ export const OneUser: React.FC<{ user: User; fetchUsers: () => void }> = ({
         "Content-Type": "application/json",
         Authorization: "Bearer " + cookies.loginData.token,
       },
-    }).then((r) => fetchUsers());
+    }).then((r) => {
+      fetchUsers();
+      displayModal(
+        user.isDeleted
+          ? "Użytkownik " +
+              user.firstName +
+              " " +
+              user.lastName +
+              " przywrócony z powodzeniem."
+          : "Użytkownik " +
+              user.firstName +
+              " " +
+              user.lastName +
+              " usunięty z powodzeniem."
+      );
+    });
   }
   const { t } = useTranslation();
 

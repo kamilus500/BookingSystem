@@ -1,5 +1,3 @@
-import Address from "./Address";
-
 export default interface Order {
   id: number;
   userId: number;
@@ -7,7 +5,7 @@ export default interface Order {
   cost: number;
   dateTime: Date;
   tentId: number;
-  address: Address;
+  adress: string;
   isEnd: boolean;
   isAccepted: boolean;
 }

@@ -101,7 +101,7 @@ const OrderSummary: React.FC<{
   };
 
   return (
-    <Wrapper>
+    <>
       {!message && (
         <>
           <div>
@@ -182,6 +182,7 @@ const OrderSummary: React.FC<{
           )}
           <div className="w-1/4 flex gap-4">
             <Button
+              accent
               clickHandler={() =>
                 setOrderStateReducer({ type: OrderActions.SET_STEP_DEC })
               }
@@ -208,7 +209,7 @@ const OrderSummary: React.FC<{
           </div>
         </>
       )}
-    </Wrapper>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Validation.css";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 export const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -117,14 +117,11 @@ export const SignUp: React.FC = () => {
               />
 
               <div className="flex items-center">
-                <label
-                  htmlFor="remember-me"
-                  className="my-10 elements font-medium ml-2 block text-sm text-gray-900"
-                >
+                <label className="my-10 elements font-medium ml-2 block text-sm text-gray-900">
                   <input
                     onClick={() => setShow(!show)}
                     type="checkbox"
-                    className="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 mr-1 text-indigo-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600"
                   />
 
                   {t("ShowPassword")}
@@ -135,12 +132,12 @@ export const SignUp: React.FC = () => {
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a
-                href="#"
+              <Link
+                to="register"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                {t("ForgotPassword")}
-              </a>
+                {t("No account? Register...")}
+              </Link>
             </div>
           </div>
 
