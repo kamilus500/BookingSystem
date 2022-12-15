@@ -105,7 +105,7 @@ const OrderSummary: React.FC<{
           <div>
             <div>
               <p>
-                {t("TentSize")}: {size} - {state.price} PLN
+                {t("TentSize")}: {size} - {orderState.price} PLN
               </p>
             </div>
 
@@ -159,10 +159,10 @@ const OrderSummary: React.FC<{
             </div>
           </div>
           <div>
-            <p>Koszt dostawy: {distanceCost} PLN</p>
+            <p>Koszt dostawy: {Number(distanceCost).toFixed(2)} PLN</p>
           </div>
           <div>
-            <p>Łączny koszt: {Number(distanceCost) + totalValue} PLN</p>
+            <p>Łączny koszt: {(Number(distanceCost) + totalValue).toFixed(2)} PLN</p>
           </div>
           <div className="w-1/4 flex gap-4">
             <Button

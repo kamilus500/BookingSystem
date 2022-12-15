@@ -1,9 +1,9 @@
 export interface OrderState {
   totalValue: number;
   price: number;
-  tentId: number;
+  tentId: number|null;
   step: number;
-  size: string;
+  size: string|undefined;
   bbq: boolean;
   speaker: boolean;
   chairs: number;

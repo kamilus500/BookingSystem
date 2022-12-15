@@ -44,7 +44,7 @@ export const Registration: React.FC = () => {
           }
         );
 
-        if (resp.ok === true) {
+        if (resp.ok) {
           setDisabled(false);
           history.push("/login");
         } else {

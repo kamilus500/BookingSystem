@@ -67,6 +67,12 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     case OrderActions.SET_SPEAKER: {
       return { ...state, speaker: action.payload };
     }
+    case OrderActions.SET_PRICE2: {
+      return { ...state, price: action.payload };
+    }
+    case OrderActions.SET_TENTID: {
+      return { ...state, tentId: action.payload };
+    }
     case OrderActions.SET_PRICE: {
       if (action.payload) {
         return { ...state, totalValue: action.payload };
@@ -105,11 +111,11 @@ const ReservationPage: React.FC = () => {
   const [cookies] = useCookies(["loginData"]);
 
   const initialOrderState: OrderState = {
-    price: state.price,
+    price: state?state.price:489,
     totalValue: 0,
-    tentId: state.tentId,
+    tentId: state?state.tentId:1,
     step: 0,
-    size: state.size,
+    size: state?state.size:"small",
     bbq: false,
     speaker: false,
     chairs: 0,

@@ -10,16 +10,27 @@ const Size: React.FC<{
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const selectHandler = () => {
+    let price;
 
     if (selectRef.current) {
-      console.log(selectRef.current.value)
+      price=selectRef.current.value==="small"?489:selectRef.current.value==="medium"?589:889;
+      console.log(selectRef.current)
       setOrderStateReducer({
         type: OrderActions.SET_SIZE,
         payload: selectRef.current.value,
       });
+      console.log(price)
+      setOrderStateReducer({
+        type: OrderActions.SET_PRICE2,
+        payload: selectRef.current.value==="small"?489:selectRef.current.value==="medium"?589:889,
+      });
+
+      setOrderStateReducer({
+        type: OrderActions.SET_TENTID,
+        payload: selectRef.current.value==="small"?1:selectRef.current.value==="medium"?2:3,
+      });
     }
   };
-  console.log(selectRef.current?.value)
   return (
     <>
       <h3>Wybierz rozmiar namiotu!</h3>
@@ -32,9 +43,9 @@ const Size: React.FC<{
         className="dark:text-black"
       >
         <option disabled={selectRef.current?.value!==""} value="">--Wybierz rozmiar--</option>
-        <option value="small">Mały</option>
-        <option value="medium">Średni</option>
-        <option value="giga">Giga</option>
+        <option data-price={489} value="small">Mały</option>
+        <option data-price={589} value="medium">Średni</option>
+        <option data-price={889} value="giga">Giga</option>
       </select>
     </>
   );

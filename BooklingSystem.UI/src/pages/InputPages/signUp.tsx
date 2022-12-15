@@ -33,7 +33,7 @@ export const SignUp: React.FC = () => {
         }
       );
 
-      if (resp.ok === true) {
+      if (resp.ok) {
         setDisabled(false);
 
         const respData = await resp.json();

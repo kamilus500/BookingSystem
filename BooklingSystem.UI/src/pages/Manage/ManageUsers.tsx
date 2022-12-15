@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { OneUser } from "../../components/User/OneUser";
 import User from "../../models/User";
