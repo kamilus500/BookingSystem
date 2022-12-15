@@ -18,6 +18,7 @@ const OrderSummary: React.FC<{
   const [message, setMessage] = useState("");
   const [disable, setDisable] = useState(false);
   const [distanceCost, setDistanceCost] = useState("0");
+  const [buttonDisable, setButtonDisable] = useState(false);
 
   const history = useHistory();
 
@@ -43,6 +44,7 @@ const OrderSummary: React.FC<{
       .then((response) => response.json())
       .then((data) => {
         const cost = (data.results[address.zipCode] * 2 * 3).toFixed(2);
+        isNaN(Number(cost)) ? setButtonDisable(true) : setButtonDisable(false);
         setDistanceCost(cost);
       });
 
@@ -50,7 +52,7 @@ const OrderSummary: React.FC<{
       setOrderStateReducer({ type: OrderActions.SET_PRICE, payload: 0 });
   }, [setOrderStateReducer, address.zipCode]);
 
-  const { state } = useLocation<LocationState>();
+  // const { state } = useLocation<LocationState>();
 
   const [cookie] = useCookies(["loginData"]);
 
@@ -158,12 +160,26 @@ const OrderSummary: React.FC<{
               </p>
             </div>
           </div>
-          <div>
-            <p>Koszt dostawy: {Number(distanceCost).toFixed(2)} PLN</p>
-          </div>
-          <div>
-            <p>Łączny koszt: {(Number(distanceCost) + totalValue).toFixed(2)} PLN</p>
-          </div>
+          {buttonDisable && (
+            <div>
+              <p className="text-red-900 font-bold text-4xl">
+                Nieprawidłowy kod pocztowy!
+              </p>
+            </div>
+          )}
+          {!buttonDisable && (
+            <>
+              <div>
+                <p>Koszt dostawy: {Number(distanceCost).toFixed(2)} PLN</p>
+              </div>
+              <div>
+                <p>
+                  Łączny koszt: {(Number(distanceCost) + totalValue).toFixed(2)}{" "}
+                  PLN
+                </p>
+              </div>
+            </>
+          )}
           <div className="w-1/4 flex gap-4">
             <Button
               clickHandler={() =>
@@ -172,7 +188,11 @@ const OrderSummary: React.FC<{
             >
               {t("Back")}
             </Button>
-            <Button disabled={disable} clickHandler={orderHandler} accent>
+            <Button
+              disabled={disable || buttonDisable}
+              clickHandler={orderHandler}
+              accent
+            >
               {t("Order")}
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import Button from "../Ui/Button";
 import { useTranslation } from "react-i18next";
 import { OrderState } from "../../models/OrderState";
@@ -17,18 +17,18 @@ const UserInput: React.FC<{
   const { t } = useTranslation();
   const [cookie] = useCookies(["loginData"]);
 
-  const [zipExists, setZipExists] = useState(false);
-
-  const checkZipExistance=(zipCode: string)=> {
-    fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      setZipExists(res.ok);
-    });
-  }
+  // const [zipExists, setZipExists] = useState(false);
+  //
+  // const checkZipExistance=(zipCode: string)=> {
+  //   fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   }).then((res) => {
+  //     setZipExists(res.ok);
+  //   });
+  // }
 
   const firstNameHandler = () => {
     if (firstNameRef.current) {
@@ -65,17 +65,18 @@ const UserInput: React.FC<{
   };
 
   const { address, user } = orderState;
-  const { firstName, lastName,email } = user;
+  const { firstName, lastName, email } = user;
   const { street, buildingNumber, city, zipCode } = address;
   const disableButton =
     /^[A-Za-z]+$/g.test(firstName) &&
-      /^[A-Za-z]+$/g.test(lastName) &&
+    /^[A-Za-z]+$/g.test(lastName) &&
     street &&
-      buildingNumber &&
-      /^[A-Za-z]+$/g.test(city) &&
-    /^[\d]{2}-[\d]{3}$/g.test(zipCode)&&
-      /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/g.test(email);
-
+    buildingNumber &&
+    /^[A-Za-z]+$/g.test(city) &&
+    /^[\d]{2}-[\d]{3}$/g.test(zipCode) &&
+    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/g.test(
+      email
+    );
 
   return (
     <>
@@ -127,14 +128,11 @@ const UserInput: React.FC<{
         </Button>
         <Button
           clickHandler={() => {
-            checkZipExistance(zipCode)
-            setOrderStateReducer({type: OrderActions.SET_STEP_INC})
-
-          }
-          }
+            // checkZipExistance(zipCode)
+            setOrderStateReducer({ type: OrderActions.SET_STEP_INC });
+          }}
           accent
           disabled={!disableButton}
-
         >
           {t("Next")}
         </Button>

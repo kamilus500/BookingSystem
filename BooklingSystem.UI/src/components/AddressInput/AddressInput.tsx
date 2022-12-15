@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { OrderState } from "../../models/OrderState";
 import { OrderAction } from "../../pages/ReservationPage/ReservationPage";
 import { OrderActions } from "../../models/OrderActions";
@@ -12,17 +12,16 @@ const AddressInput: React.FC<{
   const zipCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
 
-  const checkZipExistance=async(zipCode: string):Promise<any>=> {
-
-    const resp =await fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
+  const checkZipExistance = async (zipCode: string): Promise<any> => {
+    const resp = await fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
 
-    return (await resp.json())
-  }
+    return await resp.json();
+  };
 
   const streetHandler = () => {
     if (streetRef.current) {
@@ -46,10 +45,8 @@ const AddressInput: React.FC<{
       });
     }
   };
-  const zipCodeHandler =async () => {
+  const zipCodeHandler = async () => {
     if (zipCodeRef.current) {
-      const zip=await checkZipExistance(zipCodeRef.current.value)
-     if(!zip.length) return;
       setOrderStateReducer({
         type: OrderActions.SET_ADDRESS,
         payload: {
