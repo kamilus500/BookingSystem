@@ -13,6 +13,7 @@ const AddressInput: React.FC<{
   const cityRef = useRef<HTMLInputElement>(null);
 
   const checkZipExistance=async(zipCode: string):Promise<any>=> {
+
     const resp =await fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
       method: "GET",
       headers: {
