@@ -1,4 +1,5 @@
 ﻿using BookingSystem.Service.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -35,6 +36,15 @@ namespace BookingSystem.Service.Controllers
                 return NoContent();
 
             return Ok(users);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{userId}")]
+        public async Task<ActionResult> Remove([FromRoute]int userId)
+        {
+            await _userService.Remove(userId);
+
+            return Ok();
         }
     }
 }

@@ -14,7 +14,6 @@ namespace BookingSystem.Service.Services
         public Task<User> GetUser(UserLoginDto userLoginDto);
         public Task<User> GetUserById(int id);
         public Task<List<User>> GetUsers();
-
         public Task Remove(int id);
     }
 }

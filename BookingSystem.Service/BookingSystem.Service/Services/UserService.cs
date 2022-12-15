@@ -158,8 +158,9 @@ namespace BookingSystem.Service.Services
 
                 if (user is null)
                     throw new Exception("User is null");
-                
-                _dbContext.Users.Remove(user);
+
+                user.IsDeleted = true;
+
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
