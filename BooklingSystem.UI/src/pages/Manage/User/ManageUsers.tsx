@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
-import { OneUser } from "../../components/User/OneUser";
-import User from "../../models/User";
+import { OneUser } from "./OneUser";
+import User from "../../../models/User";
 
 export const ManageUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const { t } = useTranslation();
-
-  useEffect(() => {
+  function fetchUsers() {
     fetch("https://booking-tent-api.azurewebsites.net/api/user/", {
       method: "GET",
       headers: {
@@ -20,6 +19,9 @@ export const ManageUsers: React.FC = () => {
       .then((res: User[]) => {
         setUsers(res);
       });
+  }
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   return (
@@ -42,7 +44,7 @@ export const ManageUsers: React.FC = () => {
       </thead>
       <tbody>
         {users.map((user, index) => (
-          <OneUser key={index} user={user} />
+          <OneUser key={index} user={user} fetchUsers={fetchUsers} />
         ))}
       </tbody>
     </table>

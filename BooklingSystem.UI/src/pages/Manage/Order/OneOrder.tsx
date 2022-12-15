@@ -2,30 +2,30 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 
-import Order from "../../models/Order";
-import AddOpinion from "../Opinions/AddOpinion";
+import Order from "../../../models/Order";
+import AddOpinion from "../../../components/Opinions/AddOpinion";
 
-export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
+export const OneOrder: React.FC<{ order: Order; fetchOrders: () => void }> = ({
+  order,
+  fetchOrders,
+}) => {
   const [cookies] = useCookies(["loginData"]);
   const [addOpinion, setAddOpinion] = useState(false);
   const { t, i18n } = useTranslation();
+
   function deleteOrder() {
-    fetch(
-      "https://booking-tent-api.azurewebsites.net/api/order/" + order.orderId,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + cookies.loginData.token,
-        },
-      }
-    );
+    fetch("https://booking-tent-api.azurewebsites.net/api/order/" + order.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.loginData.token,
+      },
+    }).then(() => fetchOrders());
   }
 
   function acceptOrder() {
     fetch(
-      "https://booking-tent-api.azurewebsites.net/api/order/accept/" +
-        order.orderId,
+      "https://booking-tent-api.azurewebsites.net/api/order/accept/" + order.id,
       {
         method: "PUT",
         headers: {
@@ -33,13 +33,12 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
           Authorization: "Bearer " + cookies.loginData.token,
         },
       }
-    );
+    ).then(() => fetchOrders());
   }
 
   function endOrder() {
     fetch(
-      "https://booking-tent-api.azurewebsites.net/api/order/finish/" +
-        order.orderId,
+      "https://booking-tent-api.azurewebsites.net/api/order/finish/" + order.id,
       {
         method: "PUT",
         headers: {
@@ -47,7 +46,7 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
           Authorization: "Bearer " + cookies.loginData.token,
         },
       }
-    );
+    ).then(() => fetchOrders());
   }
 
   return (
@@ -105,9 +104,9 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
             </span>
             <button
               onClick={deleteOrder}
-              className="text-blue-400 hover:text-blue-600 "
+              className="rounded mr-1 bg-red-700 py-1 px-3 text-xs font-bold"
             >
-              Remove
+              {t("Delete reservation")}
             </button>
           </>
           <>
@@ -116,14 +115,14 @@ export const OneOrder: React.FC<{ order: Order }> = ({ order }) => {
             </span>
             <button
               onClick={() => setAddOpinion((a) => !a)}
-              className="text-blue-400 hover:text-blue-600 "
+              className="rounded mr-1 bg-green-500 py-1 px-3 text-xs font-bold"
             >
-              Add opinion
+              {t("Add opinion")}
             </button>
+            {addOpinion && <AddOpinion setAddOpinion={setAddOpinion} />}
           </>
         </td>
       </tr>
-      {addOpinion && <AddOpinion setAddOpinion={setAddOpinion} />}
     </>
   );
 };

@@ -6,5 +6,6 @@ export default interface User {
   lastName: string;
   email: string;
   role: number;
+  isDeleted: boolean;
   orders: Order[];
 }

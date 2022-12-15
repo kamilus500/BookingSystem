@@ -1,7 +1,7 @@
 import Address from "./Address";
 
 export default interface Order {
-  orderId: number;
+  id: number;
   userId: number;
   textId: number;
   cost: number;

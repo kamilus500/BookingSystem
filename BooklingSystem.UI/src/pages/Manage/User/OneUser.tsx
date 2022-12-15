@@ -2,9 +2,12 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 
-import User from "../../models/User";
+import User from "../../../models/User";
 
-export const OneUser: React.FC<{ user: User }> = ({ user }) => {
+export const OneUser: React.FC<{ user: User; fetchUsers: () => void }> = ({
+  user,
+  fetchUsers,
+}) => {
   const [cookies] = useCookies(["loginData"]);
   function deleteUser() {
     fetch("https://booking-tent-api.azurewebsites.net/api/user/" + user.id, {
@@ -13,7 +16,7 @@ export const OneUser: React.FC<{ user: User }> = ({ user }) => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + cookies.loginData.token,
       },
-    });
+    }).then((r) => fetchUsers());
   }
   const { t } = useTranslation();
 
@@ -48,12 +51,18 @@ export const OneUser: React.FC<{ user: User }> = ({ user }) => {
           <span className="lg:hidden absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase">
             {t("Actions")}
           </span>
-          <button
-            onClick={deleteUser}
-            className="text-blue-400 hover:text-blue-600 "
-          >
-            Remove
-          </button>
+          {user.isDeleted ? (
+            <button className="rounded mr-1 bg-red-900 py-1 px-3 text-xs font-bold">
+              {t("User is removed")}
+            </button>
+          ) : (
+            <button
+              onClick={deleteUser}
+              className="rounded mr-1 bg-red-600 py-1 px-3 text-xs font-bold"
+            >
+              {t("Remove user")}
+            </button>
+          )}
         </>
       </td>
     </tr>
