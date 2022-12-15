@@ -10,24 +10,30 @@ const Size: React.FC<{
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const selectHandler = () => {
-    let price;
-
     if (selectRef.current) {
-      price=selectRef.current.value==="small"?489:selectRef.current.value==="medium"?589:889;
-      console.log(selectRef.current)
       setOrderStateReducer({
         type: OrderActions.SET_SIZE,
         payload: selectRef.current.value,
       });
-      console.log(price)
+
       setOrderStateReducer({
         type: OrderActions.SET_PRICE2,
-        payload: selectRef.current.value==="small"?489:selectRef.current.value==="medium"?589:889,
+        payload:
+          selectRef.current.value === "small"
+            ? 489
+            : selectRef.current.value === "medium"
+            ? 589
+            : 889,
       });
 
       setOrderStateReducer({
         type: OrderActions.SET_TENTID,
-        payload: selectRef.current.value==="small"?1:selectRef.current.value==="medium"?2:3,
+        payload:
+          selectRef.current.value === "small"
+            ? 1
+            : selectRef.current.value === "medium"
+            ? 2
+            : 3,
       });
     }
   };
@@ -42,10 +48,18 @@ const Size: React.FC<{
         defaultValue={orderState.size}
         className="dark:text-black"
       >
-        <option disabled={selectRef.current?.value!==""} value="">--Wybierz rozmiar--</option>
-        <option data-price={489} value="small">Mały</option>
-        <option data-price={589} value="medium">Średni</option>
-        <option data-price={889} value="giga">Giga</option>
+        <option disabled={selectRef.current?.value !== ""} value="">
+          --Wybierz rozmiar--
+        </option>
+        <option data-price={489} value="small">
+          Mały
+        </option>
+        <option data-price={589} value="medium">
+          Średni
+        </option>
+        <option data-price={889} value="giga">
+          Giga
+        </option>
       </select>
     </>
   );

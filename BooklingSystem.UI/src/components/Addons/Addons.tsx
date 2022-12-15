@@ -13,17 +13,39 @@ const Addons: React.FC<{
 
   const chairHandler = () => {
     if (chairsRef.current) {
+      let charisNumber = Number(chairsRef.current.value);
+
       setOrderStateReducer({
         type: OrderActions.SET_CHAIRS,
-        payload: chairsRef.current.valueAsNumber,
+        payload:
+          charisNumber < 0
+            ? 0
+            : charisNumber > 30 && orderState.tentId === 1
+            ? 30
+            : charisNumber > 50 && orderState.tentId === 2
+            ? 50
+            : charisNumber > 80 && orderState.tentId === 3
+            ? 80
+            : charisNumber,
       });
     }
   };
   const tableHandler = () => {
     if (tablesRef.current) {
+      let tableNumber = Number(tablesRef.current.value);
+
       setOrderStateReducer({
         type: OrderActions.SET_TABLES,
-        payload: tablesRef.current.valueAsNumber,
+        payload:
+          tableNumber < 0
+            ? 0
+            : tableNumber > 3 && orderState.tentId === 1
+            ? 3
+            : tableNumber > 5 && orderState.tentId === 2
+            ? 5
+            : tableNumber > 8 && orderState.tentId === 3
+            ? 8
+            : tableNumber,
       });
     }
   };
@@ -67,10 +89,11 @@ const Addons: React.FC<{
       <label>
         Liczba krzeseł:
         <input
-          className="dark:text-black"
+          className="dark:text-black w-32"
           type="number"
           placeholder="Podaj liczbę..."
           min={0}
+          max={orderState.tentId === 1 ? 30 : orderState.tentId === 2 ? 50 : 80}
           onChange={chairHandler}
           ref={chairsRef}
           value={orderState.chairs}
@@ -80,7 +103,7 @@ const Addons: React.FC<{
       <label>
         Liczba stołów:
         <input
-          className="dark:text-black"
+          className="dark:text-black w-32"
           type="number"
           placeholder="Podaj liczbę..."
           min={0}
