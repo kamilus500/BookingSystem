@@ -111,11 +111,11 @@ const ReservationPage: React.FC = () => {
   const [cookies] = useCookies(["loginData"]);
 
   const initialOrderState: OrderState = {
-    price: state?state.price:489,
+    price: state ? state.price : 489,
     totalValue: 0,
-    tentId: state?state.tentId:1,
+    tentId: state ? state.tentId : 1,
     step: 0,
-    size: state?state.size:"small",
+    size: state ? state.size : "small",
     bbq: false,
     speaker: false,
     chairs: 0,
@@ -128,7 +128,7 @@ const ReservationPage: React.FC = () => {
       city: "",
     },
     user: {
-      email: "",
+      email: cookies?.loginData?.email ? cookies.loginData.email : "",
       firstName: cookies?.loginData?.name ? cookies.loginData.name : "",
       lastName: cookies?.loginData?.lastname ? cookies.loginData.lastname : "",
       userId: undefined,
