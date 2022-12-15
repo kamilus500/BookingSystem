@@ -10,14 +10,16 @@ const Size: React.FC<{
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const selectHandler = () => {
+
     if (selectRef.current) {
+      console.log(selectRef.current.value)
       setOrderStateReducer({
         type: OrderActions.SET_SIZE,
         payload: selectRef.current.value,
       });
     }
   };
-
+  console.log(selectRef.current?.value)
   return (
     <>
       <h3>Wybierz rozmiar namiotu!</h3>
@@ -29,7 +31,7 @@ const Size: React.FC<{
         defaultValue={orderState.size}
         className="dark:text-black"
       >
-        <option value="">--Wybierz rozmiar--</option>
+        <option disabled={selectRef.current?.value!==""} value="">--Wybierz rozmiar--</option>
         <option value="small">Mały</option>
         <option value="medium">Średni</option>
         <option value="giga">Giga</option>

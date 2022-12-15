@@ -61,7 +61,7 @@ const UserInput: React.FC<{
     street &&
     buildingNumber &&
     city &&
-    /[\d]{2}-[\d]{3}/g.test(zipCode);
+    /^[\d]{2}-[\d]{3}$/g.test(zipCode);
 
   return (
     <>
