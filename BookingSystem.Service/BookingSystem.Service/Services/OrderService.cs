@@ -1,11 +1,17 @@
 ﻿using AutoMapper;
 using BookingSystem.Service.Dtos;
+using BookingSystem.Service.EmailTemplates;
 using BookingSystem.Service.Entities;
+using BookingSystem.Service.Entities.Enums;
+using BookingSystem.Service.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BookingSystem.Service.Services
@@ -16,9 +22,11 @@ namespace BookingSystem.Service.Services
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<OrderService> _logger;
+        private readonly IUserService _userService;
 
-        public OrderService(ApplicationDbContext dbContext, IMapper mapper, EmailService emailService, ILogger<OrderService> logger)
+        public OrderService(ApplicationDbContext dbContext, IMapper mapper, EmailService emailService, ILogger<OrderService> logger, IUserService userService)
         {
+            _userService = userService;
             _dbContext = dbContext;
             _mapper = mapper;
             _emailService = emailService;
@@ -34,7 +42,7 @@ namespace BookingSystem.Service.Services
 
                 var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
 
-                order.IsAccepted = true;
+                order.IsAccepted = !order.IsAccepted;
 
                 await _dbContext.SaveChangesAsync();
             }
@@ -47,8 +55,6 @@ namespace BookingSystem.Service.Services
 
         public async Task Create(OrderDto newOrderDto)
         {
-            string email = string.Empty;
-
             try
             {
                 if(newOrderDto == null)
@@ -59,12 +65,34 @@ namespace BookingSystem.Service.Services
                 await _dbContext.Orders.AddAsync(order);
                 await _dbContext.SaveChangesAsync();
 
-                if(newOrderDto.UserId == null)
-                    await _emailService.Send(newOrderDto.Email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                string body = EmailTemplateConst.createOrder;
+
+                string size = string.Empty;
+                if (newOrderDto.TentId == 1)
+                    size = "Mały";
+
+                if (newOrderDto.TentId == 2)
+                    size = "Średni";
+
+                if (newOrderDto.TentId == 3)
+                    size = "Giga";
+
+                StringBuilder stringBuilder = new StringBuilder(body);
+
+                stringBuilder.Replace("##DATE##", newOrderDto.DateTime.ToShortDateString());
+                stringBuilder.Replace("##PRICE##", newOrderDto.Cost.ToString("0.00"));
+                stringBuilder.Replace("##SIZE##", size);
+
+                if (newOrderDto.UserId == null)
+                {
+                    stringBuilder.Replace("##NAME##", " ");
+                    await _emailService.Send(newOrderDto.Email, "Namioty", stringBuilder.ToString());
+                }
                 else
                 {
-                    email = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId).Email;
-                    await _emailService.Send(email, "Namioty", "Rezerwacja namiotu została pomyślnie zakończona");
+                    var user = _dbContext.Users.FirstOrDefault(x => x.Id == order.UserId);
+                    stringBuilder.Replace("##NAME##", user.FirstName + " " + user.LastName);
+                    await _emailService.Send(user.Email, "Namioty", stringBuilder.ToString());
                 }
             }
             catch (Exception ex)
@@ -106,7 +134,7 @@ namespace BookingSystem.Service.Services
                 if (order == null)
                     throw new ArgumentNullException(nameof(order));
 
-                order.IsEnd = true;
+                order.IsEnd = !order.IsEnd;
 
                 await _dbContext.SaveChangesAsync();
             }

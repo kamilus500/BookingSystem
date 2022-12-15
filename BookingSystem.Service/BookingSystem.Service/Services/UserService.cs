@@ -114,7 +114,7 @@ namespace BookingSystem.Service.Services
             }
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(int? id)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace BookingSystem.Service.Services
                 if (user is null)
                     throw new Exception("User is null");
 
-                user.IsDeleted = true;
+                user.IsDeleted = !user.IsDeleted;
 
                 _dbContext.SaveChanges();
             }

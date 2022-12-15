@@ -38,6 +38,7 @@ namespace BookingSystem.Service.Services
             mail.From = new MailAddress(_senderEmail, _senderName);
             mail.To.Add(new MailAddress(to));
             mail.Subject = subject;
+            mail.IsBodyHtml = true;
             mail.BodyEncoding = System.Text.Encoding.UTF8;
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = body;
