@@ -12,17 +12,15 @@ const AddressInput: React.FC<{
   const zipCodeRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
 
-  const [zipExists, setZipExists] = useState(false);
-  function checkZipExistance(zipCode: string) {
-    fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
+  const checkZipExistance=async(zipCode: string):Promise<any>=> {
+    const resp =await fetch("http://kodpocztowy.intami.pl/api/" + zipCode, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      console.log(res);
-      setZipExists(true);
-    });
+    })
+
+    return (await resp.json())
   }
 
   const streetHandler = () => {
@@ -47,8 +45,10 @@ const AddressInput: React.FC<{
       });
     }
   };
-  const zipCodeHandler = () => {
+  const zipCodeHandler =async () => {
     if (zipCodeRef.current) {
+      const zip=await checkZipExistance(zipCodeRef.current.value)
+     if(!zip.length) return;
       setOrderStateReducer({
         type: OrderActions.SET_ADDRESS,
         payload: {
